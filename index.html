@@ -172,7 +172,6 @@
         <h2>بوابة المؤتمر الوطني الإلكترونية</h2>
     </div>
 
-    <!-- 1. شاشة تسجيل الدخول -->
     <div id="login-section" class="section-panel">
         <h3 style="text-align: center; color: var(--dark-slate); margin-top: 0;">تسجيل دخول المندوبين</h3>
         <div class="form-group">
@@ -191,7 +190,6 @@
         <div id="loading-data" style="display:none; margin-top:15px; text-align:center; color: var(--primary-green); font-weight: bold;">جاري التحقق من الحساب جلب البيانات الشخصية...</div>
     </div>
 
-    <!-- 2. شاشة استكمال وتعديل البيانات الشخصية والنقابية -->
     <div id="profile-section" class="section-panel">
         <h3 style="text-align: center; color: var(--dark-slate); border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0;">استمارة تعديل وتأكيد بيانات المندوب</h3>
         
@@ -214,14 +212,12 @@
         <div class="form-group"><label>رقم الهاتف 01</label><input type="text" id="p-phone1" class="input-field"></div>
         <div class="form-group"><label>رقم الهاتف 02 (إن وجد)</label><input type="text" id="p-phone2" class="input-field"></div>
         
-        <!-- زر الحفظ العادي والانتقال للتصويت -->
-        <button class="btn-primary btn-success" id="save-profile-btn" onclick="saveProfile(false)">حفظ البيانات والانتقال للتصويت</button>
+        <div class="form-group"><label>الحساب الإلكتروني (البريد الإلكتروني)</label><input type="email" id="p-email" class="input-field" placeholder="example@domain.com" style="text-align: left; direction: ltr;"></div>
         
-        <!-- زر الحفظ والخروج الفوري الجديد للمندوبين الراغبين بالتعديل فقط -->
+        <button class="btn-primary btn-success" id="save-profile-btn" onclick="saveProfile(false)">حفظ البيانات والانتقال للتصويت</button>
         <button class="btn-primary btn-danger-outline" id="save-exit-btn" onclick="saveProfile(true)">حفظ التعديلات الشخصية فقط وتسجيل الخروج</button>
     </div>
 
-    <!-- 3. شاشة التصويت الانتخابي المطور -->
     <div id="voting-section" class="section-panel" style="border-top-color: var(--primary-red);">
         <div id="quota-alert-box">
             <h3 id="welcome-name" style="margin-top: 0; color: var(--dark-slate);">مرحباً</h3>
@@ -232,7 +228,6 @@
         <button id="submit-votes" class="btn-primary" style="background: var(--primary-red);">تأكيد وإرسال التصويت النهائي</button>
     </div>
 
-    <!-- 4. شاشة عرض الفائزين بالمجلس الوطني -->
     <div id="winners-section" class="section-panel" style="border-top-color: var(--gold-winner);">
         <h3 style="text-align: center; color: var(--dark-slate); margin-top: 0; margin-bottom: 20px;">🏆 قائمة الفائزين بعضوية المجلس الوطني حسب الولايات</h3>
         <div id="winners-loading" style="text-align:center; font-weight:bold; color: var(--primary-green);">جاري معالجة الأصوات وفرز الفائزين حياً من السيرفر...</div>
@@ -315,9 +310,9 @@
         document.getElementById('p-subject').value = loggedInUser.subject;
         document.getElementById('p-phone1').value = loggedInUser.phone1;
         document.getElementById('p-phone2').value = loggedInUser.phone2;
+        document.getElementById('p-email').value = loggedInUser.email || ""; // إسناد قيمة البريد الإلكتروني للواجهة
     }
 
-    // تعديل الدالة لاستقبال متغير يحدد ما إذا كان المندوب يريد الخروج فقط بعد التعديل
     async function saveProfile(shouldExitOnly) {
         const voterIdValue = document.getElementById('p-voter-id').value.trim();
         if (!voterIdValue) {
@@ -328,8 +323,7 @@
 
         const saveBtn = document.getElementById('save-profile-btn');
         const exitBtn = document.getElementById('save-exit-btn');
-        saveBtn.disabled = true;
-        exitBtn.disabled = true;
+        saveBtn.disabled = true; exitBtn.disabled = true;
         saveBtn.innerText = "جاري الحفظ في جدول الإكسيل...";
         
         const profileData = {
@@ -350,7 +344,8 @@
             workPlace: document.getElementById('p-workPlace').value.trim(), 
             subject: document.getElementById('p-subject').value.trim(), 
             phone1: document.getElementById('p-phone1').value.trim(), 
-            phone2: document.getElementById('p-phone2').value.trim()
+            phone2: document.getElementById('p-phone2').value.trim(),
+            email: document.getElementById('p-email').value.trim() // إرسال البريد الإلكتروني للسيرفر
         };
         try {
             const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify(profileData) });
@@ -358,13 +353,8 @@
             if (result.status === "success") {
                 alert(result.message); 
                 loggedInUser.name = profileData.name;
-                
-                // إذا اختار المندوب التعديل والخروج فقط، أو إذا كان قد صوّت سابقاً، نقوم بعمل خروج تلقائي له
-                if (shouldExitOnly || loggedInUser.hasVoted) {
-                    location.reload(); 
-                } else {
-                    showVotingScreen();
-                }
+                if (shouldExitOnly || loggedInUser.hasVoted) { location.reload(); } 
+                else { showVotingScreen(); }
             } else { 
                 alert(result.message); 
                 saveBtn.disabled = false; exitBtn.disabled = false;
@@ -387,7 +377,7 @@
             const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify({ action: "getProvinceCandidates", province: loggedInUser.province }) });
             const result = await response.json();
             if(result.status === "success") { provinceCandidates = result.candidates; document.getElementById('loading-candidates').style.display = 'none'; renderCandidates(); }
-        } catch(e) { alert("خطأ في تحميل قائمةmathbf المرشحين."); }
+        } catch(e) { alert("خطأ في تحميل قائمة المرشحين."); }
     }
 
     function renderCandidates() {

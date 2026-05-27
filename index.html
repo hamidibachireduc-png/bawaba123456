@@ -37,6 +37,9 @@
         
         .info-notice { background: #ebf8ff; border-right: 5px solid #3182ce; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; color: #2b6cb0; font-weight: 500; line-height: 1.5; }
         
+        /* علبة الملاحظة التوجيهية الجديدة والبارزة للمشرف الولائي */
+        .supervisor-box { background: #fffaf0; border-right: 5px solid #dd6b20; padding: 14px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; color: #dd6b20; font-weight: bold; line-height: 1.6; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+
         .fee-container { display: flex; justify-content: space-between; gap: 10px; margin: 25px 0; }
         .fee-card { flex: 1; background: #f8fafc; border: 2px solid #e2e8f0; padding: 20px 10px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; color: var(--dark-slate); transition: all 0.2s ease; }
         .fee-card:hover { border-color: var(--blue-navy); background: #f0f7ff; }
@@ -79,8 +82,11 @@
 
     <!-- 2. شاشة مراجعة وتأكيد البيانات الشخصية والمهنية -->
     <div id="profile-section" class="section-panel">
+        <!-- 🔔 مكان ظهور خانة الملاحظة التوجيهية الديناميكية المضافة حديثاً -->
+        <div id="supervisor-notice-zone" class="supervisor-box" style="display:none;"></div>
+
         <h3 style="text-align: center; color: var(--dark-slate); border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0;">استمارة تأكيد وتحديث بيانات المندوب</h3>
-        <div class="info-notice">💡 مرحباً بك زميلي المندوب. يرجى مراجعة وتحديث ملفك الشخصي أولاً، الضغط على الزر أدناه سيقوم بحفظ بياناتك وتوجيهك آلياً إلى العملية الانتخابية المفتوحة حالياً في قاعة المؤتمر.</div>
+        <div class="info-notice">💡 يرجى مراجعة وتحديث ملفك الشخصي أولاً، الضغط على الزر أدناه سيقوم بحفظ بياناتك وتوجيهك آلياً إلى العملية الانتخابية المفتوحة حالياً في قاعة المؤتمر.</div>
         
         <input type="hidden" id="p-voter-id">
         <div class="form-group"><label>الاســم واللقــب (بالعربية)</label><input type="text" id="p-name" class="input-field"></div>
@@ -105,7 +111,7 @@
         <button class="btn-primary btn-danger-outline" id="save-exit-btn" onclick="saveProfile(true)">حفظ التعديلات الشخصية فقط وخروج</button>
     </div>
 
-    <!-- 3. صندوق انتخابات المجلس الوطني -->
+    <!-- 3. صندوق انتخابات المجلس الوطني مستقل -->
     <div id="voting-section" class="section-panel">
         <div class="info-notice">🗳️ <strong>جلسة انتخاب المجلس الوطني:</strong> عند الضغط على تأكيد، سيتم قيد وتأمين خياراتك في الصندوق، وسيتم <strong>تسجيل خروجك فوراً من النظام</strong> حفاظاً على سرية وسلامة العملية التنظيمية.</div>
         <div id="quota-alert-box">
@@ -118,7 +124,7 @@
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">❌ إلغاء والتراجع للخروج</button>
     </div>
 
-    <!-- 4. صندوق انتخابات الأمين العام الوطني -->
+    <!-- 4. صندوق انتخابات الأمين العام الوطني مستقل -->
     <div id="sg-voting-section" class="section-panel" style="border-top-color: var(--primary-red);">
         <div class="info-notice">🗳️ <strong>جلسة انتخاب الأمين العام الوطني:</strong> يرجى اختيار مرشحكم بدقة. تأكيد التصويت سيقوم بإيداع صوتك مباشرة في الصندوق المعزول ومن ثم <strong>تسجيل خروجك تلقائياً</strong> لإتاحة المجال لمتابعة باقي أشغال المؤتمر في القاعة.</div>
         <h3 style="text-align: center; color: var(--primary-red); margin-top: 0;">صندوق انتخاب الأمين العام الوطني للنقابة</h3>
@@ -128,7 +134,7 @@
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">❌ إلغاء والتراجع للخروج</button>
     </div>
 
-    <!-- 5. شاشة الاستفتاء الرقمي على مبلغ الانخراط -->
+    <!-- 5. شاشة الاستفتاء الرقمي على مبلغ الانخراط مستقلة -->
     <div id="fee-section" class="section-panel" style="border-top-color: var(--blue-navy);">
         <div class="info-notice">💰 <strong>جلسة التصويت على القيمة المالية:</strong> يرجى تحديد مبلغ الانخراط المقترح للسنوات القادمة. عند الضغط على تأكيد، يُقيد صوتك الاستفتائي وتخرج فوراً نحو الشاشة الرئيسية.</div>
         <h3 style="text-align: center; color: var(--blue-navy); margin-top: 0;">تحديد مبلغ الانخراط في النقابة الوطنية (S.N.T.E)</h3>
@@ -166,7 +172,6 @@
 </div>
 
 <script>
-    // ⚠️ تأكد من وضع رابط الـ Web App الصحيح والمحدث هنا
     const webAppUrl = "https://script.google.com/macros/s/AKfycbwzHJwS24DONrgZjO3K-DqMBJ9XWwlf1jFgUwIXw1z1LWTrFee7WOiMRIudKRsNV62f/exec"; 
     
     const quotas = {
@@ -179,12 +184,31 @@
         "الجلفة": { councilMembers: 5 }, "سوق اهراس": { councilMembers: 4 }, "تيبازة": { councilMembers: 2 }
     };
 
+    // 🗺️ قاعدة بيانات اللجنة الوطنية المسؤولة عن الولايات للمطابقة الفورية حياً
+    const committeeDatabase = [
+        { name: "فريد لمناجلية", phone: "0556477879", provinces: ["البليدة", "عين الدفلى", "تيسمسيلت", "الشلف"] },
+        { name: "تامي نورين لخضر", phone: "0675998222", provinces: ["تيبازة"] },
+        { name: "عبد الرحيم سعيد", phone: "0556850930", provinces: ["الجزائر وسط", "الجزائر غرب", "تيزي وزو"] },
+        { name: "جبري عبد الجليل", phone: "0561546898", provinces: ["الجزائر شرق", "بومرداس", "بجاية"] },
+        { name: "بن يحي مصطفى", phone: "0663664686", provinces: ["تيميمون", "برج باجي مختار", "بني عباس", "عين صالح", "عين قزام"] },
+        { name: "عبد الحي رمضان", phone: "0663112987", provinces: ["ورقلة", "تقرت", "جانت", "المغير", "المنيعة", "المغيير"] },
+        { name: "معطالله عبد النبي", phone: "0671327711", provinces: ["الأغواط", "الاغواط", "الوادي", "بسكرة", "اولاد جلال"] },
+        { name: "مجاطي علي", phone: "0771242455", provinces: ["عين تيموشنت", "عين تيموشت", "تلمسان"] },
+        { name: "بن علو توفيق", phone: "0663241117", provinces: ["سيدي بلعباس", "وهران", "معسكر", "سعيدة"] },
+        { name: "راشدي الهواري", phone: "0776484477", provinces: ["مستغانم", "غيلزان", "غليزان"] },
+        { name: "كرميش بايزيد", phone: "0656192113", provinces: ["بوسعادة", "المسيلة", "برج بوعريريج", "البويرة", "سطيف", "بريكة"] },
+        { name: "جعفري عبد الرحمان", phone: "0775586559", provinces: ["تبسة", "سوق اهراس", "قسنطينة", "عنابة", "سكيكدة", "قالمة", "خنشلة", "ام البواقي", "ميلة", "جيجل", "الطارف"] },
+        { name: "حجازي خالد", phone: "0663915534", provinces: ["باتنة"] },
+        { name: "قويدر يحياوي", phone: "0781450423", provinces: ["غرداية", "الجلفة", "مسعد", "عين وسارة", "المدية", "قصر الشلالة", "تيارت"] },
+        { name: "رحيمي احمد", phone: "0671276322", provinces: ["ادرار", "تمنراست", "بشار", "البيض", "الابيض سيدى الشيخ", "تيندوف", "النعامة"] }
+    ];
+
     let loggedInUser = null;
     let selectedCandidates = [];
     let provinceCandidates = [];
     let selectedSGName = "";
     let selectedFeeValue = "";
-    let sessionControl = null; // حفظ حالة المفاتيح حية من الشيت
+    let sessionControl = null;
 
     function formatCleanDate(dateStr) {
         if (!dateStr) return "";
@@ -223,7 +247,7 @@
                 loggedInUser.hasVotedCouncil = result.hasVotedCouncil;
                 loggedInUser.hasVotedSG = result.hasVotedSG;
                 loggedInUser.hasVotedFee = result.hasVotedFee;
-                sessionControl = result.sessionControl; // جلب حالة الأزرار من الإكسيل
+                sessionControl = result.sessionControl;
                 
                 showProfileScreen();
             } else {
@@ -231,7 +255,7 @@
                 document.getElementById('login-error').style.display = 'block';
             }
         } catch (error) { 
-            alert("خطأ اتصال السيرفر المركزي. تأكد أن خيار الصلاحية (Who has access) في إعدادات النشر داخل الـ Script مضبوط على Anyone حتماً."); 
+            alert("خطأ اتصال السيرفر المركزي."); 
         }
         document.getElementById('login-btn').disabled = false;
         document.getElementById('loading-data').style.display = 'none';
@@ -241,6 +265,9 @@
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('profile-section').style.display = 'block';
         
+        // 🔍 استدعاء دالة البحث الآلي لتحديد وعرض بيانات المشرف الولائي بالأعلى فوراً
+        renderSupervisorNotice(loggedInUser.province);
+
         document.getElementById('p-voter-id').value = loggedInUser.id;
         document.getElementById('p-name').value = loggedInUser.name;
         document.getElementById('p-province').value = loggedInUser.province;
@@ -259,6 +286,32 @@
         document.getElementById('p-phone1').value = loggedInUser.phone1;
         document.getElementById('p-phone2').value = loggedInUser.phone2;
         document.getElementById('p-email').value = loggedInUser.email || "";
+    }
+
+    // دالة بناء صندوق الملاحظة التوجيهية بناءً على المحاور الجغرافية والولايات
+    function renderSupervisorNotice(userProvince) {
+        const noticeZone = document.getElementById('supervisor-notice-zone');
+        if (!userProvince) { noticeZone.style.display = 'none'; return; }
+
+        let cleanProv = userProvince.trim();
+        let supervisor = null;
+
+        // البحث والمطابقة في المصفوفة
+        for (let i = 0; i < committeeDatabase.length; i++) {
+            if (committeeDatabase[i].provinces.includes(cleanProv)) {
+                supervisor = committeeDatabase[i];
+                break;
+            }
+        }
+
+        if (supervisor) {
+            noticeZone.innerHTML = `⚠️ <strong>ملاحظة هامة:</strong> لطرح أي تساؤل فيما يخص العملية الانتخابية وأعمال المؤتمر، يرجى التواصل مع عضو اللجنة الوطنية المشرف على ولايتكم السيد: <strong>${supervisor.name}</strong> (الهاتف / واتساب: <span dir="ltr">${supervisor.phone}</span>).`;
+            noticeZone.style.display = 'block';
+        } else {
+            // حالة احتياطية عامة إذا لم يتم العثور على الولاية بدقة في قاعدة البيانات المحدودة
+            noticeZone.innerHTML = `⚠️ <strong>ملاحظة:</strong> لطرح أي تساؤل فيما يخص العملية الانتخابية يرجى التواصل مع عضو اللجنة الوطنية المشرف على ولايتكم الموقرة.`;
+            noticeZone.style.display = 'block';
+        }
     }
 
     async function saveProfile(shouldExitOnly) {
@@ -289,11 +342,10 @@
             const result = await response.json();
             if (result.status === "success") {
                 if (shouldExitOnly) { 
-                    alert("تم حفظ معلوماتك التحديثية بنجاح بنظام المؤتمر.");
+                    alert("تم حفظ معلوماتك بنجاح بنظام المؤتمر.");
                     location.reload(); 
                 } else { 
                     document.getElementById('profile-section').style.display = 'none';
-                    // التوجيه الحصري الخاضع لمفاتيح التشغيل في الشيت
                     goToCurrentOpenSession();
                 }
             }
@@ -301,27 +353,19 @@
         saveBtn.disabled = false; exitBtn.disabled = false;
     }
 
-    // خوارزمية التوجيه الذكية المتكاملة مع لوحة تحكم رئيس الجلسة
     function goToCurrentOpenSession() {
-        // 1. فحص جلسة المجلس الوطني
         if (sessionControl.council === "مفتوح") {
             if (!loggedInUser.hasVotedCouncil) { showCouncilVotingScreen(); return; }
             else { alert("زميلي المندوب: لقد قمت بالتصويت مسبقاً في جلسة المجلس الوطني الحالية بنجاح!"); location.reload(); return; }
         }
-        
-        // 2. فحص جلسة انتخاب الأمين العام
         if (sessionControl.sg === "مفتوح") {
             if (!loggedInUser.hasVotedSG) { showSGVotingScreen(); return; }
             else { alert("زميلي المندوب: لقد قمت بالتصويت مسبقاً في جلسة انتخاب الأمين العام الوطني بنجاح!"); location.reload(); return; }
         }
-        
-        // 3. فحص جلسة مبلغ الانخراط
         if (sessionControl.fee === "مفتوح") {
             if (!loggedInUser.hasVotedFee) { showFeeVotingScreen(); return; }
             else { alert("زميلي المندوب: لقد قمت بالتصويت مسبقاً في استفتاء مبلغ الانخراط السنوي بنجاح!"); location.reload(); return; }
         }
-
-        // إذا كانت جميع الصناديق مغلقة حالياً من طرف الإدارة
         alert("تنبيه: جميع الصناديق الانتخابية مغلقة حالياً بقرار من رئيس الجلسة، يرجى الانتظار لحين فتح الصندوق التالي في القاعة.");
         location.reload();
     }

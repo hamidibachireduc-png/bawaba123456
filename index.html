@@ -166,7 +166,7 @@
 </div>
 
 <script>
-    // ⚠️ السطر 137: يرجى وضع رابط الـ Web App الجديد الخاص بك المستخرج من الـ deployment هنا
+    // ⚠️ تأكد من وضع رابط الـ Web App الصحيح والمحدث هنا
     const webAppUrl = "https://script.google.com/macros/s/AKfycbwzHJwS24DONrgZjO3K-DqMBJ9XWwlf1jFgUwIXw1z1LWTrFee7WOiMRIudKRsNV62f/exec"; 
     
     const quotas = {
@@ -184,6 +184,7 @@
     let provinceCandidates = [];
     let selectedSGName = "";
     let selectedFeeValue = "";
+    let sessionControl = null; // حفظ حالة المفاتيح حية من الشيت
 
     function formatCleanDate(dateStr) {
         if (!dateStr) return "";
@@ -211,7 +212,6 @@
         document.getElementById('login-error').style.display = 'none';
         
         try {
-            // استخدام ترويسة text/plain لتخطي جدار CORS البرمجي للمتصفحات بنجاح
             const response = await fetch(webAppUrl, { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -222,13 +222,16 @@
                 loggedInUser = result.user;
                 loggedInUser.hasVotedCouncil = result.hasVotedCouncil;
                 loggedInUser.hasVotedSG = result.hasVotedSG;
+                loggedInUser.hasVotedFee = result.hasVotedFee;
+                sessionControl = result.sessionControl; // جلب حالة الأزرار من الإكسيل
+                
                 showProfileScreen();
             } else {
                 document.getElementById('login-error').innerText = result.message;
                 document.getElementById('login-error').style.display = 'block';
             }
         } catch (error) { 
-            alert("خطأ في الاتصال بالسيرفر المركزي.\n\nتأكد أن خيار الصلاحية (Who has access) في إعدادات النشر داخل الـ Script مضبوط على Anyone حتماً."); 
+            alert("خطأ اتصال السيرفر المركزي. تأكد أن خيار الصلاحية (Who has access) في إعدادات النشر داخل الـ Script مضبوط على Anyone حتماً."); 
         }
         document.getElementById('login-btn').disabled = false;
         document.getElementById('loading-data').style.display = 'none';
@@ -290,6 +293,7 @@
                     location.reload(); 
                 } else { 
                     document.getElementById('profile-section').style.display = 'none';
+                    // التوجيه الحصري الخاضع لمفاتيح التشغيل في الشيت
                     goToCurrentOpenSession();
                 }
             }
@@ -297,14 +301,29 @@
         saveBtn.disabled = false; exitBtn.disabled = false;
     }
 
+    // خوارزمية التوجيه الذكية المتكاملة مع لوحة تحكم رئيس الجلسة
     function goToCurrentOpenSession() {
-        if (!loggedInUser.hasVotedCouncil) { 
-            showCouncilVotingScreen(); 
-        } else if (!loggedInUser.hasVotedSG) { 
-            showSGVotingScreen(); 
-        } else { 
-            showFeeVotingScreen(); 
+        // 1. فحص جلسة المجلس الوطني
+        if (sessionControl.council === "مفتوح") {
+            if (!loggedInUser.hasVotedCouncil) { showCouncilVotingScreen(); return; }
+            else { alert("زميلي المندوب: لقد قمت بالتصويت مسبقاً في جلسة المجلس الوطني الحالية بنجاح!"); location.reload(); return; }
         }
+        
+        // 2. فحص جلسة انتخاب الأمين العام
+        if (sessionControl.sg === "مفتوح") {
+            if (!loggedInUser.hasVotedSG) { showSGVotingScreen(); return; }
+            else { alert("زميلي المندوب: لقد قمت بالتصويت مسبقاً في جلسة انتخاب الأمين العام الوطني بنجاح!"); location.reload(); return; }
+        }
+        
+        // 3. فحص جلسة مبلغ الانخراط
+        if (sessionControl.fee === "مفتوح") {
+            if (!loggedInUser.hasVotedFee) { showFeeVotingScreen(); return; }
+            else { alert("زميلي المندوب: لقد قمت بالتصويت مسبقاً في استفتاء مبلغ الانخراط السنوي بنجاح!"); location.reload(); return; }
+        }
+
+        // إذا كانت جميع الصناديق مغلقة حالياً من طرف الإدارة
+        alert("تنبيه: جميع الصناديق الانتخابية مغلقة حالياً بقرار من رئيس الجلسة، يرجى الانتظار لحين فتح الصندوق التالي في القاعة.");
+        location.reload();
     }
 
     async function showCouncilVotingScreen() {
@@ -325,7 +344,7 @@
                 document.getElementById('loading-candidates').style.display = 'none';
                 renderCandidates();
             }
-        } catch(e) { alert("خطأ في جلب مرشحي الولاية من السيرفر."); }
+        } catch(e) { alert("خطأ في جلب مرشحي الولاية."); }
     }
 
     function renderCandidates() {
@@ -353,7 +372,7 @@
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({ action: "submitVote", voterId: voterIdValue, voterName: loggedInUser.name, province: loggedInUser.province, votes: selectedCandidates.join(" ، ") }) 
             });
-            alert("تم إيداع وتأمين صوتك لانتخابات المجلس الوطني بنجاح! سيتم تسجيل خروجك الآن بانتظام.");
+            alert("تم إيداع وتأمين صوتك لانتخابات المجلس الوطني بنجاح! سيتم تسجيل خروجك الآن بانتظام وبأمان.");
             location.reload(); 
         } catch (e) { alert("خطأ في إرسال أصوات المجلس الوطني."); document.getElementById('submit-votes').disabled = false; }
     }
@@ -397,7 +416,7 @@
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({ action: "submitSGVote", voterId: voterIdValue, voterName: loggedInUser.name, province: loggedInUser.province, sgVote: selectedSGName }) 
             });
-            alert("تم تسجيل صوتك السري للأمانة العامة الوطنية بنجاح! سيتم تسجيل خروجك الآن بانتظام.");
+            alert("تم تسجيل صوتك السري للأمانة العامة الوطنية بنجاح! سيتم تسجيل خروجك الآن بانتظام وبأمان.");
             location.reload();
         } catch(e) { alert("خطأ في إرسال الصوت للأمانة العامة."); document.getElementById('submit-sg-vote').disabled = false; }
     }
@@ -424,7 +443,7 @@
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({ action: "submitVote", voterId: voterIdValue, voterName: loggedInUser.name, province: loggedInUser.province, votes: "انخراط: " + selectedFeeValue }) 
             });
-            alert("تم تسجيل خيارك المالي لمبلغ الانخراط السنوي بنجاح! سيتم تسجيل خروجك الآن بانتظام.");
+            alert("تم تسجيل خيارك المالي لمبلغ الانخراط السنوي بنجاح! سيتم تسجيل خروجك الآن بانتظام وبأمان.");
             location.reload();
         } catch(e) { location.reload(); }
     }
@@ -458,7 +477,7 @@
 
                 renderWinners(result.results, result.birthDatesMap);
             }
-        } catch(e) { alert("خطأ في معالجة لوحة النتائج الإجمالية من السيرفر."); }
+        } catch(e) { alert("خطأ في قراءة لوحة النتائج العامة."); }
     }
 
     function renderWinners(resultsData, birthDatesMap) {

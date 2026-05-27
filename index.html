@@ -12,6 +12,7 @@
             --light-red: #e74c3c;
             --dark-slate: #1a252f;
             --bg-color: #f4f6f7;
+            --gold-winner: #f1c40f;
         }
 
         body { 
@@ -78,12 +79,6 @@
             border-radius: 6px; 
             font-size: 15px; 
             box-sizing: border-box; 
-            transition: border-color 0.3s ease;
-        }
-        
-        .input-field:focus {
-            border-color: var(--primary-green);
-            outline: none;
         }
         
         .btn-primary { 
@@ -98,23 +93,14 @@
             font-weight: bold; 
             margin-top: 10px; 
             box-shadow: 0 3px 6px rgba(39, 174, 96, 0.2);
-            transition: background 0.2s ease;
         }
         
-        .btn-primary:hover { 
-            background: var(--light-green); 
-        }
+        .btn-primary:hover { background: var(--light-green); }
+        .btn-success { background: var(--primary-green); }
+        .btn-secondary { background: #7f8c8d; box-shadow: none; margin-top: 15px; }
+        .btn-secondary:hover { background: #95a5a6; }
         
-        .btn-success { 
-            background: var(--primary-green); 
-            box-shadow: 0 3px 6px rgba(39, 174, 96, 0.2);
-        }
-        
-        .btn-success:hover {
-            background: var(--light-green);
-        }
-        
-        #profile-section, #voting-section { 
+        #profile-section, #voting-section, #winners-section { 
             display: none; 
         }
         
@@ -123,65 +109,57 @@
             padding: 15px; 
             margin-bottom: 15px; 
             border-radius: 8px; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             border-right: 5px solid var(--primary-green); 
-            border-left: 1px solid #e2e8f0;
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
+            border-top: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;
         }
         
-        .info h3 {
-            margin: 0 0 5px 0;
+        .winner-province-box {
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-right: 6px solid var(--gold-winner);
+        }
+        
+        .winner-province-title {
+            font-size: 18px;
+            font-weight: bold;
             color: var(--dark-slate);
+            margin-top: 0;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .winner-row {
+            display: flex;
+            justify-content: space-between;
+            background: #fcf8e3;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: 1px solid #fbeed5;
+            font-weight: bold;
+            color: #c09853;
         }
         
-        .info p {
-            margin: 0;
-            color: #7f8c8d;
-            font-size: 14px;
+        .winner-row.top-winner {
+            background: #f0fff4;
+            border-color: #c6f6d5;
+            color: #22543d;
         }
 
         .vote-btn { 
-            background: var(--primary-green); 
-            color: white; 
-            border: none; 
-            padding: 10px 22px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            transition: background 0.2s ease;
+            background: var(--primary-green); color: white; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-weight: bold; 
         }
-        
-        .vote-btn:hover {
-            background: var(--light-green);
-        }
-
-        .vote-btn.selected { 
-            background: var(--primary-red); 
-        }
-        
-        .vote-btn.selected:hover {
-            background: var(--light-red);
-        }
-
-        .error-msg { 
-            color: var(--primary-red); 
-            margin-top: 12px; 
-            font-weight: bold; 
-            display: none; 
-        }
-        
-        #quota-alert-box {
-            background: #fff5f5; 
-            padding: 15px; 
-            border-radius: 8px; 
-            margin-bottom: 20px; 
-            text-align: center;
-            border: 1px solid #feb2b2;
-        }
+        .vote-btn.selected { background: var(--primary-red); }
+        .error-msg { color: var(--primary-red); margin-top: 12px; font-weight: bold; display: none; }
+        #quota-alert-box { background: #fff5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #feb2b2; }
     </style>
 </head>
 <body>
@@ -192,12 +170,10 @@
         <h2>بوابة المؤتمر الوطني الإلكترونية</h2>
     </div>
 
-    <!-- 1. شاشة تسجيل الدخول بالتعديل الجديد -->
     <div id="login-section" class="section-panel">
         <h3 style="text-align: center; color: var(--dark-slate); margin-top: 0;">تسجيل دخول المندوبين</h3>
         <div class="form-group">
             <label>رقم العضوية</label>
-            <!-- تم تغيير النص المساعد المكتوب بالأسفل -->
             <input type="text" id="member-id" class="input-field" placeholder="بيانات الدخول يتم عبر اعضاء اللجنة الوطنية">
         </div>
         <div class="form-group">
@@ -205,27 +181,20 @@
             <input type="password" id="member-pin" class="input-field" placeholder="******">
         </div>
         <button class="btn-primary" id="login-btn" onclick="login()">دخول ومراجعة البيانات</button>
+        
+        <button class="btn-primary btn-secondary" onclick="showWinnersScreen()">📊 عرض لوحة نتائج الفائزين بالمجلس الوطني</button>
+        
         <div id="login-error" class="error-msg" style="text-align: center;">بيانات الدخول غير صحيحة!</div>
         <div id="loading-data" style="display:none; margin-top:15px; text-align:center; color: var(--primary-green); font-weight: bold;">جاري التحقق من الحساب جلب البيانات الشخصية...</div>
     </div>
 
-    <!-- 2. شاشة استكمال وتعديل البيانات الشخصية والنقابية -->
     <div id="profile-section" class="section-panel">
         <h3 style="text-align: center; color: var(--dark-slate); border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0;">استمارة تعديل وتأكيد بيانات المندوب</h3>
-        
         <div class="form-group"><label>الاســم واللقــب (بالعربية)</label><input type="text" id="p-name" class="input-field"></div>
         <div class="form-group"><label>NOM ET PRENOM (بالفرنسية)</label><input type="text" id="p-nomPrenomFr" class="input-field"></div>
         <div class="form-group"><label>الولاية</label><input type="text" id="p-province" class="input-field" readonly style="background: #edf2f7; color: #718096; font-weight: bold;"></div>
         <div class="form-group"><label>الصفة النقابية لحضور المؤتمر</label><input type="text" id="p-unionRole" class="input-field"></div>
-        
-        <div class="form-group">
-            <label>الجنس</label>
-            <select id="p-gender" class="input-field">
-                <option value="ذكر">ذكر</option>
-                <option value="أنثى">أنثى</option>
-            </select>
-        </div>
-        
+        <div class="form-group"><label>الجنس</label><select id="p-gender" class="input-field"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select></div>
         <div class="form-group"><label>تاريخ الميلاد</label><input type="date" id="p-birthDate" class="input-field"></div>
         <div class="form-group"><label>مكان الميلاد</label><input type="text" id="p-birthPlace" class="input-field"></div>
         <div class="form-group"><label>اسم الاب</label><input type="text" id="p-fatherName" class="input-field"></div>
@@ -237,11 +206,9 @@
         <div class="form-group"><label>مادة التدريس (بالنسبة للأساتذة)</label><input type="text" id="p-subject" class="input-field"></div>
         <div class="form-group"><label>رقم الهاتف 01</label><input type="text" id="p-phone1" class="input-field"></div>
         <div class="form-group"><label>رقم الهاتف 02 (إن وجد)</label><input type="text" id="p-phone2" class="input-field"></div>
-        
         <button class="btn-primary btn-success" id="save-profile-btn" onclick="saveProfile()">حفظ البيانات والانتقال للتصويت</button>
     </div>
 
-    <!-- 3. شاشة التصويت الانتخابي المطور -->
     <div id="voting-section" class="section-panel" style="border-top-color: var(--primary-red);">
         <div id="quota-alert-box">
             <h3 id="welcome-name" style="margin-top: 0; color: var(--dark-slate);">مرحباً</h3>
@@ -250,6 +217,15 @@
         <div id="loading-candidates" style="text-align:center; font-weight:bold; color: var(--primary-green); margin-bottom: 15px;">جاري جلب مرشحي ولايتك ديناميكياً من السيرفر...</div>
         <div id="candidates-list"></div>
         <button id="submit-votes" class="btn-primary" style="background: var(--primary-red);">تأكيد وإرسال التصويت النهائي</button>
+    </div>
+
+    <div id="winners-section" class="section-panel" style="border-top-color: var(--gold-winner);">
+        <h3 style="text-align: center; color: var(--dark-slate); margin-top: 0; margin-bottom: 20px;">🏆 قائمة الفائزين بعضوية المجلس الوطني حسب الولايات</h3>
+        <div id="winners-loading" style="text-align:center; font-weight:bold; color: var(--primary-green);">جاري معالجة الأصوات وفرز الفائزين حياً من السيرفر...</div>
+        
+        <div id="winners-list-container"></div>
+        
+        <button class="btn-primary btn-secondary" onclick="goBackToLogin()">⬅️ العودة لصفحة الدخول الرئيسية</button>
     </div>
 </div>
 
@@ -270,79 +246,51 @@
     let selectedCandidates = [];
     let provinceCandidates = [];
 
+    // جافا سكريبت لتصفية التواريخ من أصفار الساعة الزائدة
     function formatCleanDate(dateStr) {
         if (!dateStr) return "";
         try {
             let rawDate = dateStr.split('T')[0].split(' ')[0];
-            
             if (rawDate.includes('/')) {
                 let parts = rawDate.split('/');
-                if(parts[2].length === 4) {
-                    return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
-                }
+                if(parts[2].length === 4) return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
             }
-            
             if (rawDate.includes('-')) {
                 let parts = rawDate.split('-');
-                if(parts[0].length === 4) {
-                    return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
-                }
+                if(parts[0].length === 4) return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
             }
             return rawDate;
-        } catch (e) {
-            return "";
-        }
+        } catch (e) { return ""; }
     }
 
     async function login() {
         const idInput = document.getElementById('member-id').value.trim();
         const pinInput = document.getElementById('member-pin').value.trim();
-        
         if(!idInput || !pinInput) { alert("الرجاء إدخال رقم العضوية والرمز السري."); return; }
-
         const loginBtn = document.getElementById('login-btn');
         const loadingDiv = document.getElementById('loading-data');
         const errorDiv = document.getElementById('login-error');
-        
-        loginBtn.disabled = true;
-        loadingDiv.style.display = 'block';
-        errorDiv.style.display = 'none';
-
+        loginBtn.disabled = true; loadingDiv.style.display = 'block'; errorDiv.style.display = 'none';
         try {
-            const response = await fetch(webAppUrl, {
-                method: 'POST',
-                body: JSON.stringify({ action: "apiLogin", memberId: idInput, memberPin: pinInput })
-            });
+            const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify({ action: "apiLogin", memberId: idInput, memberPin: pinInput }) });
             const result = await response.json();
-
             if (result.status === "success") {
-                loggedInUser = result.user;
-                loggedInUser.hasVoted = result.hasVoted; 
-                showProfileScreen();
-            } else {
-                errorDiv.innerText = result.message;
-                errorDiv.style.display = 'block';
-            }
-        } catch (error) {
-            alert("حدث خطأ أثناء فحص الحساب في السيرفر. يرجى مراجعة إعدادات الـ Apps Script.");
-        }
-        loginBtn.disabled = false;
-        loadingDiv.style.display = 'none';
+                loggedInUser = result.user; loggedInUser.hasVoted = result.hasVoted; showProfileScreen();
+            } else { errorDiv.innerText = result.message; errorDiv.style.display = 'block'; }
+        } catch (error) { alert("حدث خطأ أثناء فحص الحساب في السيرفر."); }
+        loginBtn.disabled = false; loadingDiv.style.display = 'none';
     }
 
     function showProfileScreen() {
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('profile-section').style.display = 'block';
-        
         document.getElementById('p-name').value = loggedInUser.name;
         document.getElementById('p-province').value = loggedInUser.province;
         document.getElementById('p-unionRole').value = loggedInUser.unionRole;
         document.getElementById('p-gender').value = loggedInUser.gender || "ذكر";
         document.getElementById('p-nomPrenomFr').value = loggedInUser.nomPrenomFr;
-        
         document.getElementById('p-birthDate').value = formatCleanDate(loggedInUser.birthDate);
         document.getElementById('p-hireDate').value = formatCleanDate(loggedInUser.hireDate);
-        
         document.getElementById('p-birthPlace').value = loggedInUser.birthPlace;
         document.getElementById('p-fatherName').value = loggedInUser.fatherName;
         document.getElementById('p-motherName').value = loggedInUser.motherName;
@@ -356,123 +304,121 @@
 
     async function saveProfile() {
         const saveBtn = document.getElementById('save-profile-btn');
-        saveBtn.innerText = "جاري الحفظ في جدول الإكسيل...";
-        saveBtn.disabled = true;
-
+        saveBtn.innerText = "جاري الحفظ في جدول الإكسيل..."; saveBtn.disabled = true;
         const profileData = {
-            action: "updateProfile",
-            voterId: loggedInUser.id,
-            name: document.getElementById('p-name').value.trim(),
-            province: document.getElementById('p-province').value.trim(),
-            unionRole: document.getElementById('p-unionRole').value.trim(),
-            gender: document.getElementById('p-gender').value,
-            nomPrenomFr: document.getElementById('p-nomPrenomFr').value.trim(),
-            birthDate: document.getElementById('p-birthDate').value,
-            birthPlace: document.getElementById('p-birthPlace').value.trim(),
-            fatherName: document.getElementById('p-fatherName').value.trim(),
-            motherName: document.getElementById('p-motherName').value.trim(),
-            address: document.getElementById('p-address').value.trim(),
-            hireDate: document.getElementById('p-hireDate').value,
-            rank: document.getElementById('p-rank').value.trim(),
-            workPlace: document.getElementById('p-workPlace').value.trim(),
-            subject: document.getElementById('p-subject').value.trim(),
-            phone1: document.getElementById('p-phone1').value.trim(),
-            phone2: document.getElementById('p-phone2').value.trim()
+            action: "updateProfile", voterId: loggedInUser.id, name: document.getElementById('p-name').value.trim(), province: document.getElementById('p-province').value.trim(), unionRole: document.getElementById('p-unionRole').value.trim(), gender: document.getElementById('p-gender').value, nomPrenomFr: document.getElementById('p-nomPrenomFr').value.trim(), birthDate: document.getElementById('p-birthDate').value, birthPlace: document.getElementById('p-birthPlace').value.trim(), fatherName: document.getElementById('p-fatherName').value.trim(), motherName: document.getElementById('p-motherName').value.trim(), address: document.getElementById('p-address').value.trim(), hireDate: document.getElementById('p-hireDate').value, rank: document.getElementById('p-rank').value.trim(), workPlace: document.getElementById('p-workPlace').value.trim(), subject: document.getElementById('p-subject').value.trim(), phone1: document.getElementById('p-phone1').value.trim(), phone2: document.getElementById('p-phone2').value.trim()
         };
-
         try {
             const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify(profileData) });
             const result = await response.json();
-            
             if (result.status === "success") {
-                alert(result.message);
-                loggedInUser.name = profileData.name;
-                
-                if (loggedInUser.hasVoted) {
-                    alert("لقد قمت بالتصويت سابقاً، تم حفظ تعديل بياناتك الشخصية بنجاح بنظام المؤتمر وسيتم خروجك الآن.");
-                    location.reload();
-                } else {
-                    showVotingScreen();
-                }
-            } else {
-                alert(result.message);
-                saveBtn.disabled = false;
-            }
-        } catch (error) {
-            alert("خطأ أثناء الاتصال بالخادم لحفظ التعديلات.");
-            saveBtn.disabled = false;
-        }
+                alert(result.message); loggedInUser.name = profileData.name;
+                if (loggedInUser.hasVoted) { alert("لقد صوّت سابقا، تم حفظ بياناتك الشخصية بنجاح بنظام المؤتمر وسيتم خروجك الآن."); location.reload(); } 
+                else { showVotingScreen(); }
+            } else { alert(result.message); saveBtn.disabled = false; }
+        } catch (error) { alert("خطأ في الاتصال بالسيرفر."); saveBtn.disabled = false; }
     }
 
     async function showVotingScreen() {
         document.getElementById('profile-section').style.display = 'none';
         document.getElementById('voting-section').style.display = 'block';
         document.getElementById('welcome-name').innerText = `مرحباً، الزميل المندوب: ${loggedInUser.name}`;
-        
         const userQuota = quotas[loggedInUser.province] ? quotas[loggedInUser.province].councilMembers : 1;
         document.getElementById('quota-info').innerText = `ولايتك الموقرة (${loggedInUser.province}) مخصص لها حصة: ${userQuota} مقاعد بالمجلس الوطني. يرجى اختيار مرشحيك بعناية.`;
-
         try {
-            const response = await fetch(webAppUrl, {
-                method: 'POST',
-                body: JSON.stringify({ action: "getProvinceCandidates", province: loggedInUser.province })
-            });
+            const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify({ action: "getProvinceCandidates", province: loggedInUser.province }) });
             const result = await response.json();
-            if(result.status === "success") {
-                provinceCandidates = result.candidates;
-                document.getElementById('loading-candidates').style.display = 'none';
-                renderCandidates();
-            }
-        } catch(e) {
-            alert("خطأ في تحميل قائمة المرشحين.");
-        }
+            if(result.status === "success") { provinceCandidates = result.candidates; document.getElementById('loading-candidates').style.display = 'none'; renderCandidates(); }
+        } catch(e) { alert("خطأ في تحميل قائمة المرشحين."); }
     }
 
     function renderCandidates() {
-        const list = document.getElementById('candidates-list');
-        list.innerHTML = '';
+        const list = document.getElementById('candidates-list'); list.innerHTML = '';
         provinceCandidates.forEach(candidate => {
             const isSelected = selectedCandidates.includes(candidate.name);
-            list.innerHTML += `
-                <div class="candidate-card">
-                    <div class="info"><h3>${candidate.name}</h3><p>${candidate.role}</p></div>
-                    <button class="vote-btn ${isSelected ? 'selected' : ''}" onclick="toggleVote('${candidate.name}')">
-                        ${isSelected ? 'إلغاء الانتخاب (X)' : 'انتخاب'}
-                    </button>
-                </div>`;
+            list.innerHTML += `<div class="candidate-card"><div class="info"><h3>${candidate.name}</h3><p>${candidate.role}</p></div><button class="vote-btn ${isSelected ? 'selected' : ''}" onclick="toggleVote('${candidate.name}')">${isSelected ? 'إلغاء الانتخاب (X)' : 'انتخاب'}</button></div>`;
         });
     }
 
     function toggleVote(candidateName) {
         const maxVotes = quotas[loggedInUser.province] ? quotas[loggedInUser.province].councilMembers : 1;
-        if (selectedCandidates.includes(candidateName)) {
-            selectedCandidates = selectedCandidates.filter(name => name !== candidateName);
-        } else {
-            if (selectedCandidates.length < maxVotes) { selectedCandidates.push(candidateName); } 
-            else { alert(`تنبيه: حصة ولايتك القانونية هي ${maxVotes} مرشحين فقط.`); }
-        }
+        if (selectedCandidates.includes(candidateName)) { selectedCandidates = selectedCandidates.filter(name => name !== candidateName); } 
+        else { if (selectedCandidates.length < maxVotes) { selectedCandidates.push(candidateName); } else { alert(`تنبيه: حصة ولايتك القانونية هي ${maxVotes} مرشحين فقط.`); } }
         renderCandidates();
     }
 
     document.getElementById('submit-votes').addEventListener('click', async () => {
-        if (selectedCandidates.length === 0) { alert("الرجاء اختيار مرشح واحد على الأقل قبل التأكيد لإرسال الصندوق."); return; }
-        const btn = document.getElementById('submit-votes');
-        btn.innerText = "جاري إرسال وتأمين تصويتك بالخادم...";
-        btn.disabled = true;
-
+        if (selectedCandidates.length === 0) { alert("الرجاء اختيار مرشح واحد على الأقل."); return; }
+        const btn = document.getElementById('submit-votes'); btn.innerText = "جاري إرسال وتأمين تصويتك بالخادم..."; btn.disabled = true;
         try {
-            const response = await fetch(webAppUrl, {
-                method: 'POST',
-                body: JSON.stringify({ action: "submitVote", voterId: loggedInUser.id, voterName: loggedInUser.name, province: loggedInUser.province, votes: selectedCandidates.join(" ، ") })
-            });
+            const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify({ action: "submitVote", voterId: loggedInUser.id, voterName: loggedInUser.name, province: loggedInUser.province, votes: selectedCandidates.join(" ، ") }) });
             const result = await response.json();
             if (result.status === "success") { alert(result.message); location.reload(); } 
             else { alert(result.message); btn.disabled = false; btn.innerText = "تأكيد وإرسال التصويت النهائي"; }
-        } catch (error) {
-            alert("خطأ في إرسال صوتك للسيرفر.");
-            btn.disabled = false;
-        }
+        } catch (error) { alert("خطأ في إرسال صوتك للسيرفر."); btn.disabled = false; }
     });
+
+    async function showWinnersScreen() {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('winners-section').style.display = 'block';
+        document.getElementById('winners-loading').style.display = 'block';
+        document.getElementById('winners-list-container').innerHTML = '';
+
+        try {
+            const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify({ action: "calculateWinners" }) });
+            const result = await response.json();
+            if (result.status === "success") {
+                document.getElementById('winners-loading').style.display = 'none';
+                renderWinners(result.results);
+            }
+        } catch (e) {
+            alert("حدث خطأ أثناء جلب وتحليل فرز الأصوات من السيرفر.");
+            goBackToLogin();
+        }
+    }
+
+    function renderWinners(resultsData) {
+        const container = document.getElementById('winners-list-container');
+        if (Object.keys(resultsData).length === 0) {
+            container.innerHTML = `<div style="text-align:center; font-weight:bold; color:var(--primary-red); padding: 20px;">حتى الآن لا توجد أي أصوات مسجلة في الصندوق الإلكتروني!</div>`;
+            return;
+        }
+
+        for (const province in resultsData) {
+            const allowedQuota = quotas[province] ? quotas[province].councilMembers : 1;
+            let sortedCandidates = [];
+            for (const name in resultsData[province]) {
+                sortedCandidates.push({ name: name, votesCount: resultsData[province][name] });
+            }
+            sortedCandidates.sort((a, b) => b.votesCount - a.votesCount);
+
+            let provinceHtml = `
+                <div class="winner-province-box">
+                    <div class="winner-province-title">
+                        <span>📍 ولاية: ${province}</span>
+                        <span style="font-size:14px; color:var(--primary-red);">الحصة المخصصة: ${allowedQuota} مقاعد</span>
+                    </div>
+            `;
+
+            for (let i = 0; i < sortedCandidates.length; i++) {
+                const candidate = sortedCandidates[i];
+                const isActualWinner = i < allowedQuota;
+                provinceHtml += `
+                    <div class="winner-row ${isActualWinner ? 'top-winner' : ''}">
+                        <span>${isActualWinner ? '🥇 ' : '🔹 '} ${candidate.name} ${isActualWinner ? '(فائز بمقعد)' : '(لم يسعفه الحظ)'}</span>
+                        <span>عدد الأصوات: ${candidate.votesCount}</span>
+                    </div>
+                `;
+            }
+            provinceHtml += `</div>`;
+            container.innerHTML += provinceHtml;
+        }
+    }
+
+    function goBackToLogin() {
+        document.getElementById('winners-section').style.display = 'none';
+        document.getElementById('login-section').style.display = 'block';
+    }
 </script>
 </body>
 </html>

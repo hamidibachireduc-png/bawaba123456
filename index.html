@@ -239,8 +239,10 @@
 </div>
 
 <script>
+    // رابط الويب لتطبيق Google Apps Script الخاص بك
     const webAppUrl = "https://script.google.com/macros/s/AKfycbwzHJwS24DONrgZjO3K-DqMBJ9XWwlf1jFgUwIXw1z1LWTrFee7WOiMRIudKRsNV62f/exec"; 
     
+    // حصص الولايات المخصصة قانونياً
     const quotas = {
         "ادرار": { councilMembers: 2 }, "الشلف": { councilMembers: 2 }, "الاغواط": { councilMembers: 2 },
         "ام البواقي": { councilMembers: 1 }, "باتنة": { councilMembers: 1 }, "بجاية": { councilMembers: 1 },
@@ -310,7 +312,7 @@
         document.getElementById('p-subject').value = loggedInUser.subject;
         document.getElementById('p-phone1').value = loggedInUser.phone1;
         document.getElementById('p-phone2').value = loggedInUser.phone2;
-        document.getElementById('p-email').value = loggedInUser.email || ""; // إسناد قيمة البريد الإلكتروني للواجهة
+        document.getElementById('p-email').value = loggedInUser.email || ""; 
     }
 
     async function saveProfile(shouldExitOnly) {
@@ -345,7 +347,7 @@
             subject: document.getElementById('p-subject').value.trim(), 
             phone1: document.getElementById('p-phone1').value.trim(), 
             phone2: document.getElementById('p-phone2').value.trim(),
-            email: document.getElementById('p-email').value.trim() // إرسال البريد الإلكتروني للسيرفر
+            email: document.getElementById('p-email').value.trim() 
         };
         try {
             const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify(profileData) });
@@ -418,7 +420,7 @@
             const result = await response.json();
             if (result.status === "success") {
                 document.getElementById('winners-loading').style.display = 'none';
-                renderWinners(result.results);
+                renderWinners(result.results, result.birthDatesMap);
             }
         } catch (e) {
             alert("حدث خطأ أثناء جلب وتحليل فرز الأصوات من السيرفر.");
@@ -426,12 +428,15 @@
         }
     }
 
-    function renderWinners(resultsData) {
+    // دالة الفرز المحدثة بالكامل لترتيب الفائزين حسب الأصوات أولاً، والسن (الأكبر سناً) عند التساوي
+    function renderWinners(resultsData, birthDatesMap) {
         const container = document.getElementById('winners-list-container');
         if (Object.keys(resultsData).length === 0) {
             container.innerHTML = `<div style="text-align:center; font-weight:bold; color:var(--primary-red); padding: 20px;">حتى الآن لا توجد أي أصوات مسجلة في الصندوق الإلكتروني!</div>`;
             return;
         }
+
+        const bMap = birthDatesMap || {};
 
         for (const province in resultsData) {
             const allowedQuota = quotas[province] ? quotas[province].councilMembers : 1;
@@ -439,7 +444,17 @@
             for (const name in resultsData[province]) {
                 sortedCandidates.push({ name: name, votesCount: resultsData[province][name] });
             }
-            sortedCandidates.sort((a, b) => b.votesCount - a.votesCount);
+            
+            // خوارزمية الفرز المزدوجة العادلة: الأصوات ثم السن
+            sortedCandidates.sort((a, b) => {
+                if (b.votesCount !== a.votesCount) {
+                    return b.votesCount - a.votesCount; // فرز تنازلي حسب عدد الأصوات
+                }
+                // عند التساوي: الأقدم تاريخ ميلاد يربح (القيمة الأصغر كطابع زمني تعني سن أكبر)
+                let ageA = bMap[a.name] || 9999999999999;
+                let ageB = bMap[b.name] || 9999999999999;
+                return ageA - ageB; 
+            });
 
             let provinceHtml = `
                 <div class="winner-province-box">

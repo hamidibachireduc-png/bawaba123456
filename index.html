@@ -26,7 +26,6 @@
             margin: 0 auto; 
         }
         
-        /* تصميم الهيدر مع اللوغو والألوان الجديدة */
         .header { 
             text-align: center; 
             background: var(--dark-slate); 
@@ -87,7 +86,6 @@
             outline: none;
         }
         
-        /* الأزرار بالألوان الجديدة */
         .btn-primary { 
             background: var(--primary-green); 
             color: white; 
@@ -120,7 +118,6 @@
             display: none; 
         }
         
-        /* بطاقات التصويت */
         .candidate-card { 
             background: white; 
             padding: 15px; 
@@ -190,18 +187,18 @@
 <body>
 
 <div class="container">
-    <!-- الهيدر المطور مع اللوغو -->
     <div class="header">
         <img src="https://c.top4top.io/p_3793h57541.png" alt="لوغو النقابة" class="logo">
         <h2>بوابة المؤتمر الوطني الإلكترونية</h2>
     </div>
 
-    <!-- 1. شاشة تسجيل الدخول -->
+    <!-- 1. شاشة تسجيل الدخول بالتعديل الجديد -->
     <div id="login-section" class="section-panel">
         <h3 style="text-align: center; color: var(--dark-slate); margin-top: 0;">تسجيل دخول المندوبين</h3>
         <div class="form-group">
             <label>رقم العضوية</label>
-            <input type="text" id="member-id" class="input-field" placeholder="مثال: snte041">
+            <!-- تم تغيير النص المساعد المكتوب بالأسفل -->
+            <input type="text" id="member-id" class="input-field" placeholder="بيانات الدخول يتم عبر اعضاء اللجنة الوطنية">
         </div>
         <div class="form-group">
             <label>الرقم السري</label>
@@ -229,7 +226,6 @@
             </select>
         </div>
         
-        <!-- تعديل الحقول لتصبح نوع تاريخ تفاعلي نظيف بدون أصفار الساعة -->
         <div class="form-group"><label>تاريخ الميلاد</label><input type="date" id="p-birthDate" class="input-field"></div>
         <div class="form-group"><label>مكان الميلاد</label><input type="text" id="p-birthPlace" class="input-field"></div>
         <div class="form-group"><label>اسم الاب</label><input type="text" id="p-fatherName" class="input-field"></div>
@@ -245,7 +241,7 @@
         <button class="btn-primary btn-success" id="save-profile-btn" onclick="saveProfile()">حفظ البيانات والانتقال للتصويت</button>
     </div>
 
-    <!-- 3. شاشة التصويت الانتخابي المطور باللونين الأخضر والأحمر -->
+    <!-- 3. شاشة التصويت الانتخابي المطور -->
     <div id="voting-section" class="section-panel" style="border-top-color: var(--primary-red);">
         <div id="quota-alert-box">
             <h3 id="welcome-name" style="margin-top: 0; color: var(--dark-slate);">مرحباً</h3>
@@ -274,25 +270,21 @@
     let selectedCandidates = [];
     let provinceCandidates = [];
 
-    // دالة مساعدة لتنظيف ومعالجة التواريخ لتناسب خانة الـ input من نوع date وتخفي أصفار الساعة
     function formatCleanDate(dateStr) {
         if (!dateStr) return "";
         try {
-            // سحب الجزء الأول الخاص بالتاريخ فقط وإهمال الساعة تماماً
             let rawDate = dateStr.split('T')[0].split(' ')[0];
             
-            // إذا كان التاريخ قادماً بتنسيق يوم/شهر/سنة (مثل المعتاد في بعض الأنظمة)، نقوم بتحويله ليكون متوافقاً YYYY-MM-DD
             if (rawDate.includes('/')) {
                 let parts = rawDate.split('/');
-                if(parts[2].length === 4) { // DD/MM/YYYY
+                if(parts[2].length === 4) {
                     return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
                 }
             }
             
-            // إذا كان التنسيق سليماً وجاهزاً
             if (rawDate.includes('-')) {
                 let parts = rawDate.split('-');
-                if(parts[0].length === 4) { // YYYY-MM-DD
+                if(parts[0].length === 4) {
                     return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
                 }
             }
@@ -348,7 +340,6 @@
         document.getElementById('p-gender').value = loggedInUser.gender || "ذكر";
         document.getElementById('p-nomPrenomFr').value = loggedInUser.nomPrenomFr;
         
-        // جلب التاريخ منضفاً ومصفى بشكل مثالي بدون أصفار الوقت والساعات
         document.getElementById('p-birthDate').value = formatCleanDate(loggedInUser.birthDate);
         document.getElementById('p-hireDate').value = formatCleanDate(loggedInUser.hireDate);
         

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة المؤتمر الوطني - الجيل الذكي</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 15px; }
+        .container { max-width: 650px; margin: 0 auto; }
+        .header { text-align: center; background: #1a252f; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .section-panel { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #34495e; }
+        .input-field { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 15px; box-sizing: border-box; }
+        .btn-primary { background: #2980b9; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
+        .btn-primary:hover { background: #3498db; }
+        .btn-success { background: #27ae60; color: white; }
+        #profile-section, #voting-section { display: none; }
+        .candidate-card { background: white; padding: 15px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border-right: 5px solid #3498db; }
+        .vote-btn { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .vote-btn.selected { background: #e74c3c; }
+        .error-msg { color: #e74c3c; margin-top: 10px; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>بوابة المؤتمر الوطني الإلكترونية</h2>
+    </div>
+
+    <div id="login-section" class="section-panel">
+        <h3 style="text-align: center;">تسجيل دخول المندوبين</h3>
+        <div class="form-group">
+            <label>رقم العضوية</label>
+            <input type="text" id="member-id" class="input-field" placeholder="مثال: snte041">
+        </div>
+        <div class="form-group">
+            <label>الرقم السري</label>
+            <input type="password" id="member-pin" class="input-field" placeholder="******">
+        </div>
+        <button class="btn-primary" id="login-btn" onclick="login()">دخول ومراجعة البيانات</button>
+        <div id="login-error" class="error-msg" style="text-align: center;">بيانات الدخول غير صحيحة!</div>
+        <div id="loading-data" style="display:none; margin-top:10px; text-align:center; color: #2980b9; font-weight: bold;">جاري التحقق من الحساب جلب البيانات...</div>
+    </div>
+
+    <div id="profile-section" class="section-panel">
+        <h3 style="text-align: center; color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px;">استمارة تعديل وتأكيد بيانات المندوب</h3>
+        <div class="form-group"><label>الاســم واللقــب (بالعربية)</label><input type="text" id="p-name" class="input-field"></div>
+        <div class="form-group"><label>NOM ET PRENOM (بالفرنسية)</label><input type="text" id="p-nomPrenomFr" class="input-field"></div>
+        <div class="form-group"><label>الولاية</label><input type="text" id="p-province" class="input-field" readonly style="background: #e8f0fe;"></div>
+        <div class="form-group"><label>الصفة النقابية لحضور المؤتمر</label><input type="text" id="p-unionRole" class="input-field"></div>
+        <div class="form-group"><label>الجنس</label><select id="p-gender" class="input-field"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select></div>
+        <div class="form-group"><label>تاريخ الميلاد</label><input type="text" id="p-birthDate" class="input-field"></div>
+        <div class="form-group"><label>مكان الميلاد</label><input type="text" id="p-birthPlace" class="input-field"></div>
+        <div class="form-group"><label>اسم الاب</label><input type="text" id="p-fatherName" class="input-field"></div>
+        <div class="form-group"><label>لقب واسم الام</label><input type="text" id="p-motherName" class="input-field"></div>
+        <div class="form-group"><label>العنوان الشخصي</label><input type="text" id="p-address" class="input-field"></div>
+        <div class="form-group"><label>تاريخ أول تعيين في القطاع</label><input type="text" id="p-hireDate" class="input-field"></div>
+        <div class="form-group"><label>الرتبة الحالية</label><input type="text" id="p-rank" class="input-field"></div>
+        <div class="form-group"><label>مكان العمل</label><input type="text" id="p-workPlace" class="input-field"></div>
+        <div class="form-group"><label>مادة التدريس (بالنسبة للأساتذة)</label><input type="text" id="p-subject" class="input-field"></div>
+        <div class="form-group"><label>رقم الهاتف 01</label><input type="text" id="p-phone1" class="input-field"></div>
+        <div class="form-group"><label>رقم الهاتف 02 (إن وجد)</label><input type="text" id="p-phone2" class="input-field"></div>
+        <button class="btn-primary btn-success" id="save-profile-btn" onclick="saveProfile()">حفظ البيانات والانتقال للتصويت</button>
+    </div>
+
+    <div id="voting-section" class="section-panel">
+        <div style="background: #edf2f7; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
+            <h3 id="welcome-name" style="margin-top: 0;">مرحباً</h3>
+            <p style="color: #c0392b; font-weight: bold; margin-bottom: 0;" id="quota-info"></p>
+        </div>
+        <div id="loading-candidates" style="text-align:center; font-weight:bold; color:#2980b9;">جاري جلب مرشحي ولايتك ديناميكياً...</div>
+        <div id="candidates-list"></div>
+        <button id="submit-votes" class="btn-primary">تأكيد وإرسال التصويت النهائي</button>
+    </div>
+</div>
+
+<script>
+    // الرابط الفعلي الخاص بك (Google Apps Script)
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbwzHJwS24DONrgZjO3K-DqMBJ9XWwlf1jFgUwIXw1z1LWTrFee7WOiMRIudKRsNV62f/exec"; 
+    
+    const quotas = {
+        "ادرار": { councilMembers: 2 }, "الشلف": { councilMembers: 2 }, "الاغواط": { councilMembers: 2 },
+        "ام البواقي": { councilMembers: 1 }, "باتنة": { councilMembers: 1 }, "بجاية": { councilMembers: 1 },
+        "بسكرة": { councilMembers: 1 }, "بشار": { councilMembers: 2 }, "البليدة": { councilMembers: 2 },
+        "البويرة": { councilMembers: 1 }, "تمنراست": { councilMembers: 1 }, "تبسة": { councilMembers: 4 },
+        "تلمسان": { councilMembers: 2 }, "تيارت": { councilMembers: 2 }, "تيزي وزو": { councilMembers: 1 },
+        "الجزائر شرق": { councilMembers: 2 }, "الجزائر غرب": { councilMembers: 1 }, "الجزائر وسط": { councilMembers: 2 },
+        "الجلفة": { councilMembers: 5 }, "سوق اهراس": { councilMembers: 4 }, "تيبازة": { councilMembers: 2 }
+    };
+
+    let loggedInUser = null;
+    let selectedCandidates = [];
+    let provinceCandidates = [];
+
+    // عملية الدخول الذكية من خلال الخادم مباشرة (بدون قيود حظر)
+    async function login() {
+        const idInput = document.getElementById('member-id').value.trim();
+        const pinInput = document.getElementById('member-pin').value.trim();
+        
+        if(!idInput || !pinInput) { alert("الرجاء إدخال رقم العضوية والرمز السري."); return; }
+
+        const loginBtn = document.getElementById('login-btn');
+        const loadingDiv = document.getElementById('loading-data');
+        const errorDiv = document.getElementById('login-error');
+        
+        loginBtn.disabled = true;
+        loadingDiv.style.display = 'block';
+        errorDiv.style.display = 'none';
+
+        try {
+            const response = await fetch(webAppUrl, {
+                method: 'POST',
+                body: JSON.stringify({ action: "apiLogin", memberId: idInput, memberPin: pinInput })
+            });
+            const result = await response.json();
+
+            if (result.status === "success") {
+                loggedInUser = result.user;
+                showProfileScreen();
+            } else {
+                errorDiv.innerText = result.message;
+                errorDiv.style.display = 'block';
+            }
+        } catch (error) {
+            alert("حدث خطأ أثناء فحص الحساب في السيرفر. يرجى مراجعة إعدادات الـ Apps Script.");
+        }
+        loginBtn.disabled = false;
+        loadingDiv.style.display = 'none';
+    }
+
+    function showProfileScreen() {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('profile-section').style.display = 'block';
+        
+        // تعبئة البيانات المستلمة حية من جدول الإكسيل
+        document.getElementById('p-name').value = loggedInUser.name;
+        document.getElementById('p-province').value = loggedInUser.province;
+        document.getElementById('p-unionRole').value = loggedInUser.unionRole;
+        document.getElementById('p-gender').value = loggedInUser.gender || "ذكر";
+        document.getElementById('p-nomPrenomFr').value = loggedInUser.nomPrenomFr;
+        document.getElementById('p-birthDate').value = loggedInUser.birthDate;
+        document.getElementById('p-birthPlace').value = loggedInUser.birthPlace;
+        document.getElementById('p-fatherName').value = loggedInUser.fatherName;
+        document.getElementById('p-motherName').value = loggedInUser.motherName;
+        document.getElementById('p-address').value = loggedInUser.address;
+        document.getElementById('p-hireDate').value = loggedInUser.hireDate;
+        document.getElementById('p-rank').value = loggedInUser.rank;
+        document.getElementById('p-workPlace').value = loggedInUser.workPlace;
+        document.getElementById('p-subject').value = loggedInUser.subject;
+        document.getElementById('p-phone1').value = loggedInUser.phone1;
+        document.getElementById('p-phone2').value = loggedInUser.phone2;
+    }
+
+    async function saveProfile() {
+        const saveBtn = document.getElementById('save-profile-btn');
+        saveBtn.innerText = "جاري الحفظ في جدول الإكسيل...";
+        saveBtn.disabled = true;
+
+        const profileData = {
+            action: "updateProfile",
+            voterId: loggedInUser.id,
+            name: document.getElementById('p-name').value.trim(),
+            province: document.getElementById('p-province').value.trim(),
+            unionRole: document.getElementById('p-unionRole').value.trim(),
+            gender: document.getElementById('p-gender').value,
+            nomPrenomFr: document.getElementById('p-nomPrenomFr').value.trim(),
+            birthDate: document.getElementById('p-birthDate').value.trim(),
+            birthPlace: document.getElementById('p-birthPlace').value.trim(),
+            fatherName: document.getElementById('p-fatherName').value.trim(),
+            motherName: document.getElementById('p-motherName').value.trim(),
+            address: document.getElementById('p-address').value.trim(),
+            hireDate: document.getElementById('p-hireDate').value.trim(),
+            rank: document.getElementById('p-rank').value.trim(),
+            workPlace: document.getElementById('p-workPlace').value.trim(),
+            subject: document.getElementById('p-subject').value.trim(),
+            phone1: document.getElementById('p-phone1').value.trim(),
+            phone2: document.getElementById('p-phone2').value.trim()
+        };
+
+        try {
+            const response = await fetch(webAppUrl, { method: 'POST', body: JSON.stringify(profileData) });
+            const result = await response.json();
+            
+            if (result.status === "success") {
+                alert(result.message);
+                loggedInUser.name = profileData.name;
+                showVotingScreen();
+            } else {
+                alert(result.message);
+                saveBtn.disabled = false;
+            }
+        } catch (error) {
+            alert("خطأ أثناء الاتصال بالخادم لحفظ التعديلات.");
+            saveBtn.disabled = false;
+        }
+    }
+
+    async function showVotingScreen() {
+        document.getElementById('profile-section').style.display = 'none';
+        document.getElementById('voting-section').style.display = 'block';
+        document.getElementById('welcome-name').innerText = `مرحباً، ${loggedInUser.name}`;
+        
+        const userQuota = quotas[loggedInUser.province] ? quotas[loggedInUser.province].councilMembers : 1;
+        document.getElementById('quota-info').innerText = `ولايتك (${loggedInUser.province}) مخصص لها ${userQuota} مقاعد.`;
+
+        // جلب مرشحي نفس الولاية حياً من الإكسيل عبر السيرفر
+        try {
+            const response = await fetch(webAppUrl, {
+                method: 'POST',
+                body: JSON.stringify({ action: "getProvinceCandidates", province: loggedInUser.province })
+            });
+            const result = await response.json();
+            if(result.status === "success") {
+                provinceCandidates = result.candidates;
+                document.getElementById('loading-candidates').style.display = 'none';
+                renderCandidates();
+            }
+        } catch(e) {
+            alert("خطأ في تحميل قائمة المرشحين.");
+        }
+    }
+
+    function renderCandidates() {
+        const list = document.getElementById('candidates-list');
+        list.innerHTML = '';
+        provinceCandidates.forEach(candidate => {
+            const isSelected = selectedCandidates.includes(candidate.name);
+            list.innerHTML += `
+                <div class="candidate-card">
+                    <div class="info"><h3>${candidate.name}</h3><p>${candidate.role}</p></div>
+                    <button class="vote-btn ${isSelected ? 'selected' : ''}" onclick="toggleVote('${candidate.name}')">
+                        ${isSelected ? 'إلغاء' : 'انتخاب'}
+                    </button>
+                </div>`;
+        });
+    }
+
+    function toggleVote(candidateName) {
+        const maxVotes = quotas[loggedInUser.province] ? quotas[loggedInUser.province].councilMembers : 1;
+        if (selectedCandidates.includes(candidateName)) {
+            selectedCandidates = selectedCandidates.filter(name => name !== candidateName);
+        } else {
+            if (selectedCandidates.length < maxVotes) { selectedCandidates.push(candidateName); } 
+            else { alert(`عذراً، حصة ولايتك هي ${maxVotes} مرشحين فقط.`); }
+        }
+        renderCandidates();
+    }
+
+    document.getElementById('submit-votes').addEventListener('click', async () => {
+        if (selectedCandidates.length === 0) { alert("الرجاء اختيار مرشح واحد على الأقل."); return; }
+        const btn = document.getElementById('submit-votes');
+        btn.innerText = "جاري إرسال التصويت وحمايته...";
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(webAppUrl, {
+                method: 'POST',
+                body: JSON.stringify({ action: "submitVote", voterId: loggedInUser.id, voterName: loggedInUser.name, province: loggedInUser.province, votes: selectedCandidates.join(" ، ") })
+            });
+            const result = await response.json();
+            if (result.status === "success") { alert(result.message); location.reload(); } 
+            else { alert(result.message); btn.disabled = false; btn.innerText = "تأكيد وإرسال التصويت النهائي"; }
+        } catch (error) {
+            alert("خطأ في إرسال صوتك للسيرفر.");
+            btn.disabled = false;
+        }
+    });
+</script>
+</body>
+</html>

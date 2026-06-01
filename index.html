@@ -27,8 +27,11 @@
         
         /* تنسيق التنبيه الطارئ الجديد */
         .urgent-alert { background: #fff3cd; border-right: 5px solid #ffc107; padding: 15px; border-radius: 6px; margin-top: 25px; margin-bottom: 20px; }
-        .urgent-alert h4 { color: #856404; margin-top: 0; margin-bottom: 8px; font-size: 16px; }
-        .urgent-alert p { color: #856404; font-size: 14px; margin: 0; line-height: 1.6; font-weight: bold; }
+        .urgent-alert h4 { color: #856404; margin-top: 0; margin-bottom: 12px; font-size: 16px; font-weight: bold; }
+        .urgent-alert-text { color: #856404; font-size: 14px; line-height: 1.6; font-weight: bold; }
+        .urgent-alert-text p { margin-top: 0; margin-bottom: 10px; }
+        .apk-btn { display: inline-block; margin-top: 8px; background: #e67e22; color: #fff !important; padding: 8px 15px; border-radius: 6px; text-decoration: none; font-size: 14px; box-shadow: 0 2px 4px rgba(230, 126, 34, 0.3); transition: background 0.2s; }
+        .apk-btn:hover { background: #d35400; }
 
         .fee-container { display: flex; justify-content: space-between; gap: 10px; margin: 25px 0; }
         .fee-card { flex: 1; background: #f8fafc; border: 2px solid #e2e8f0; padding: 20px 10px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; color: var(--dark-slate); transition: all 0.2s ease; }
@@ -98,10 +101,14 @@
         <div class="form-group"><label>رقم الهاتف 02</label><input type="text" id="p-phone2" class="input-field"></div>
         <div class="form-group"><label>الحساب الإلكتروني (البريد)</label><input type="email" id="p-email" class="input-field" style="text-align: left; direction: ltr;"></div>
         
-        <!-- التنبيه الطارئ الجديد (بديل التعهد) -->
+        <!-- التنبيه المحدث -->
         <div class="urgent-alert">
-            <h4>🚨 تنبيه طارئ:</h4>
-            <p>تلغى استمارة التعهد السابقة ومن حق كل مندوب المشاركة في المؤتمر الوطني، أما فيما يخص الحالات الخاصة سوف يتم التعامل معها في إطار القانون 32-02 دون إقصاء أي أحد.</p>
+            <h4>🚨 هام :</h4>
+            <div class="urgent-alert-text">
+                <p>- تلغي استمارة التعهد السابقة ومن حق كل مندوب المشاركة في المؤتمر الوطني اما فيما يخص الحالات الخاصة سوف يتم التعامل معها في اطار القانون 23-02 دون اقصاء اي احد.</p>
+                <p style="margin-bottom: 0;">- يمكنكم الدخول الى البوابة عبر الفضاء الرقمي للنقابة الوطنية لعمال التربية الرابط من هنا:<br>
+                <a href="https://apk.e-droid.net/apk/app3120923-ctx0zy.apk?v=2" target="_blank" class="apk-btn">📥 تحميل تطبيق الفضاء الرقمي (APK)</a></p>
+            </div>
         </div>
 
         <button class="btn-primary" id="save-profile-btn" onclick="saveProfile(false)">حفظ ومتابعة الأشغال ➡️</button>
@@ -269,7 +276,7 @@
             membershipCard: document.getElementById('p-membershipCard').value.trim(),
             socialSecurity: document.getElementById('p-socialSecurity').value.trim(),
             nin: document.getElementById('p-nin').value.trim(),
-            pledge: "ملغى" // تم إلغاء التعهد وتمرير قيمة افتراضية لتفادي الأخطاء في الخادم
+            pledge: "ملغى" 
         };
 
         try {

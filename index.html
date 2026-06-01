@@ -25,12 +25,10 @@
         .info-notice { background: #ebf8ff; border-right: 5px solid #3182ce; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; color: #2b6cb0; font-weight: 500; line-height: 1.5; }
         .supervisor-box { background: #fffaf0; border-right: 5px solid #dd6b20; padding: 14px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; color: #dd6b20; font-weight: bold; line-height: 1.6; }
         
-        /* تنسيق صندوق التعهد الإلزامي */
-        .pledge-box { background: #fff5f5; border: 1px solid #feb2b2; padding: 18px; border-radius: 8px; margin-top: 25px; margin-bottom: 20px; }
-        .pledge-box h4 { color: var(--primary-red); margin-top: 0; margin-bottom: 10px; font-size: 16px; }
-        .pledge-box p { font-size: 14px; color: #2d3748; line-height: 1.6; margin-bottom: 15px; text-align: justify; }
-        .pledge-label { font-weight: bold; color: var(--dark-slate); cursor: pointer; display: flex; align-items: flex-start; gap: 10px; font-size: 14px; }
-        .pledge-label input { width: 22px; height: 22px; margin-top: -2px; accent-color: var(--primary-green); }
+        /* تنسيق التنبيه الطارئ الجديد */
+        .urgent-alert { background: #fff3cd; border-right: 5px solid #ffc107; padding: 15px; border-radius: 6px; margin-top: 25px; margin-bottom: 20px; }
+        .urgent-alert h4 { color: #856404; margin-top: 0; margin-bottom: 8px; font-size: 16px; }
+        .urgent-alert p { color: #856404; font-size: 14px; margin: 0; line-height: 1.6; font-weight: bold; }
 
         .fee-container { display: flex; justify-content: space-between; gap: 10px; margin: 25px 0; }
         .fee-card { flex: 1; background: #f8fafc; border: 2px solid #e2e8f0; padding: 20px 10px; text-align: center; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; color: var(--dark-slate); transition: all 0.2s ease; }
@@ -53,6 +51,7 @@
         <h2>بوابة المؤتمر الوطني الإلكترونية</h2>
     </div>
 
+    <!-- 1. شاشة تسجيل الدخول -->
     <div id="login-section" class="section-panel">
         <h3 style="text-align: center; color: var(--dark-slate); margin-top: 0;">تسجيل دخول المندوبين</h3>
         <div class="form-group">
@@ -69,10 +68,11 @@
         <div id="loading-data" style="display:none; text-align:center; color: var(--primary-green); font-weight: bold; margin-top:10px;">جاري الاتصال والتحقق من الحساب...</div>
     </div>
 
+    <!-- 2. شاشة الاستمارة -->
     <div id="profile-section" class="section-panel">
         <div id="supervisor-notice-zone" class="supervisor-box" style="display:none;"></div>
         <h3 style="text-align: center; color: var(--dark-slate); border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0;">استمارة تأكيد وتحديث بيانات المندوب</h3>
-        <div class="info-notice">💡 يرجى مراجعة وتحديث ملفك الشخصي والمصادقة على التعهد أولاً لحفظ بياناتك وتوجيهك آلياً إلى العملية الانتخابية.</div>
+        <div class="info-notice">💡 يرجى مراجعة وتحديث ملفك الشخصي أولاً لحفظ بياناتك وتوجيهك آلياً إلى العملية الانتخابية.</div>
         
         <input type="hidden" id="p-voter-id">
         <div class="form-group"><label>الاســم واللقــب (بالعربية)</label><input type="text" id="p-name" class="input-field"></div>
@@ -98,26 +98,17 @@
         <div class="form-group"><label>رقم الهاتف 02</label><input type="text" id="p-phone2" class="input-field"></div>
         <div class="form-group"><label>الحساب الإلكتروني (البريد)</label><input type="email" id="p-email" class="input-field" style="text-align: left; direction: ltr;"></div>
         
-        <div class="pledge-box">
-            <h4>📜 تعهد شرفي إلزامي بعدم الانتماء السياسي</h4>
-            <p>أتعهد بشرفي بصفتي مندوباً للمؤتمر الوطني السادس الاستثنائي للنقابة، أنني لا أمارس أي نشاط سياسي أو قيادي في مكتب تنفيذي لأي حزب سياسي، ولست مترشحاً لأي انتخابات تشريعية (البرلمان) أو مجالس ولائية أو بلدية. وأتحمل كافة الإجراءات القانونية والنقابية المترتبة في حال ثبوت عكس ذلك.</p>
-            <label class="pledge-label">
-                <input type="checkbox" id="p-pledge">
-                <span>قرأت التعهد وأصادق عليه التزاماً مني بقوانين وأخلاقيات النقابة.</span>
-            </label>
-            
-            <div style="margin-top: 18px; text-align: center; border-top: 1px dashed #feb2b2; padding-top: 15px;">
-                <p style="font-size: 13px; color: #c53030; margin-bottom: 8px; font-weight: bold;">⚠️ شرط أساسي لدخول قاعة المؤتمر:</p>
-                <a href="https://drive.google.com/file/d/1Vw-BspoKKnMDEohEzTBzfhKRODlAj9fe/view?usp=drive_link" target="_blank" style="display: inline-block; background-color: #2b6cb0; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    📥 اضغط هنا لتحميل النسخة الورقية (للطباعة والمصادقة)
-                </a>
-            </div>
+        <!-- التنبيه الطارئ الجديد (بديل التعهد) -->
+        <div class="urgent-alert">
+            <h4>🚨 تنبيه طارئ:</h4>
+            <p>تلغى استمارة التعهد السابقة ومن حق كل مندوب المشاركة في المؤتمر الوطني، أما فيما يخص الحالات الخاصة سوف يتم التعامل معها في إطار القانون 32-02 دون إقصاء أي أحد.</p>
         </div>
 
-        <button class="btn-primary" id="save-profile-btn" onclick="saveProfile(false)">حفظ ومصادقة ومتابعة الأشغال ➡️</button>
+        <button class="btn-primary" id="save-profile-btn" onclick="saveProfile(false)">حفظ ومتابعة الأشغال ➡️</button>
         <button class="btn-primary btn-danger-outline" id="save-exit-btn" onclick="saveProfile(true)">حفظ التعديلات الشخصية فقط وخروج</button>
     </div>
 
+    <!-- 3. صندوق المجلس الوطني -->
     <div id="voting-section" class="section-panel">
         <div class="info-notice">🗳️ <strong>جلسة انتخاب المجلس الوطني:</strong> يتم تسجيل خروجك آلياً بعد التصويت.</div>
         <div id="quota-alert-box">
@@ -130,6 +121,7 @@
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">❌ إلغاء والتراجع</button>
     </div>
 
+    <!-- 4. صندوق الأمين العام -->
     <div id="sg-voting-section" class="section-panel" style="border-top-color: var(--primary-red);">
         <div class="info-notice">🗳️ <strong>جلسة انتخاب الأمين العام الوطني:</strong> يرجى اختيار المترشح بدقة.</div>
         <h3 style="text-align: center; color: var(--primary-red); margin-top: 0;">صندوق انتخاب الأمين العام الوطني</h3>
@@ -139,6 +131,7 @@
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">❌ إلغاء والتراجع</button>
     </div>
 
+    <!-- 5. صندوق مبلغ الانخراط -->
     <div id="fee-section" class="section-panel" style="border-top-color: var(--blue-navy);">
         <div class="info-notice">💰 <strong>جلسة التصويت على القيمة المالية:</strong> حدد مبلغ الانخراط المقترح للسنوات القادمة.</div>
         <h3 style="text-align: center; color: var(--blue-navy); margin-top: 0;">تحديد مبلغ الانخراط في النقابة</h3>
@@ -150,6 +143,7 @@
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">❌ إلغاء والتراجع</button>
     </div>
 
+    <!-- 6. شاشة عرض النتائج -->
     <div id="winners-section" class="section-panel" style="border-top-color: var(--gold-winner);">
         <h3 style="text-align: center; color: var(--dark-slate); margin-top: 0;">🏆 نتائج الفرز الإلكتروني المباشر</h3>
         
@@ -172,7 +166,7 @@
 </div>
 
 <script>
-    // ⚠️ ضع رابط الـ Web App الجديد الخاص بك هنا
+    // ⚠️ ضع رابط الـ Web App الخاص بك هنا
     const webAppUrl = "https://script.google.com/macros/s/AKfycbwzHJwS24DONrgZjO3K-DqMBJ9XWwlf1jFgUwIXw1z1LWTrFee7WOiMRIudKRsNV62f/exec"; 
     
     const quotas = { "ادرار": { councilMembers: 2 }, "الشلف": { councilMembers: 2 }, "الاغواط": { councilMembers: 2 }, "ام البواقي": { councilMembers: 1 }, "باتنة": { councilMembers: 1 }, "بجاية": { councilMembers: 1 }, "بسكرة": { councilMembers: 1 }, "بشار": { councilMembers: 2 }, "البليدة": { councilMembers: 2 }, "البويرة": { councilMembers: 1 }, "تمنراست": { councilMembers: 1 }, "تبسة": { councilMembers: 4 }, "تلمسان": { councilMembers: 2 }, "تيارت": { councilMembers: 2 }, "تيزي وزو": { councilMembers: 1 }, "الجزائر شرق": { councilMembers: 2 }, "الجزائر غرب": { councilMembers: 1 }, "الجزائر وسط": { councilMembers: 2 }, "الجلفة": { councilMembers: 5 }, "سوق اهراس": { councilMembers: 4 }, "تيبازة": { councilMembers: 2 } };
@@ -243,11 +237,6 @@
         document.getElementById('p-membershipCard').value = loggedInUser.membershipCard || "";
         document.getElementById('p-socialSecurity').value = loggedInUser.socialSecurity || "";
         document.getElementById('p-nin').value = loggedInUser.nin || "";
-        
-        // إذا كان المندوب قد وافق مسبقاً، ضع علامة صح تلقائياً
-        if(loggedInUser.pledge === "موافق") {
-            document.getElementById('p-pledge').checked = true;
-        }
     }
 
     function renderSupervisorNotice(userProvince) {
@@ -264,12 +253,6 @@
     }
 
     async function saveProfile(shouldExitOnly) {
-        // فحص إجباري للمصادقة على التعهد
-        if (!document.getElementById('p-pledge').checked) {
-            alert("⚠️ لا يمكنك إكمال العملية حتى تقوم بالمصادقة على التعهد الشرفي الخاص بالانتماء السياسي أسفل الاستمارة.");
-            return;
-        }
-
         const voterIdValue = document.getElementById('p-voter-id').value.trim();
         const saveBtn = document.getElementById('save-profile-btn'); const exitBtn = document.getElementById('save-exit-btn');
         saveBtn.disabled = true; exitBtn.disabled = true;
@@ -286,14 +269,14 @@
             membershipCard: document.getElementById('p-membershipCard').value.trim(),
             socialSecurity: document.getElementById('p-socialSecurity').value.trim(),
             nin: document.getElementById('p-nin').value.trim(),
-            pledge: "موافق" // إرسال حالة التعهد للسيرفر
+            pledge: "ملغى" // تم إلغاء التعهد وتمرير قيمة افتراضية لتفادي الأخطاء في الخادم
         };
 
         try {
             const response = await fetch(webAppUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(profileData) });
             const result = await response.json();
             if (result.status === "success") {
-                if (shouldExitOnly) { alert("تم حفظ بياناتك وتوثيق تعهدك بنجاح."); location.reload(); } 
+                if (shouldExitOnly) { alert("تم حفظ بياناتك بنجاح."); location.reload(); } 
                 else { document.getElementById('profile-section').style.display = 'none'; goToCurrentOpenSession(); }
             }
         } catch (e) { alert("خطأ في الاتصال."); }

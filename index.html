@@ -25,7 +25,6 @@
         .info-notice { background: #ebf8ff; border-right: 5px solid #3182ce; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; color: #2b6cb0; font-weight: 500; line-height: 1.5; }
         .supervisor-box { background: #fffaf0; border-right: 5px solid #dd6b20; padding: 14px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; color: #dd6b20; font-weight: bold; line-height: 1.6; }
         
-        /* تنسيق التنبيه الطارئ الجديد */
         .urgent-alert { background: #fff3cd; border-right: 5px solid #ffc107; padding: 15px; border-radius: 6px; margin-top: 25px; margin-bottom: 20px; }
         .urgent-alert h4 { color: #856404; margin-top: 0; margin-bottom: 12px; font-size: 16px; font-weight: bold; }
         .urgent-alert-text { color: #856404; font-size: 14px; line-height: 1.6; font-weight: bold; }
@@ -78,6 +77,14 @@
         <div class="info-notice">💡 يرجى مراجعة وتحديث ملفك الشخصي أولاً لحفظ بياناتك وتوجيهك آلياً إلى العملية الانتخابية.</div>
         
         <input type="hidden" id="p-voter-id">
+        
+        <!-- حقول تعديل اسم المستخدم والرقم السري الجديدة -->
+        <div style="background: #fdf2f8; padding: 15px; border-radius: 8px; border-right: 4px solid #ed64a6; margin-bottom: 18px;">
+            <p style="margin-top:0; font-size:13px; color:#d53f8c; font-weight:bold;">🔐 يمكنك تغيير بيانات الدخول الخاصة بك، يرجى تذكرها جيداً للدخول مستقبلاً:</p>
+            <div class="form-group" style="margin-bottom: 10px;"><label style="color:#b83280;">اسم المستخدم (بيان العضوية)</label><input type="text" id="p-username" class="input-field" style="border-color: #ed64a6;"></div>
+            <div class="form-group" style="margin-bottom: 0;"><label style="color:#b83280;">الرقم السري</label><input type="text" id="p-password" class="input-field" style="border-color: #ed64a6;"></div>
+        </div>
+
         <div class="form-group"><label>الاســم واللقــب (بالعربية)</label><input type="text" id="p-name" class="input-field"></div>
         <div class="form-group"><label>NOM ET PRENOM (بالفرنسية)</label><input type="text" id="p-nomPrenomFr" class="input-field"></div>
         <div class="form-group"><label>الولاية</label><input type="text" id="p-province" class="input-field" readonly style="background:#edf2f7;"></div>
@@ -115,20 +122,16 @@
         <button class="btn-primary btn-danger-outline" id="save-exit-btn" onclick="saveProfile(true)">حفظ التعديلات الشخصية فقط وخروج</button>
     </div>
 
-    <!-- 3. صندوق المجلس الوطني -->
+    <!-- باقي الصناديق الانتخابية (لم تتغير) -->
     <div id="voting-section" class="section-panel">
         <div class="info-notice">🗳️ <strong>جلسة انتخاب المجلس الوطني:</strong> يتم تسجيل خروجك آلياً بعد التصويت.</div>
-        <div id="quota-alert-box">
-            <h3 id="welcome-name">مرحباً</h3>
-            <p style="color: var(--primary-red); font-weight: bold; margin-bottom: 0; font-size: 16px;" id="quota-info"></p>
-        </div>
+        <div id="quota-alert-box"><h3 id="welcome-name">مرحباً</h3><p style="color: var(--primary-red); font-weight: bold; margin-bottom: 0; font-size: 16px;" id="quota-info"></p></div>
         <div id="loading-candidates" style="text-align:center; font-weight:bold; color: var(--primary-green); margin-bottom: 15px;">جاري الجلب...</div>
         <div id="candidates-list"></div>
         <button id="submit-votes" class="btn-primary" onclick="submitCouncilVotes()">تأكيد، إرسال الصوت وتسجيل الخروج 📥</button>
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">❌ إلغاء والتراجع</button>
     </div>
 
-    <!-- 4. صندوق الأمين العام -->
     <div id="sg-voting-section" class="section-panel" style="border-top-color: var(--primary-red);">
         <div class="info-notice">🗳️ <strong>جلسة انتخاب الأمين العام الوطني:</strong> يرجى اختيار المترشح بدقة.</div>
         <h3 style="text-align: center; color: var(--primary-red); margin-top: 0;">صندوق انتخاب الأمين العام الوطني</h3>
@@ -138,7 +141,6 @@
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">❌ إلغاء والتراجع</button>
     </div>
 
-    <!-- 5. صندوق مبلغ الانخراط -->
     <div id="fee-section" class="section-panel" style="border-top-color: var(--blue-navy);">
         <div class="info-notice">💰 <strong>جلسة التصويت على القيمة المالية:</strong> حدد مبلغ الانخراط المقترح للسنوات القادمة.</div>
         <h3 style="text-align: center; color: var(--blue-navy); margin-top: 0;">تحديد مبلغ الانخراط في النقابة</h3>
@@ -150,24 +152,13 @@
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">❌ إلغاء والتراجع</button>
     </div>
 
-    <!-- 6. شاشة عرض النتائج -->
     <div id="winners-section" class="section-panel" style="border-top-color: var(--gold-winner);">
         <h3 style="text-align: center; color: var(--dark-slate); margin-top: 0;">🏆 نتائج الفرز الإلكتروني المباشر</h3>
-        
-        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid var(--blue-navy);">
-            <h4 style="margin-top:0; color:var(--blue-navy);">💰 حصيلة تصويت مبلغ الانخراط:</h4>
-            <div id="fee-winner-display"></div>
-        </div>
-
-        <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid var(--primary-red);">
-            <h4 style="margin-top:0; color:var(--primary-red);">🥇 نتائج منصب الأمين العام الوطني:</h4>
-            <div id="sg-winner-display"></div>
-        </div>
-
+        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid var(--blue-navy);"><h4 style="margin-top:0; color:var(--blue-navy);">💰 حصيلة تصويت مبلغ الانخراط:</h4><div id="fee-winner-display"></div></div>
+        <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid var(--primary-red);"><h4 style="margin-top:0; color:var(--primary-red);">🥇 نتائج منصب الأمين العام الوطني:</h4><div id="sg-winner-display"></div></div>
         <h4 style="color: var(--primary-green); border-bottom: 2px solid #e2e8f0; padding-bottom: 5px;">👥 الفائزون بعضوية المجلس الوطني:</h4>
         <div id="winners-loading" style="text-align:center; font-weight:bold; color: var(--primary-green);">جاري جلب وتحليل الأصوات...</div>
         <div id="winners-list-container"></div>
-        
         <button class="btn-primary btn-secondary" onclick="goBackToLogin()">⬅️ العودة لصفحة الدخول الرئيسية</button>
     </div>
 </div>
@@ -177,24 +168,6 @@
     const webAppUrl = "https://script.google.com/macros/s/AKfycbwzHJwS24DONrgZjO3K-DqMBJ9XWwlf1jFgUwIXw1z1LWTrFee7WOiMRIudKRsNV62f/exec"; 
     
     const quotas = { "ادرار": { councilMembers: 2 }, "الشلف": { councilMembers: 2 }, "الاغواط": { councilMembers: 2 }, "ام البواقي": { councilMembers: 1 }, "باتنة": { councilMembers: 1 }, "بجاية": { councilMembers: 1 }, "بسكرة": { councilMembers: 1 }, "بشار": { councilMembers: 2 }, "البليدة": { councilMembers: 2 }, "البويرة": { councilMembers: 1 }, "تمنراست": { councilMembers: 1 }, "تبسة": { councilMembers: 4 }, "تلمسان": { councilMembers: 2 }, "تيارت": { councilMembers: 2 }, "تيزي وزو": { councilMembers: 1 }, "الجزائر شرق": { councilMembers: 2 }, "الجزائر غرب": { councilMembers: 1 }, "الجزائر وسط": { councilMembers: 2 }, "الجلفة": { councilMembers: 5 }, "سوق اهراس": { councilMembers: 4 }, "تيبازة": { councilMembers: 2 } };
-
-    const committeeDatabase = [
-        { name: "فريد لمناجلية", phone: "0556477879", provinces: ["البليدة", "عين الدفلى", "تيسمسيلت", "الشلف"] },
-        { name: "تامي نورين لخضر", phone: "0675998222", provinces: ["تيبازة"] },
-        { name: "عبد الرحيم سعيد", phone: "0556850930", provinces: ["الجزائر وسط", "الجزائر غرب", "تيزي وزو"] },
-        { name: "جبري عبد الجليل", phone: "0561546898", provinces: ["الجزائر شرق", "بومرداس", "بجاية"] },
-        { name: "بن يحي مصطفى", phone: "0663664686", provinces: ["تيميمون", "برج باجي مختار", "بني عباس", "عين صالح", "عين قزام"] },
-        { name: "عبد الحي رمضان", phone: "0663112987", provinces: ["ورقلة", "تقرت", "جانت", "المغير", "المنيعة", "المغيير"] },
-        { name: "معطالله عبد النبي", phone: "0671327711", provinces: ["الأغواط", "الاغواط", "الوادي", "بسكرة", "اولاد جلال"] },
-        { name: "مجاطي علي", phone: "0771242455", provinces: ["عين تيموشنت", "عين تيموشت", "تلمسان"] },
-        { name: "بن علو توفيق", phone: "0663241117", provinces: ["سيدي بلعباس", "وهران", "معسكر", "سعيدة"] },
-        { name: "راشدي الهواري", phone: "0776484477", provinces: ["مستغانم", "غيلزان", "غليزان"] },
-        { name: "كرميش بايزيد", phone: "0656192113", provinces: ["بوسعادة", "المسيلة", "برج بوعريريج", "البويرة", "سطيف", "بريكة"] },
-        { name: "جعفري عبد الرحمان", phone: "0775586559", provinces: ["تبسة", "سوق اهراس", "قسنطينة", "عنابة", "سكيكدة", "قالمة", "خنشلة", "ام البواقي", "ميلة", "جيجل", "الطارف"] },
-        { name: "حجازي خالد", phone: "0663915534", provinces: ["باتنة"] },
-        { name: "قويدر يحياوي", phone: "0781450423", provinces: ["غرداية", "الجلفة", "مسعد", "عين وسارة", "المدية", "قصر الشلالة", "تيارت"] },
-        { name: "رحيمي احمد", phone: "0671276322", provinces: ["ادرار", "تمنراست", "بشار", "البيض", "الابيض سيدى الشيخ", "تيندوف", "النعامة"] }
-    ];
 
     let loggedInUser = null; let selectedCandidates = []; let provinceCandidates = []; let selectedSGName = ""; let selectedFeeValue = ""; let sessionControl = null;
 
@@ -229,9 +202,14 @@
 
     function showProfileScreen() {
         document.getElementById('login-section').style.display = 'none'; document.getElementById('profile-section').style.display = 'block';
-        renderSupervisorNotice(loggedInUser.province);
 
-        document.getElementById('p-voter-id').value = loggedInUser.id; document.getElementById('p-name').value = loggedInUser.name;
+        document.getElementById('p-voter-id').value = loggedInUser.id; 
+        
+        // تعبئة حقول التعديل الجديدة
+        document.getElementById('p-username').value = loggedInUser.id;
+        document.getElementById('p-password').value = loggedInUser.pin;
+
+        document.getElementById('p-name').value = loggedInUser.name;
         document.getElementById('p-province').value = loggedInUser.province; document.getElementById('p-unionRole').value = loggedInUser.unionRole;
         document.getElementById('p-gender').value = loggedInUser.gender || "ذكر"; document.getElementById('p-nomPrenomFr').value = loggedInUser.nomPrenomFr;
         document.getElementById('p-birthDate').value = formatCleanDate(loggedInUser.birthDate); document.getElementById('p-hireDate').value = formatCleanDate(loggedInUser.hireDate);
@@ -246,26 +224,16 @@
         document.getElementById('p-nin').value = loggedInUser.nin || "";
     }
 
-    function renderSupervisorNotice(userProvince) {
-        const noticeZone = document.getElementById('supervisor-notice-zone');
-        if (!userProvince) { noticeZone.style.display = 'none'; return; }
-        let cleanProv = userProvince.trim(); let supervisor = null;
-        for (let i = 0; i < committeeDatabase.length; i++) { if (committeeDatabase[i].provinces.includes(cleanProv)) { supervisor = committeeDatabase[i]; break; } }
-        if (supervisor) {
-            noticeZone.innerHTML = `⚠️ <strong>ملاحظة هامة:</strong> لطرح أي تساؤل يرجى التواصل مع المشرف على ولايتكم السيد: <strong>${supervisor.name}</strong> (الهاتف: <span dir="ltr">${supervisor.phone}</span>).`;
-            noticeZone.style.display = 'block';
-        } else {
-            noticeZone.innerHTML = `⚠️ <strong>ملاحظة:</strong> لطرح أي تساؤل يرجى التواصل مع اللجنة الوطنية.`; noticeZone.style.display = 'block';
-        }
-    }
-
     async function saveProfile(shouldExitOnly) {
-        const voterIdValue = document.getElementById('p-voter-id').value.trim();
+        const voterIdValue = document.getElementById('p-voter-id').value.trim(); // المُعرّف الأصلي الذي دخل به
         const saveBtn = document.getElementById('save-profile-btn'); const exitBtn = document.getElementById('save-exit-btn');
         saveBtn.disabled = true; exitBtn.disabled = true;
         
         const profileData = {
-            action: "updateProfile", voterId: voterIdValue, name: document.getElementById('p-name').value.trim(), province: document.getElementById('p-province').value.trim(),
+            action: "updateProfile", voterId: voterIdValue, 
+            newUsername: document.getElementById('p-username').value.trim(), // اسم المستخدم الجديد (إن تم تغييره)
+            newPassword: document.getElementById('p-password').value.trim(), // الرقم السري الجديد (إن تم تغييره)
+            name: document.getElementById('p-name').value.trim(), province: document.getElementById('p-province').value.trim(),
             unionRole: document.getElementById('p-unionRole').value.trim(), gender: document.getElementById('p-gender').value,
             nomPrenomFr: document.getElementById('p-nomPrenomFr').value.trim(), birthDate: document.getElementById('p-birthDate').value,
             birthPlace: document.getElementById('p-birthPlace').value.trim(), fatherName: document.getElementById('p-fatherName').value.trim(),
@@ -283,6 +251,10 @@
             const response = await fetch(webAppUrl, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(profileData) });
             const result = await response.json();
             if (result.status === "success") {
+                // تحديث الـ ID في حال قام المندوب بتغييره حتى يتم تسجيل الأصوات بالاسم الجديد
+                loggedInUser.id = profileData.newUsername;
+                document.getElementById('p-voter-id').value = profileData.newUsername;
+
                 if (shouldExitOnly) { alert("تم حفظ بياناتك بنجاح."); location.reload(); } 
                 else { document.getElementById('profile-section').style.display = 'none'; goToCurrentOpenSession(); }
             }
@@ -398,7 +370,6 @@
                 
                 const flags = result.displayFlags || { council: "مغلق", sg: "مغلق", fee: "مغلق" };
 
-                // 1. عرض نتيجة الانخراط (بالأقفال)
                 if (flags.fee === "مفتوح") {
                     let feeCounts = { "200 دج": result.feeResults["200 دج"] || 0, "100 دج": result.feeResults["100 دج"] || 0 };
                     let feeHtml = '';
@@ -408,7 +379,6 @@
                     document.getElementById('fee-winner-display').innerHTML = '<div style="padding: 15px; text-align:center; color:#7f8c8d; font-weight:bold;">🔒 لم يتم التصريح بعرض نتيجة الانخراط بعد.</div>';
                 }
 
-                // 2. عرض نتائج الأمين العام (بالأقفال)
                 if (flags.sg === "مفتوح") {
                     let sgArray = []; for (const name in result.sgResults) { sgArray.push({ name: name, votes: result.sgResults[name] }); }
                     sgArray.sort((a, b) => b.votes - a.votes);
@@ -425,7 +395,6 @@
                     document.getElementById('sg-winner-display').innerHTML = '<div style="padding: 15px; text-align:center; color:#7f8c8d; font-weight:bold;">🔒 لم يتم التصريح بعرض نتائج الأمانة العامة بعد.</div>';
                 }
 
-                // 3. عرض نتائج المجلس (بالأقفال)
                 if (flags.council === "مفتوح") { renderWinners(result.results, result.birthDatesMap); } 
                 else { document.getElementById('winners-list-container').innerHTML = '<div style="padding: 20px; text-align:center; background:#edf2f7; border-radius:8px; color:#7f8c8d; font-weight:bold;">🔒 لم يتم التصريح بعرض المجلس الوطني بعد.</div>'; }
             }

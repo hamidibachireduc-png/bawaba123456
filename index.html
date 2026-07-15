@@ -376,10 +376,24 @@
                     <textarea id="mag-body" rows="6" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none font-medium leading-relaxed" placeholder="اكتب مسودتك أو مقالك هنا بالتفصيل..."></textarea>
                   </div>
                   
-                  <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow font-bold">
-                    <i class="fa-solid fa-paper-plane"></i>
-                    <span>إرسال كمسودة للأمين العام</span>
-                  </button>
+                  <div class="grid grid-cols-2 gap-2 pt-2">
+                    <button type="button" onclick="sendMagViaGmail()" class="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg border border-red-200 transition flex items-center justify-center gap-1.5 font-bold text-[10px]">
+                      <i class="fa-solid fa-envelope"></i>
+                      <span>إرسال Gmail ✉️</span>
+                    </button>
+                    <button type="button" onclick="sendMagViaWhatsApp()" class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg border border-emerald-200 transition flex items-center justify-center gap-1.5 font-bold text-[10px]">
+                      <i class="fa-brands fa-whatsapp text-sm"></i>
+                      <span>إرسال WhatsApp 💬</span>
+                    </button>
+                    <button type="button" onclick="saveMagAsPDF()" class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg border border-blue-200 transition flex items-center justify-center gap-1.5 font-bold text-[10px]">
+                      <i class="fa-solid fa-file-pdf"></i>
+                      <span>حفظ كـ PDF 📥</span>
+                    </button>
+                    <button type="button" onclick="saveMagAsTXT()" class="px-3 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg border border-gray-300 transition flex items-center justify-center gap-1.5 font-bold text-[10px]">
+                      <i class="fa-solid fa-file-lines"></i>
+                      <span>حفظ كـ TXT 📄</span>
+                    </button>
+                  </div>
                 </form>
               </div>
 
@@ -489,13 +503,13 @@
                   </div>
                 </div>
                 <div class="bg-emerald-900/40 p-3 rounded-lg text-[10px] leading-relaxed text-emerald-100 mt-4">
-                  <i class="fa-solid fa-circle-info"></i> سيقوم النظام بإعداد محتوى الرسالة تلقائياً مع ترويسة البيانات وتمريرها لتطبيق البريد المعتمد لديك لإتمام الإرسال.
+                  <i class="fa-solid fa-circle-info"></i> يرجى ملء النموذج واختيار أحد خيارات الإرسال المباشر أو حفظ الرسالة للمتابعة.
                 </div>
               </div>
 
               <!-- نموذج المراسلة -->
               <div class="md:col-span-2 space-y-4">
-                <form id="contact-form" onsubmit="handleSendEmail(event)" class="space-y-4 text-xs font-bold">
+                <form id="contact-form" onsubmit="event.preventDefault()" class="space-y-4 text-xs font-bold">
                   <div>
                     <label class="block text-gray-600 mb-1.5">موضوع الرسالة</label>
                     <input type="text" id="email-subject" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none" placeholder="مثال: تقرير حول هيكلة الفرع النقابي بالولاية">
@@ -523,18 +537,33 @@
                     <label class="block text-gray-600 mb-1.5">نص الرسالة التفصيلي</label>
                     <textarea id="email-body" rows="6" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none leading-relaxed font-medium" placeholder="اكتب تفاصيل مراسلتك للأمين العام الوطني هنا..."></textarea>
                   </div>
-                  <div class="flex justify-end gap-3 pt-2">
-                    <button type="button" onclick="copyEmailToClipboard()" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition flex items-center gap-1.5 text-gray-700 bg-white">
-                      <i class="fa-solid fa-copy"></i>
-                      <span>نسخ البريد الإلكتروني</span>
+                  <div class="flex flex-wrap justify-end gap-2 pt-2">
+                    <button type="button" onclick="sendViaGmail()" class="px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg border border-red-200 transition flex items-center gap-1.5 font-bold">
+                      <i class="fa-solid fa-envelope"></i>
+                      <span>إرسال عبر Gmail ✉️</span>
                     </button>
-                    <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition shadow-md flex items-center gap-1.5 font-bold">
-                      <i class="fa-solid fa-paper-plane"></i>
-                      <span>فتح البريد للإرسال</span>
+                    <button type="button" onclick="sendViaWhatsApp()" class="px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg border border-emerald-200 transition flex items-center gap-1.5 font-bold">
+                      <i class="fa-brands fa-whatsapp text-sm"></i>
+                      <span>إرسال عبر WhatsApp 💬</span>
+                    </button>
+                    <button type="button" onclick="saveAsPDF()" class="px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg border border-blue-200 transition flex items-center gap-1.5 font-bold">
+                      <i class="fa-solid fa-file-pdf"></i>
+                      <span>حفظ كـ PDF 📥</span>
+                    </button>
+                    <button type="button" onclick="saveAsTXT()" class="px-4 py-2.5 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg border border-gray-300 transition flex items-center gap-1.5 font-bold">
+                      <i class="fa-solid fa-file-lines"></i>
+                      <span>حفظ كـ ملف نصي (TXT) 📄</span>
+                    </button>
+                    <button type="button" onclick="copyEmailToClipboard()" class="px-4 py-2.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition flex items-center gap-1.5 text-gray-700 bg-white">
+                      <i class="fa-solid fa-copy"></i>
+                      <span>نسخ البريد</span>
                     </button>
                   </div>
                 </form>
               </div>
+            </div>
+          </div>
+        </div>
             </div>
           </div>
         </div>
@@ -1092,40 +1121,155 @@
     }
 
     // =========================================================================
-    // إدارة مراسلة الأمين العام الوطني
+    // إدارة مراسلة الأمين العام الوطني المحدثة (Gmail, WhatsApp, PDF, TXT)
     // =========================================================================
-    function handleSendEmail(e) {
-      e.preventDefault();
-      if (!currentUserProfile) return;
-
+    function validateContactForm() {
       const subject = document.getElementById('email-subject').value.trim();
+      const bodyText = document.getElementById('email-body').value.trim();
+      
+      if (!subject) {
+        alert("يرجى ملء موضوع الرسالة.");
+        document.getElementById('email-subject').focus();
+        return null;
+      }
+      if (!bodyText) {
+        alert("يرجى كتابة نص الرسالة التفصيلي.");
+        document.getElementById('email-body').focus();
+        return null;
+      }
+      
       const priority = document.getElementById('email-priority').value;
       const type = document.getElementById('email-type').value;
-      const bodyText = document.getElementById('email-body').value.trim();
-
-      const recipient = "kouidery@ymail.com";
-      const emailSubject = `[SNTE بوابة هيكلة الأمانات] ${subject} - (${priority})`;
       
-      const emailBody = `الموضوع: ${subject}
-نوع المراسلة: ${type}
-درجة الأهمية: ${priority}
+      return { subject, priority, type, bodyText };
+    }
+
+    function sendViaGmail() {
+      const data = validateContactForm();
+      if (!data) return;
+      
+      const recipient = "kouidery@ymail.com";
+      const emailSubject = `[SNTE بوابة هيكلة الأمانات] ${data.subject} - (${data.priority})`;
+      const emailBody = `الموضوع: ${data.subject}
+نوع المراسلة: ${data.type}
+درجة الأهمية: ${data.priority}
 
 معلومات المرسل النقابي:
 --------------------------------------------------
-الاسم الكامل: ${currentUserProfile.name}
+الاسم الكامل: ${currentUserProfile.name || currentUserProfile.fullName}
 الصفة النقابية: ${currentUserProfile.hierarchyLabel}
 نطاق الصلاحيات: ${currentUserProfile.hierarchyScope}
 تاريخ المراسلة: ${new Date().toLocaleString('ar-DZ')}
 
 تفاصيل الرسالة:
 --------------------------------------------------
-${bodyText}
+${data.bodyText}
 
 --------------------------------------------------
 مُرسل تلقائياً عبر منصة تسيير الأمانات - SNTE`;
 
-      const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-      window.location.href = mailtoLink;
+      const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      window.open(gmailLink, '_blank');
+    }
+
+    function sendViaWhatsApp() {
+      const data = validateContactForm();
+      if (!data) return;
+
+      const phone = "213557072815";
+      const message = `*مراسلة نقابية رسمية - SNTE*
+*المستقبل:* الأمين العام الوطني
+*الموضوع:* ${data.subject}
+*النوع:* ${data.type} | *الأهمية:* ${data.priority}
+
+*المرسل:* ${currentUserProfile.name || currentUserProfile.fullName} (${currentUserProfile.hierarchyLabel})
+*النطاق:* ${currentUserProfile.hierarchyScope}
+
+*نص الرسالة:*
+--------------------------------------------------
+${data.bodyText}
+--------------------------------------------------
+_مُرسل عبر بوابة أمانات الأسنتيو_`;
+
+      const waLink = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+      window.open(waLink, '_blank');
+    }
+
+    function saveAsPDF() {
+      const data = validateContactForm();
+      if (!data) return;
+
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html lang="ar" dir="rtl">
+        <head>
+          <title>مراسلة نقابية - ${data.subject}</title>
+          <style>
+            body { font-family: 'Cairo', Arial, sans-serif; padding: 40px; direction: rtl; line-height: 1.6; color: #333; }
+            .header { border-bottom: 2px solid #059669; padding-bottom: 20px; margin-bottom: 30px; text-align: center; }
+            .header h2 { color: #059669; margin: 0; }
+            .section { margin-bottom: 20px; font-size: 14px; }
+            .label { font-weight: bold; color: #059669; }
+            .content { background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; white-space: pre-wrap; font-size: 13px; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h2>بوابة أمانات الأسنتيو - مراسلة نقابية رسمية</h2>
+            <p>النقابة الوطنية لعمال التربية SNTE</p>
+          </div>
+          <div class="section">
+            <p><span class="label">المستلم:</span> الأمين العام الوطني (kouidery@ymail.com)</p>
+            <p><span class="label">موضوع الرسالة:</span> ${data.subject}</p>
+            <p><span class="label">نوع المراسلة:</span> ${data.type} | <span class="label">الأولوية:</span> ${data.priority}</p>
+            <p><span class="label">المرسل:</span> ${currentUserProfile.name || currentUserProfile.fullName} (${currentUserProfile.hierarchyLabel})</p>
+            <p><span class="label">نطاق الصلاحيات:</span> ${currentUserProfile.hierarchyScope}</p>
+            <p><span class="label">تاريخ الإرسال:</span> ${new Date().toLocaleString('ar-DZ')}</p>
+          </div>
+          <div class="section">
+            <p class="label">نص المراسلة:</p>
+            <div class="content">${data.bodyText}</div>
+          </div>
+          <script>
+            window.onload = function() {
+              window.print();
+              window.onafterprint = function() { window.close(); };
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
+
+    function saveAsTXT() {
+      const data = validateContactForm();
+      if (!data) return;
+
+      const emailBody = `الموضوع: ${data.subject}
+نوع المراسلة: ${data.type}
+درجة الأهمية: ${data.priority}
+
+معلومات المرسل النقابي:
+--------------------------------------------------
+الاسم الكامل: ${currentUserProfile.name || currentUserProfile.fullName}
+الصفة النقابية: ${currentUserProfile.hierarchyLabel}
+نطاق الصلاحيات: ${currentUserProfile.hierarchyScope}
+تاريخ المراسلة: ${new Date().toLocaleString('ar-DZ')}
+
+تفاصيل الرسالة:
+--------------------------------------------------
+${data.bodyText}
+
+--------------------------------------------------
+مُرسل تلقائياً عبر منصة تسيير الأمانات - SNTE`;
+
+      const blob = new Blob([emailBody], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `مراسلة_الأسنتيو_${Date.now()}.txt`;
+      a.click();
     }
 
     function copyEmailToClipboard() {
@@ -1330,35 +1474,153 @@ ${bodyText}
       document.getElementById('mag-read-modal').classList.add('hidden');
     }
 
-    function handleSendMagazineArticle(e) {
-      e.preventDefault();
+    function validateMagForm() {
       const author = document.getElementById('mag-author').value.trim();
       const state = document.getElementById('mag-state').value.trim();
       const section = document.getElementById('mag-section').value;
       const title = document.getElementById('mag-title').value.trim();
       const body = document.getElementById('mag-body').value.trim();
 
+      if (!author) {
+        alert("يرجى كتابة اسم الكاتب / المساهم.");
+        document.getElementById('mag-author').focus();
+        return null;
+      }
+      if (!state) {
+        alert("يرجى كتابة الولاية الجغرافية.");
+        document.getElementById('mag-state').focus();
+        return null;
+      }
+      if (!title) {
+        alert("يرجى كتابة عنوان المقال.");
+        document.getElementById('mag-title').focus();
+        return null;
+      }
+      if (!body) {
+        alert("يرجى كتابة محتوى المساهمة.");
+        document.getElementById('mag-body').focus();
+        return null;
+      }
+
+      return { author, state, section, title, body };
+    }
+
+    function sendMagViaGmail() {
+      const data = validateMagForm();
+      if (!data) return;
+
       const recipient = "kouidery@ymail.com";
-      const emailSubject = `[صوت القاعدة] مساهمة جديدة: ${title} - قسم ${section}`;
-      
-      const emailBody = `العنوان المقترح: ${title}
-القسم المستهدف: ${section}
-الكاتب والمساهم: ${author} (ولاية ${state})
+      const emailSubject = `[صوت القاعدة] مساهمة جديدة: ${data.title} - قسم ${data.section}`;
+      const emailBody = `العنوان المقترح: ${data.title}
+القسم المستهدف: ${data.section}
+الكاتب والمساهم: ${data.author} (ولاية ${data.state})
 تاريخ الإرسال: ${new Date().toLocaleDateString('ar-DZ')}
 
 نص مساهمة المقال:
 --------------------------------------------------
-${body}
+${data.body}
 
 --------------------------------------------------
-تم إعداد وإرسال هذا نموذج كمسودة إلكترونية عبر بوابة أمانات الأسنتيو - مجلة صوت القاعدة`;
+تم إعداد وإرسال هذا النموذج كمسودة إلكترونية عبر بوابة أمانات الأسنتيو - مجلة صوت القاعدة`;
 
-      const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-      window.location.href = mailtoLink;
+      const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      window.open(gmailLink, '_blank');
       
       document.getElementById('mag-title').value = '';
       document.getElementById('mag-body').value = '';
-      alert("تم إعداد مسودة المقال! سيتم فتح برنامج البريد الإلكتروني الخاص بك لإرساله مباشرة للأمين العام الوطني.");
+    }
+
+    function sendMagViaWhatsApp() {
+      const data = validateMagForm();
+      if (!data) return;
+
+      const phone = "213557072815";
+      const message = `*مساهمة جديدة في مجلة صوت القاعدة - SNTE*
+*العنوان:* ${data.title}
+*القسم:* ${data.section}
+*المساهم:* ${data.author} (ولاية ${data.state})
+
+*محتوى المقال:*
+--------------------------------------------------
+${data.body}
+--------------------------------------------------
+_مُرسل عبر مجلة صوت القاعدة الإلكترونية_`;
+
+      const waLink = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+      window.open(waLink, '_blank');
+      
+      document.getElementById('mag-title').value = '';
+      document.getElementById('mag-body').value = '';
+    }
+
+    function saveMagAsPDF() {
+      const data = validateMagForm();
+      if (!data) return;
+
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html lang="ar" dir="rtl">
+        <head>
+          <title>مساهمة مجلة صوت القاعدة - ${data.title}</title>
+          <style>
+            body { font-family: 'Cairo', Arial, sans-serif; padding: 40px; direction: rtl; line-height: 1.6; color: #333; }
+            .header { border-bottom: 2px solid #059669; padding-bottom: 20px; margin-bottom: 30px; text-align: center; }
+            .header h2 { color: #059669; margin: 0; }
+            .section { margin-bottom: 20px; font-size: 14px; }
+            .label { font-weight: bold; color: #059669; }
+            .content { background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; white-space: pre-wrap; font-size: 13px; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h2>مجلة "صوت القاعدة" النقابية - مسودة مساهمة مقال</h2>
+            <p>النقابة الوطنية لعمال التربية SNTE</p>
+          </div>
+          <div class="section">
+            <p><span class="label">الأمين العام المستلم:</span> kouidery@ymail.com</p>
+            <p><span class="label">العنوان المقترح:</span> ${data.title}</p>
+            <p><span class="label">القسم المستهدف:</span> ${data.section}</p>
+            <p><span class="label">الكاتب والمساهم:</span> ${data.author} (ولاية ${data.state})</p>
+            <p><span class="label">تاريخ الإعداد:</span> ${new Date().toLocaleDateString('ar-DZ')}</p>
+          </div>
+          <div class="section">
+            <p class="label">نص المقال:</p>
+            <div class="content">${data.body}</div>
+          </div>
+          <script>
+            window.onload = function() {
+              window.print();
+              window.onafterprint = function() { window.close(); };
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
+
+    function saveMagAsTXT() {
+      const data = validateMagForm();
+      if (!data) return;
+
+      const fileContent = `العنوان المقترح: ${data.title}
+القسم المستهدف: ${data.section}
+الكاتب والمساهم: ${data.author} (ولاية ${data.state})
+تاريخ الإعداد: ${new Date().toLocaleDateString('ar-DZ')}
+
+نص مساهمة المقال:
+--------------------------------------------------
+${data.body}
+
+--------------------------------------------------
+تم الحفظ كمسودة عبر بوابة أمانات الأسنتيو - مجلة صوت القاعدة`;
+
+      const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `مقال_صوت_القاعدة_${Date.now()}.txt`;
+      a.click();
     }
   </script>
 </body>

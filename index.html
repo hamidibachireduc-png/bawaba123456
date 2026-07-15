@@ -2,607 +2,603 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>بوابة المجلس الوطني الرقمية</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+  <title>نظام المحاضر والمنخرطين - SNTE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root { --primary-color: #1a4d2e; --secondary-color: #4f6f52; --dark-color: #2c3e50; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: var(--dark-color); min-height: 100vh; display: flex; flex-direction: column; }
-    .bg-custom { background-color: var(--primary-color) !important; }
-    .text-custom { color: var(--primary-color); }
-    .hero-section { background: linear-gradient(135deg, #1a4d2e 0%, #4f6f52 100%); border-bottom-right-radius: 24px; border-bottom-left-radius: 24px; }
-    .search-container { border-radius: 50px; overflow: hidden; background-color: white; padding: 3px 10px; }
-    .custom-card { border: none; border-radius: 14px; background: white; transition: all 0.3s ease; }
-    .member-card { cursor: pointer; }
-    .member-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.08) !important; }
-    .avatar-circle { width: 50px; height: 50px; background-color: #e8f5e9; color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
-    .nav-pills .nav-link { color: var(--secondary-color); padding: 10px 20px; white-space: nowrap; }
-    .nav-pills .nav-link.active { background-color: var(--primary-color) !important; color: white !important; }
-    .shadow-inner { box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); }
-    .mobile-scroll-nav { flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; padding-bottom: 5px; justify-content: flex-start !important; }
-    .mobile-scroll-nav::-webkit-scrollbar { height: 4px; }
-    .mobile-scroll-nav::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-  </style>
+  <style>body { font-family: 'Cairo', sans-serif; }</style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
 
-  <div id="gatekeeperContainer" class="d-flex align-items-center justify-content-center my-auto p-3" style="min-height: 85vh;">
-    <div class="card shadow border-0 p-4" style="width: 100%; max-width: 450px; border-radius: 16px;">
-      <div class="text-center mb-4">
-        <div class="mb-3"><img src="https://a.top4top.io/p_3832y1n091.png" alt="شعار النقابة" style="height: 85px;"></div>
-        <h4 class="fw-bold text-custom">بوابة المجلس الوطني</h4>
-        <p class="text-muted small">يرجى تسجيل الدخول للوصول إلى فضائك الرقمي</p>
+  <div id="login-screen" class="flex-grow flex items-center justify-center px-4 py-12">
+  <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100">
+    <div class="text-center mb-6">
+      
+      <img src="https://l.top4top.io/p_37988hwfa0.png" alt="لوغو النقابة" class="w-24 h-24 mx-auto mb-4 object-contain dropped-shadow-md">
+            <h2 class="text-xl font-bold text-gray-900"> بوابةهيكلة الامانات - SNTE</h2>
+        <p class="text-xs text-gray-400 mt-1">النقابة الوطنية لعمال التربية SNTE</p>
       </div>
-      <form id="unifiedLoginForm">
-        <div class="mb-3">
-          <label class="form-label fw-semibold text-secondary"><i class="fa-solid fa-user ms-2"></i>اسم المستخدم</label>
-          <input type="text" id="authUsername" class="form-control form-control-lg" required placeholder="المعرف الرسمي الخاص بك">
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-xs font-bold mb-2">اسم المستخدم الموحد</label>
+          <input type="text" id="login-username" value="sntedz2026" readonly class="w-full px-3 py-2 border bg-gray-100 rounded-lg text-sm font-semibold text-gray-500 focus:outline-none cursor-not-allowed">
         </div>
-        <div class="mb-3">
-          <label class="form-label fw-semibold text-secondary"><i class="fa-solid fa-key ms-2"></i>كلمة المرور</label>
-          <input type="password" id="authPassword" class="form-control form-control-lg" required placeholder="******">
+        <div class="mb-6">
+          <label class="block text-gray-700 text-xs font-bold mb-2">الرقم السري الشخصي (العمود الثاني)</label>
+          <input type="password" id="login-password" required class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="••••••••">
         </div>
-        <button type="submit" class="btn btn-success w-100 py-2.5 fw-bold fs-5" id="gateLoginBtn">دخول المنظومة</button>
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow">
+          <span>دخول آمن للوحة التحكم</span>
+          <i id="login-spinner" class="fa-solid fa-spinner animate-spin hidden"></i>
+        </button>
+        <div id="login-error" class="mt-4 p-2.5 bg-red-50 text-red-600 rounded-lg text-xs text-center font-bold hidden"></div>
       </form>
-      <div id="gateAlert" class="alert mt-3 d-none text-center py-2 small fw-bold"></div>
     </div>
   </div>
 
-  <div id="mainSystemContent" class="d-none">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-custom shadow-sm">
-      <div class="container d-flex justify-content-between">
-        <a class="navbar-brand d-flex align-items-center m-0" href="#">
-          <img src="https://a.top4top.io/p_3832y1n091.png" alt="شعار النقابة" style="height: 35px;" class="me-2 ms-2 bg-white rounded-circle p-1">
-          <span class="fw-bold fs-6">الفضاء الرقمي</span>
-        </a>
-        <div class="d-flex align-items-center">
-          <span class="badge bg-light text-success fw-bold me-2 px-2 py-1 shadow-sm" id="roleStatusBadge"></span>
-          <button class="btn btn-outline-light btn-sm fw-bold px-2 ms-1" onclick="location.reload();"><i class="fa-solid fa-power-off ms-1"></i> خروج</button>
+  <div id="dashboard-screen" class="hidden flex-grow flex flex-col">
+    <header class="bg-white shadow-sm border-b">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <img src="https://l.top4top.io/p_37988hwfa0.png" alt="لوغو النقابة" class="w-12 h-12 object-contain">
+          
+          <h1 class="text-lg font-bold text-gray-900">منصة تسيير السلم النقابي والمحاضر</h1>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="text-left">
+            <p class="text-sm font-bold text-gray-900" id="user-name"></p>
+            <span id="user-badge" class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full mt-0.5"></span>
+          </div>
+          <button onclick="handleLogout()" class="bg-gray-100 hover:bg-red-50 hover:text-red-600 p-2.5 rounded-lg transition"><i class="fa-solid fa-power-off"></i></button>
         </div>
       </div>
-    </nav>
+    </header>
 
-    <div id="adminPanelSection" class="d-none">
-      <header class="hero-section text-center text-white py-3 shadow-inner mb-3">
-        <div class="container">
-          <h3 class="fw-bold mb-1">لوحة الإشراف والمتابعة</h3>
-          <p class="mb-0 small text-white-50">إدارة النواب، التصويت الإلكتروني، ومراسلات الإدارة</p>
-        </div>
-      </header>
+    <div class="bg-white border-b shadow-inner">
+      <div class="max-w-7xl mx-auto px-4 flex gap-4">
+        <button id="tab-members-btn" onclick="switchTab('members')" class="px-6 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition">
+          <i class="fa-solid fa-users"></i> قائمة بيانات المنخرطين
+        </button>
+        <button id="tab-minutes-btn" onclick="switchTab('minutes')" class="px-6 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition">
+          <i class="fa-solid fa-file-signature"></i> تحرير وتسيير شيت المحضر النقابي
+        </button>
+      </div>
+    </div>
 
-      <div class="container my-3">
-        <ul class="nav nav-tabs mb-3 border-bottom-0 shadow-sm bg-white p-2 rounded-3 mobile-scroll-nav" id="adminTabs" role="tablist">
-          <li class="nav-item"><button class="nav-link active fw-bold border-0 text-success" data-bs-toggle="tab" data-bs-target="#adminMembersSection" type="button"><i class="fa-solid fa-users-gear ms-1"></i>النواب</button></li>
-          <li class="nav-item"><button class="nav-link fw-bold border-0 text-success" data-bs-toggle="tab" data-bs-target="#adminVotesSection" type="button"><i class="fa-solid fa-chart-pie ms-1"></i>التصويت</button></li>
-          <li class="nav-item"><button class="nav-link fw-bold border-0 text-success" data-bs-toggle="tab" data-bs-target="#adminMsgsSection" type="button"><i class="fa-solid fa-envelope-open-text ms-1"></i>المراسلات</button></li>
-        </ul>
-
-        <div class="tab-content">
-          <!-- قسم النواب -->
-          <div class="tab-pane fade show active" id="adminMembersSection" role="tabpanel">
-            <div class="input-group shadow-sm search-container mb-3">
-              <span class="input-group-text bg-white border-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
-              <input type="text" id="searchInput" class="form-control border-0" placeholder="...ابحث باسم العضو">
-            </div>
-            <h6 class="fw-bold text-secondary mb-3">إجمالي الأعضاء: <span id="membersCount" class="text-success">0</span></h6>
-            <div class="row g-2" id="membersContainer"></div>
-          </div>
-
-          <!-- قسم التصويت (النسخة المدمجة والمطورة) -->
-          <div class="tab-pane fade" id="adminVotesSection" role="tabpanel">
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+      
+      <div class="lg:col-span-1 flex flex-col gap-6">
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+          <h3 class="text-sm font-bold text-gray-900 border-b pb-2 mb-3 flex items-center gap-2 text-emerald-600">
+            <i class="fa-solid fa-gavel"></i>
+            <span>قسم مهامي وصلاحياتي النقابية</span>
+          </h3>
+          <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-1">نطاق صلاحياتك الحالية:</p>
+            <p id="user-scope" class="text-xs font-bold text-emerald-700 mb-4 bg-emerald-50 p-2 rounded border border-emerald-200"></p>
             
-            <!-- داشبورد الإحصائيات -->
-            <div class="row text-center mb-3">
-              <div class="col-6">
-                <div class="card shadow-sm border-0 border-bottom border-success border-3">
-                  <div class="card-body py-2">
-                    <h6 class="text-muted mb-1" style="font-size: 0.8rem;"><i class="fa-solid fa-check-to-slot"></i> إجمالي الأصوات</h6>
-                    <h3 class="fw-bold text-success mb-0" id="totalVotesCount">0</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="card shadow-sm border-0 border-bottom border-warning border-3">
-                  <div class="card-body py-2">
-                    <h6 class="text-muted mb-1" style="font-size: 0.8rem;"><i class="fa-solid fa-chart-pie"></i> نسبة التصويت</h6>
-                    <h3 class="fw-bold text-warning mb-0" id="votesPercentage">0%</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <p class="text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-1">بيان المهام التكليفية (العمود W):</p>
+            <div id="user-assigned-duties" class="text-xs text-gray-600 leading-relaxed max-h-72 overflow-y-auto bg-white p-3 rounded border border-gray-200 whitespace-pre-line font-medium shadow-inner"></div>
+          </div>
+        </div>
+      </div>
 
-            <!-- قائمة الأعضاء غير المصوتين (تنبيهات) -->
-            <div class="card shadow-sm border-0 mb-4 rounded-3">
-              <div class="card-header bg-white border-0 pt-3 pb-0">
-                <h6 class="fw-bold text-danger"><i class="fa-solid fa-user-clock"></i> أعضاء لم يصوتوا بعد</h6>
-              </div>
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table table-striped align-middle text-center mb-0" style="font-size: 0.85rem;">
-                    <thead class="bg-light">
-                      <tr>
-                        <th>الاسم واللقب</th>
-                        <th>تذكير</th>
-                      </tr>
-                    </thead>
-                    <tbody id="nonVotersTableBody">
-                      <tr><td colspan="2">جاري فحص البيانات...</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+      <div class="lg:col-span-3 flex flex-col gap-6">
+        
+        <div id="tab-members-content" class="space-y-6">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-xl shadow-sm border text-center">
+              <p class="text-xs text-gray-400 font-bold">المنخرطين المتاحين للتعديل</p>
+              <h4 id="stat-total" class="text-2xl font-bold text-gray-800 mt-1">0</h4>
             </div>
-
-            <!-- الإحصائيات التفصيلية القديمة للخيارات -->
-            <div class="card shadow-sm border-0 p-3 rounded-3 mb-3">
-              <h6 class="fw-bold text-custom border-bottom pb-2 mb-3">نتائج الخيارات المصوت عليها</h6>
-              <div class="row text-center g-2" id="voteStatsContainer"></div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border text-center">
+              <p class="text-xs text-emerald-500 font-bold">ذكور</p>
+              <h4 id="stat-males" class="text-2xl font-bold text-emerald-600 mt-1">0</h4>
             </div>
-            
-            <!-- سجل التصويت التفصيلي القديم -->
-            <div class="card shadow-sm border-0 p-3 rounded-3">
-              <h6 class="fw-bold text-custom border-bottom pb-2 mb-3">سجل التصويت التفصيلي</h6>
-              <div class="table-responsive">
-                <table class="table table-striped table-hover text-start align-middle small">
-                  <thead class="table-success"><tr><th>الوقت</th><th>الاسم</th><th>القرار</th><th>الصوت</th></tr></thead>
-                  <tbody id="votesTableBody"></tbody>
-                </table>
-              </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border text-center">
+              <p class="text-xs text-pink-500 font-bold">إناث</p>
+              <h4 id="stat-females" class="text-2xl font-bold text-pink-600 mt-1">0</h4>
             </div>
-
           </div>
 
-          <!-- قسم المراسلات -->
-          <div class="tab-pane fade" id="adminMsgsSection" role="tabpanel">
-            <div class="card shadow-sm border-0 p-3 rounded-3">
-              <h6 class="fw-bold text-custom border-bottom pb-2 mb-3">صندوق الوارد</h6>
-              <div class="table-responsive">
-                <table class="table table-hover text-start align-middle small">
-                  <thead class="table-dark"><tr><th>الوقت</th><th>المرسل</th><th>الموضوع</th><th>الرسالة</th><th>المرفق</th></tr></thead>
-                  <tbody id="messagesTableBody"></tbody>
-                </table>
+          <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+            <div class="p-4 border-b flex flex-col sm:flex-row justify-between items-center gap-3 bg-gray-50">
+              <input type="text" id="search-input" oninput="handleSearch()" class="w-full sm:w-72 px-3 py-1.5 border rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="البحث السريع بالاسم، الولاية، أو مكان العمل...">
+              <button onclick="openAddModal()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 shadow">
+                <i class="fa-solid fa-plus"></i> إضافة منخرط جديد
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-right border-collapse text-xs">
+                <thead>
+                  <tr class="bg-gray-100 text-gray-500 font-bold border-b">
+                    <th class="p-3.5">الاسم الكامل</th>
+                    <th class="p-3.5">الولاية</th>
+                    <th class="p-3.5">البلدية 🏙️</th>
+                    <th class="p-3.5">مكان العمل (الفرع النقابي) 🏢</th>
+                    <th class="p-3.5 text-center">الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body" class="divide-y text-gray-700 font-medium"></tbody>
+              </table>
+            </div>
+
+            <div class="p-3 border-t flex justify-between items-center text-xs text-gray-400 bg-gray-50">
+              <span id="page-info"></span>
+              <div class="flex gap-1">
+                <button onclick="prevPage()" id="prev-btn" class="px-2.5 py-1 border rounded bg-white hover:bg-gray-100 disabled:opacity-40">السابق</button>
+                <button onclick="nextPage()" id="next-btn" class="px-2.5 py-1 border rounded bg-white hover:bg-gray-100 disabled:opacity-40">التالي</button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- قسم العضو الفردي -->
-    <div id="memberIndividualSection" class="d-none container my-4">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <ul class="nav nav-pills mb-3 shadow-sm bg-white p-2 rounded-pill border mobile-scroll-nav" id="memberTabs" role="tablist">
-            <li class="nav-item"><button class="nav-link active rounded-pill fw-bold" data-bs-toggle="tab" data-bs-target="#myDataSection" type="button"><i class="fa-solid fa-user-gear ms-1"></i>بياناتي</button></li>
-            <li class="nav-item"><button class="nav-link rounded-pill fw-bold" data-bs-toggle="tab" data-bs-target="#votingSection" type="button"><i class="fa-solid fa-check-to-slot ms-1"></i>التصويت</button></li>
-            <li class="nav-item"><button class="nav-link rounded-pill fw-bold" data-bs-toggle="tab" data-bs-target="#myTasksSection" type="button"><i class="fa-solid fa-circle-check ms-1"></i>مهامي</button></li>
-            <li class="nav-item"><button class="nav-link rounded-pill fw-bold" data-bs-toggle="tab" data-bs-target="#sendBossSection" type="button"><i class="fa-solid fa-envelope-open-text ms-1"></i>مراسلة</button></li>
-            <li class="nav-item"><button class="nav-link rounded-pill fw-bold" data-bs-toggle="tab" data-bs-target="#memberFileSection" type="button"><i class="fa-solid fa-folder-open ms-1"></i>الوثائق</button></li>
-          </ul>
-
-          <div class="tab-content" id="memberTabsContent">
-            <!-- الواجهات الخاصة بالعضو الفردي تركت كما هي تماما -->
-            <div class="tab-pane fade show active" id="myDataSection" role="tabpanel">
-              <div class="card shadow border-0 overflow-hidden custom-card">
-                <div class="card-header bg-custom text-white p-3 text-center">
-                  <h5 class="fw-bold mb-1" id="indivMemberName">اسم العضو</h5>
-                  <button class="btn btn-warning btn-sm fw-bold px-3 shadow-sm mt-2" onclick="openMemberOwnEditModal();">تعديل بياناتي وحسابي</button>
-                </div>
-                <div class="card-body p-3" id="indivMemberDetailsContainer"></div>
+        <div id="tab-minutes-content" class="hidden space-y-6">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-4 gap-3">
+              <div>
+                <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                  <i class="fa-solid fa-file-pen text-emerald-600"></i>
+                  <span>شيت المحضر النشط: <span id="active-minutes-sheet" class="text-emerald-600"></span></span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">تعديل بيانات الهيئة الإدارية مباشرة وحفظها في جوجل شيت فوريًا.</p>
+              </div>
+              <div class="flex gap-2 w-full sm:w-auto">
+                <button onclick="autoFillMinutes()" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1.5 transition">
+                  <i class="fa-solid fa-bolt"></i> تعبئة تلقائية من قاعدة المنخرطين
+                </button>
+                <button onclick="saveMinutes()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1.5 transition">
+                  <i class="fa-solid fa-floppy-disk"></i> حفظ شيت المحضر الآن
+                </button>
               </div>
             </div>
 
-            <div class="tab-pane fade" id="votingSection" role="tabpanel">
-              <div class="card shadow border-0 p-3 text-center custom-card">
-                <div id="voteBoxContainer" class="p-3 border rounded bg-light mx-auto shadow-inner" style="max-width:600px; width: 100%;">
-                  <h6 class="fw-bold text-dark mb-3" id="voteQuestionText">جاري فحص الاستفتاءات...</h6>
-                  <div id="dynamicVoteOptionsContainer" class="text-start"></div>
-                  <button class="btn btn-success w-100 fw-bold mt-3" id="submitVoteBtn">إرسال الصوت الآن</button>
-                  <div id="voteAlert" class="alert mt-3 d-none text-center py-2 fw-bold small"></div>
-                  <div id="memberVoteResultsContainer" class="mt-4 d-none p-3 bg-white border rounded shadow-sm text-start">
-                    <h6 class="fw-bold text-secondary border-bottom pb-2 mb-3">النتائج المباشرة:</h6>
-                    <div id="memberVoteResultsBars"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-pane fade" id="myTasksSection" role="tabpanel">
-              <div class="card shadow border-0 p-4 text-start custom-card">
-                <div class="text-center border-bottom pb-3 mb-4">
-                  <div class="avatar-circle bg-light text-success mx-auto mb-2" style="width:60px; height:60px; font-size:1.8rem;"><i class="fa-solid fa-scroll"></i></div>
-                  <h4 class="fw-bold text-dark mb-1">مهام وصلاحيات أعضاء المجلس الوطني</h4>
-                  <p class="text-muted small mb-0">الواردة والموثقة في القانون الأساسي (SNTE)</p>
-                </div>
-                <!-- محتوى المهام -->
-              </div>
-            </div>
-
-            <div class="tab-pane fade" id="sendBossSection" role="tabpanel">
-              <div class="card shadow border-0 p-3 mx-auto custom-card" style="max-width: 700px;">
-                <h6 class="fw-bold text-custom border-bottom pb-2 mb-3">توجيه المراسلات للأمانة الوطنية</h6>
-                <form id="bossContactForm">
-                  <div class="mb-2"><label class="form-label fw-bold small">الموضوع</label><input type="text" class="form-control" id="bossSubject" required></div>
-                  <div class="mb-2"><label class="form-label fw-bold small">نص المراسلة</label><textarea class="form-control" id="bossMessage" rows="4" required></textarea></div>
-                  <button type="submit" class="btn btn-success w-100 fw-bold mt-2" id="bossSubmitBtn">إرسال المراسلة</button>
-                </form>
-                <div id="bossFormAlert" class="alert mt-3 d-none text-center py-2 fw-bold small"></div>
-              </div>
-            </div>
-
-            <div class="tab-pane fade" id="memberFileSection" role="tabpanel">
-              <div class="card shadow border-0 p-4 text-center custom-card">
-                <i class="fa-solid fa-folder-open display-1 text-warning mb-3"></i>
-                <h5 class="fw-bold">حقيبة الوثائق المشتركة</h5>
-                <div class="mt-3"><a href="https://drive.google.com/drive/folders/1fMCc-k36CmpxTuYRrnF7_OkJWyfKN3WG?usp=sharing" target="_blank" class="btn btn-success fw-bold rounded-pill px-4">استعراض المجلد السحابي</a></div>
-              </div>
+            <div class="overflow-x-auto border rounded-lg">
+              <table class="w-full text-right border-collapse text-xs">
+                <thead>
+                  <tr class="bg-gray-100 text-gray-600 font-bold border-b">
+                    <th class="p-3 border-l text-center w-12">رقم</th>
+                    <th class="p-3 border-l">اللقب والاسم</th>
+                    <th class="p-3 border-l">الوظيفة</th>
+                    <th class="p-3 border-l">رقم التعريف الوطني (NIN)</th>
+                    <th class="p-3 border-l">رقم الضمان الاجتماعي</th>
+                    <th class="p-3 border-l">المهمة النقابية</th>
+                    <th class="p-3 border-l">مكان العمل 01</th>
+                    <th class="p-3" id="minutes-h8">مكان العمل 02</th>
+                  </tr>
+                </thead>
+                <tbody id="minutes-table-body" class="divide-y"></tbody>
+              </table>
             </div>
           </div>
         </div>
+
       </div>
+    </main>
+  </div>
+
+  <div id="member-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="bg-emerald-600 text-white px-5 py-4 flex justify-between items-center shadow-md">
+        <h3 id="modal-title" class="text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-user-pen"></i> <span>إدارة بيانات ملف المنخرط بالكامل</span></h3>
+        <button onclick="closeModal()" class="text-white text-lg hover:text-gray-200"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      
+      <form id="member-form" onsubmit="handleSave(event)" class="overflow-y-auto p-6 space-y-6 text-xs bg-gray-50">
+        <input type="hidden" id="member-row">
+
+        <div class="bg-white p-4 rounded-xl border shadow-sm space-y-4">
+          <h4 class="font-bold text-emerald-700 border-b pb-1.5 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-id-card-clip text-sm"></i> 1. البيانات الشخصية والاتصال</h4>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">الاسم الكامل بالعربية</label>
+              <input type="text" id="field-fullName" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">NOM ET PRENOM (اللاتينية)</label>
+              <input type="text" id="field-latinName" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">الجنس</label>
+              <select id="field-gender" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                <option value="ذكر">ذكر</option>
+                <option value="أنثى">أنثى</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">رقم الهاتف 📞</label>
+              <input type="text" id="field-phone" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">تاريخ الميلاد</label>
+              <input type="date" id="field-birthDate" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">مكان الميلاد</label>
+              <input type="text" id="field-birthPlace" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div class="md:col-span-2">
+              <label class="font-bold block mb-1 text-gray-600">البريد الإلكتروني ✉️</label>
+              <input type="email" id="field-email" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div class="md:col-span-4">
+              <label class="font-bold block mb-1 text-gray-600">العنوان الشخصي الكامل</label>
+              <input type="text" id="field-address" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border shadow-sm space-y-4">
+          <h4 class="font-bold text-emerald-700 border-b pb-1.5 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-briefcase text-sm"></i> 2. البيانات المهنية والجغرافية</h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">الولاية الجغرافية</label>
+              <input type="text" id="field-state" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">البلدية 🏙️</label>
+              <input type="text" id="field-municipality" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">مكان العمل (الفرع النقابي) 🏢</label>
+              <input type="text" id="field-workplace" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">الرتبة الحالية</label>
+              <input type="text" id="field-rank" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">تاريخ أول تعيين في القطاع</label>
+              <input type="date" id="field-firstAppointment" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">مادة التدريس (للأساتذة)</label>
+              <input type="text" id="field-subject" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border shadow-sm space-y-4">
+          <h4 class="font-bold text-emerald-700 border-b pb-1.5 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-file-invoice text-sm"></i> 3. الأرقام الرسمية والضمان الاجتماعي</h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">رقم التعريف الوطني (NIN)</label>
+              <input type="text" id="field-nin" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-emerald-600 font-bold">رقم الضمان الاجتماعي 🛡️</label>
+              <input type="text" id="field-socialSec" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-emerald-50 border-emerald-200">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">رقم بطاقة الانخراط النقابي</label>
+              <input type="text" id="field-cardNum" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold">
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border shadow-sm space-y-4">
+          <h4 class="font-bold text-emerald-700 border-b pb-1.5 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-sitemap text-sm"></i> 4. الصفة والهياكل النقابية القيادية</h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <label class="font-bold block mb-1 text-emerald-700">الصفة النقابية (العمود F)</label>
+              <input type="text" id="field-unionStatus" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-gray-50">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-emerald-700">المهام النقابية (العمود G)</label>
+              <input type="text" id="field-unionDuties" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-gray-50">
+            </div>
+            <div>
+              <label class="font-bold block mb-1 text-gray-600">الأمانة الجهوية المكلفة بالتنسيق</label>
+              <input type="text" id="field-regionalSec" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            </div>
+            <div class="md:col-span-3">
+              <label class="font-bold block mb-1 text-gray-600">المهام المكلف بها تفصيلياً (العمود W)</label>
+              <textarea id="field-assignedDuties" rows="3" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-medium"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 border-t pt-4">
+          <button type="button" onclick="closeModal()" class="px-5 py-2 border rounded-lg hover:bg-gray-200 transition font-semibold bg-white text-gray-700">إلغاء</button>
+          <button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition shadow-md flex items-center gap-1"><i class="fa-solid fa-floppy-disk"></i> <span>حفظ وتحديث الملف بالكامل</span></button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- نوافذ منبثقة للمشرف والأعضاء -->
-  <div class="modal fade" id="memberOwnEditModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header bg-custom text-white border-0"><h6 class="modal-title fw-bold">تحديث الحساب</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-3"><form id="memberOwnEditForm"><div class="row g-2"><div class="col-12 text-start"><label class="form-label fw-semibold text-success small" id="userKeyLabel1">المستخدم</label><input type="text" id="ownUsernameField" class="form-control border-success" required></div><div class="col-12 text-start"><label class="form-label fw-semibold text-danger small" id="userKeyLabel2">كلمة المرور</label><input type="text" id="ownPasswordField" class="form-control border-danger" required></div></div><hr class="my-2"><div id="dynamicOwnFieldsContainer" class="row g-2"></div><div class="mt-3 text-end"><button type="submit" class="btn btn-success w-100 fw-bold" id="saveOwnEditBtn">حفظ التغييرات</button></div></form><div id="ownEditAlert" class="alert mt-2 d-none py-2 text-center small fw-bold"></div></div></div></div>
+  <div id="loading" class="hidden fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50">
+    <div class="bg-white p-5 rounded-xl shadow-xl flex items-center gap-3 text-xs font-bold border"><i class="fa-solid fa-sync animate-spin text-emerald-600 text-lg"></i> جاري مزامنة السلم النقابي والمحاضر الحية...</div>
   </div>
-
-  <div class="modal fade" id="editMemberModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content border-0 shadow"><div class="modal-header bg-danger text-white border-0"><h6 class="modal-title fw-bold">تعديل بيانات العضو</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-3"><form id="editMemberForm"><input type="hidden" id="editRowNumber"><div class="row g-2" id="editFieldsContainer"></div><div class="mt-3 text-end"><button type="submit" class="btn btn-success w-100 fw-bold" id="saveEditBtn">حفظ التعديلات</button></div></form><div id="editAlert" class="alert mt-2 d-none py-2 text-center"></div></div></div></div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // 🔴 الرابط السحري للاتصال بالسيرفر
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyDOXphg6UVyXKsIR7-M_8Ux5QdHO0WJV3nPpuVA-VSAYdKIDWlLHz2FElayZ_xc37h/exec';
+    // ==========================================
+    // هام جداً: ضع رابط تطبيق الويب الخاص بك هنا
+    // ==========================================
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzNCb7CcQ_iDKCXcWWGIDY8f4MZKNMT8MAO5BxLWTTlUGhfi8P0ADn781JNgSO-I1k3/exec";
 
+    let currentUserProfile = null;
     let allMembers = [];
-    let activeSessionMember = null; 
-    let activeVoteObject = null;
+    let filteredMembers = [];
+    let minutesRows = [];
+    let currentPage = 1;
+    const rowsPerPage = 12;
 
-    async function callGoogleAPI(payload) {
+    // دالة الاتصال بالخادم عبر API
+    async function callBackend(action, payload) {
+      payload.action = action;
       try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(WEB_APP_URL, {
           method: 'POST',
-          redirect: 'follow', 
-          body: JSON.stringify(payload),
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
         });
-        if (!response.ok) throw new Error("حدث خطأ في شبكة الاتصال.");
         return await response.json();
       } catch (error) {
-        console.error(error);
-        throw new Error("عذراً، السيرفر يرفض الاتصال.");
+        console.error("خطأ في الاتصال:", error);
+        return { success: false, message: "حدث خطأ في الاتصال بالخادم. تأكد من رابط الـ Web App." };
       }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('unifiedLoginForm').addEventListener('submit', handleUnifiedLogin);
-      document.getElementById('submitVoteBtn').addEventListener('click', sendVoteToServer);
-      document.getElementById('bossContactForm').addEventListener('submit', handleBossFormSubmit);
-      document.getElementById('searchInput').addEventListener('input', filterMembers);
-      document.getElementById('editMemberForm').addEventListener('submit', handleEditFormSubmit);
-      document.getElementById('memberOwnEditForm').addEventListener('submit', handleMemberOwnFormSubmit);
-    });
-
-    function handleUnifiedLogin(e) {
+    async function handleLogin(e) {
       e.preventDefault();
-      const user = document.getElementById('authUsername').value;
-      const pass = document.getElementById('authPassword').value;
-      const alertDiv = document.getElementById('gateAlert');
-      const loginBtn = document.getElementById('gateLoginBtn');
-
-      loginBtn.disabled = true; loginBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> جاري التحقق...';
-      alertDiv.classList.add('d-none');
-
-      callGoogleAPI({ action: 'login', username: user, password: pass })
-        .then(response => {
-          loginBtn.disabled = false; loginBtn.innerHTML = 'دخول المنظومة';
-          if (response.success) {
-            document.getElementById('gatekeeperContainer').classList.add('d-none');
-            document.getElementById('mainSystemContent').classList.remove('d-none');
-            
-            if (response.role === 'admin') {
-              document.getElementById('roleStatusBadge').textContent = 'المشرف العام';
-              document.getElementById('adminPanelSection').classList.remove('d-none');
-              loadAllMembersForAdmin(); 
-              loadAdminVotesAndMessages(); 
-            } else if (response.role === 'member') {
-              activeSessionMember = response.member; 
-              document.getElementById('roleStatusBadge').textContent = 'عضو المجلس';
-              document.getElementById('memberIndividualSection').classList.remove('d-none');
-              renderIndividualMember(response.member); 
-              fetchActiveVoteSystem(); 
-            }
-          } else {
-            alertDiv.classList.remove('d-none'); alertDiv.className = 'alert alert-danger mt-3 text-center py-2 small fw-bold'; alertDiv.textContent = response.message;
-          }
-        }).catch(err => {
-          loginBtn.disabled = false; loginBtn.innerHTML = 'دخول المنظومة';
-          alertDiv.classList.remove('d-none'); alertDiv.className = 'alert alert-danger mt-3 text-center py-2 small fw-bold'; alertDiv.textContent = err.message;
-        });
-    }
-
-    function fetchActiveVoteSystem() {
-      callGoogleAPI({ action: 'getActiveVote' })
-        .then(vote => {
-          if (vote) {
-            activeVoteObject = vote; 
-            document.getElementById('voteQuestionText').textContent = vote.question;
-            
-            let optionsHtml = '';
-            if (vote.options && vote.options.length > 0) {
-              vote.options.forEach((opt, idx) => {
-                optionsHtml += `
-                  <div class="form-check p-2 border rounded mb-2 bg-white">
-                    <input class="form-check-input ms-2" type="radio" name="memberVoteRadio" id="opt${idx}" value="${opt}">
-                    <label class="form-check-label fw-bold w-100" for="opt${idx}" style="cursor:pointer;">${opt}</label>
-                  </div>`;
-              });
-            } else {
-              optionsHtml = `<textarea class="form-control" id="openTextVote" rows="3" placeholder="اكتب رأيك أو تحفظك هنا..."></textarea>`;
-            }
-            document.getElementById('dynamicVoteOptionsContainer').innerHTML = optionsHtml;
-
-            const memberName = activeSessionMember['الاسم الكامل'] || Object.values(activeSessionMember)[0];
-            callGoogleAPI({ action: 'checkVoteStatus', memberName: memberName, question: vote.question })
-              .then(status => {
-                if(status.hasVoted) displayMemberVoteResults(status.results, vote.options.length === 0);
-              });
-          } else {
-            document.getElementById('voteBoxContainer').innerHTML = '<div class="alert alert-secondary fw-bold">لا يوجد أي تصويت نشط حالياً.</div>';
-          }
-        });
-    }
-
-    function sendVoteToServer() {
-      const alertDiv = document.getElementById('voteAlert'); 
-      const btn = document.getElementById('submitVoteBtn');
-      let voteValue = "";
+      document.getElementById('login-spinner').classList.remove('hidden');
+      document.getElementById('login-error').classList.add('hidden');
       
-      if (activeVoteObject.options.length > 0) {
-        const selectedRadio = document.querySelector('input[name="memberVoteRadio"]:checked');
-        if(!selectedRadio) { alertDiv.className = 'alert alert-danger d-block mt-3 py-2 small fw-bold'; alertDiv.textContent = 'يرجى تحديد خيار!'; return; }
-        voteValue = selectedRadio.value; 
-      } else {
-        const txtArea = document.getElementById('openTextVote');
-        if(!txtArea || txtArea.value.trim() === "") { alertDiv.className = 'alert alert-danger d-block mt-3 py-2 small fw-bold'; alertDiv.textContent = 'يرجى كتابة رأيك!'; return; }
-        voteValue = txtArea.value.trim();
-      }
+      const user = document.getElementById('login-username').value;
+      const pass = document.getElementById('login-password').value;
+
+      const response = await callBackend('login', { username: user, password: pass });
       
-      const memberName = activeSessionMember['الاسم الكامل'] || Object.values(activeSessionMember)[0];
-      btn.disabled = true; btn.innerHTML = 'جاري الإرسال...';
-      alertDiv.className = 'd-none';
-      
-      callGoogleAPI({ action: 'submitVote', memberName: memberName, voteValue: voteValue, question: activeVoteObject.question })
-        .then(res => {
-          btn.disabled = false; btn.innerHTML = 'إرسال الصوت الآن';
-          alertDiv.className = res.success ? 'alert alert-success d-block mt-3 py-2 small fw-bold' : 'alert alert-danger d-block mt-3 py-2 small fw-bold';
-          alertDiv.textContent = res.message; 
-          if(res.results) displayMemberVoteResults(res.results, activeVoteObject.options.length === 0);
-        })
-        .catch(err => { btn.disabled = false; btn.innerHTML = 'إرسال الصوت الآن'; alertDiv.className = 'alert alert-danger d-block mt-3 py-2 small fw-bold'; alertDiv.textContent = err.message; });
-    }
-
-    function displayMemberVoteResults(results, isOpenText = false) {
-       document.getElementById('submitVoteBtn').classList.add('d-none');
-       document.getElementById('dynamicVoteOptionsContainer').classList.add('d-none');
-       document.getElementById('memberVoteResultsContainer').classList.remove('d-none');
-       const barsContainer = document.getElementById('memberVoteResultsBars');
-       if (isOpenText) { barsContainer.innerHTML = '<div class="alert alert-info fw-bold small m-0">تم تسجيل رأيك بنجاح.</div>'; return; }
-
-       let html = '';
-       for (const [option, count] of Object.entries(results.counts)) {
-          let percentage = results.total > 0 ? Math.round((count / results.total) * 100) : 0;
-          html += `<div class="mb-2"><div class="d-flex justify-content-between small fw-bold mb-1"><span>${option}</span><span>${percentage}% (${count})</span></div><div class="progress" style="height: 8px;"><div class="progress-bar bg-success" style="width: ${percentage}%"></div></div></div>`;
-       }
-       barsContainer.innerHTML = html;
-    }
-
-    function handleBossFormSubmit(e) {
-      e.preventDefault();
-      const btn = document.getElementById('bossSubmitBtn'); const alertDiv = document.getElementById('bossFormAlert');
-      btn.disabled = true; btn.innerHTML = 'جاري الإرسال...';
-      const formData = {
-        senderName: activeSessionMember['الاسم الكامل'] || "عضو", senderEmail: activeSessionMember['البريد الإلكتروني'] || "",
-        subject: document.getElementById('bossSubject').value.trim(), message: document.getElementById('bossMessage').value.trim()
-      };
-      callGoogleAPI({ action: 'saveMessage', formData: formData })
-        .then(res => {
-          btn.disabled = false; btn.innerHTML = 'إرسال المراسلة';
-          alertDiv.className = res.success ? 'alert alert-success d-block mt-2' : 'alert alert-danger d-block mt-2';
-          alertDiv.textContent = res.message;
-          if(res.success) document.getElementById('bossContactForm').reset();
-        });
-    }
-
-    function renderIndividualMember(member) {
-      document.getElementById('indivMemberName').textContent = member['الاسم الكامل'] || Object.values(member)[0] || 'عضو';
-      let html = '<div class="list-group list-group-flush small">';
-      Object.keys(member).forEach(key => {
-        if (key !== 'id' && key !== 'rowNumber' && member[key]) {
-          let val = (key.includes('سري') || key.includes('مرور')) ? '••••••••' : member[key];
-          html += `<div class="list-group-item d-flex justify-content-between px-1"><span class="fw-bold text-success">${key}</span><span class="fw-semibold text-end">${val}</span></div>`;
-        }
-      });
-      document.getElementById('indivMemberDetailsContainer').innerHTML = html + '</div>';
-    }
-
-    function openMemberOwnEditModal() {
-      if(!activeSessionMember) return;
-      const keys = Object.keys(activeSessionMember); const userKey = keys[0]; const passKey = keys[1];
-      document.getElementById('userKeyLabel1').textContent = userKey; document.getElementById('userKeyLabel2').textContent = passKey;
-      document.getElementById('ownUsernameField').value = activeSessionMember[userKey] || ''; document.getElementById('ownPasswordField').value = activeSessionMember[passKey] || '';
-      let fieldsHtml = '';
-      keys.forEach(key => {
-        if(key !== 'id' && key !== 'rowNumber' && key !== userKey && key !== passKey) {
-          fieldsHtml += `<div class="col-12 text-start"><label class="form-label fw-semibold text-secondary small">${key}</label><input type="text" class="form-control form-control-sm own-dyn-input" data-key="${key}" value="${activeSessionMember[key] || ''}"></div>`;
-        }
-      });
-      document.getElementById('dynamicOwnFieldsContainer').innerHTML = fieldsHtml; 
-      new bootstrap.Modal(document.getElementById('memberOwnEditModal')).show();
-    }
-
-    function handleMemberOwnFormSubmit(e) {
-      e.preventDefault();
-      const saveBtn = document.getElementById('saveOwnEditBtn'); const alertDiv = document.getElementById('ownEditAlert');
-      saveBtn.disabled = true; saveBtn.innerHTML = 'جاري الحفظ...';
-      const keys = Object.keys(activeSessionMember); let updatedFields = {};
-      updatedFields[keys[0]] = document.getElementById('ownUsernameField').value.trim(); updatedFields[keys[1]] = document.getElementById('ownPasswordField').value.trim();
-      document.querySelectorAll('.own-dyn-input').forEach(input => { updatedFields[input.getAttribute('data-key')] = input.value.trim(); });
-      
-      callGoogleAPI({ action: 'updateOwnData', rowNumber: activeSessionMember.rowNumber, updatedFields: updatedFields })
-        .then(res => {
-          saveBtn.disabled = false; saveBtn.innerHTML = 'حفظ التغييرات';
-          if(res.success) {
-            alertDiv.className = 'alert alert-success mt-2 d-block'; alertDiv.textContent = res.message;
-            activeSessionMember = res.updatedMember; renderIndividualMember(activeSessionMember); 
-            setTimeout(() => bootstrap.Modal.getInstance(document.getElementById('memberOwnEditModal')).hide(), 1000);
-          } else { alertDiv.className = 'alert alert-danger mt-2 d-block'; alertDiv.textContent = res.message; }
-        });
-    }
-
-    // 🔴 هذه هي الدالة المعدلة التي تجمع بين الإحصائيات القديمة والجديدة بدون المساس بالخادم
-    function loadAdminVotesAndMessages() {
-      // 1. جلب الأصوات وتحليلها
-      callGoogleAPI({ action: 'getAdminVotes' }).then(votes => {
-        const tbody = document.getElementById('votesTableBody'); 
-        const statsContainer = document.getElementById('voteStatsContainer');
-        tbody.innerHTML = '';
+      document.getElementById('login-spinner').classList.add('hidden');
+      if (response.success) {
+        currentUserProfile = response.user;
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('dashboard-screen').classList.remove('hidden');
         
-        let voteCounts = {};
-        if (votes && votes.length > 0) {
-          votes.forEach(v => {
-            voteCounts[v.vote] = (voteCounts[v.vote] || 0) + 1;
-            tbody.insertAdjacentHTML('beforeend', `<tr><td>${v.timestamp}</td><td class="fw-bold">${v.name}</td><td>${v.question}</td><td><span class="badge bg-success">${v.vote}</span></td></tr>`);
-          });
-          
-          let statsHtml = `<div class="col-12"><div class="p-2 bg-light rounded border text-center"><h6>إجمالي الردود: ${votes.length}</h6></div></div>`;
-          for (const [option, count] of Object.entries(voteCounts)) {
-             let percentage = Math.round((count / votes.length) * 100);
-             statsHtml += `<div class="col-6"><div class="p-2 border rounded bg-white text-start"><h6 class="text-secondary small fw-bold">${option}</h6><div class="d-flex justify-content-between mb-1"><strong>${count}</strong><span class="badge bg-success">${percentage}%</span></div></div></div>`;
-          }
-          statsContainer.innerHTML = statsHtml;
-        } else {
-          tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">لا توجد أصوات.</td></tr>';
-          statsContainer.innerHTML = '<div class="col-12 text-center text-muted">لا توجد إحصائيات.</div>';
+        document.getElementById('user-name').innerText = currentUserProfile.name;
+        document.getElementById('user-badge').innerText = currentUserProfile.hierarchyLabel;
+        document.getElementById('user-scope').innerText = currentUserProfile.hierarchyScope;
+        document.getElementById('user-assigned-duties').innerText = currentUserProfile.assignedDuties;
+        document.getElementById('active-minutes-sheet').innerText = currentUserProfile.minutesSheetName;
+        
+        if (currentUserProfile.minutesSheetName !== "المحضر الوطني") {
+          document.getElementById('minutes-h8').classList.add('hidden');
         }
-
-        // 2. جلب جميع الأعضاء واستخراج غير المصوتين
-        callGoogleAPI({ action: 'getAllMembers' }).then(members => {
-          const totalMembersCount = members.length;
-          const votesCount = votes ? votes.length : 0;
-          const votedNamesList = votes ? votes.map(v => v.name) : [];
-          
-          // تحديث الداشبورد العلوي
-          document.getElementById('totalVotesCount').innerText = votesCount;
-          document.getElementById('votesPercentage').innerText = totalMembersCount > 0 ? Math.round((votesCount / totalMembersCount) * 100) + '%' : '0%';
-
-          // تصفية من لم يصوت
-          const nonVoters = members.filter(m => {
-            const mName = m['الاسم الكامل'] || Object.values(m)[1];
-            return !votedNamesList.includes(mName);
-          });
-
-          // عرض غير المصوتين
-          const nonVotersTbody = document.getElementById('nonVotersTableBody');
-          nonVotersTbody.innerHTML = '';
-
-          if(nonVoters.length === 0) {
-            nonVotersTbody.innerHTML = '<tr><td colspan="2" class="text-success fw-bold py-3"><i class="fa-solid fa-check-circle me-1"></i> الجميع قام بالتصويت!</td></tr>';
-          } else {
-            nonVoters.forEach(member => {
-              const name = member['الاسم الكامل'] || Object.values(member)[1] || 'عضو';
-              
-              // البحث عن رقم الهاتف والإيميل من بيانات العضو
-              let phone = member['رقم الهاتف'] || member['رقم الهاتف 01'] || member['الهاتف'] || '';
-              let email = member['البريد الإلكتروني'] || member['الايميل'] || '';
-
-              // معالجة رقم الهاتف ليكون دولياً (للجزائر مثلا)
-              if(phone) {
-                phone = phone.toString().trim();
-                if(phone.startsWith('0')) phone = phone.substring(1);
-                phone = '213' + phone;
-              }
-
-              const msgText = `الأخ/الأخت ${name}،\nبصفتكم عضو في المجلس الوطني لنقابة (SNTE)، نذكركم بضرورة ممارسة حقكم في التصويت على النظام الداخلي عبر البوابة الإلكترونية للمجلس اليوم.\nتواجدكم وتصويتكم التزام نقابي مهم.\n\nالأمين العام الوطني.`;
-              const encodedMsg = encodeURIComponent(msgText);
-              
-              const waLink = phone ? `https://wa.me/${phone}?text=${encodedMsg}` : '#';
-              const mailLink = email ? `mailto:${email}?subject=تذكير هام&body=${encodedMsg}` : '#';
-
-              let buttonsHtml = '';
-              if(phone) buttonsHtml += `<a href="${waLink}" target="_blank" class="btn btn-sm btn-success m-1 shadow-sm"><i class="fa-brands fa-whatsapp"></i></a>`;
-              if(email) buttonsHtml += `<a href="${mailLink}" target="_blank" class="btn btn-sm btn-danger m-1 shadow-sm"><i class="fa-solid fa-envelope"></i></a>`;
-              if(!phone && !email) buttonsHtml = `<span class="badge bg-secondary small">لا يوجد اتصال</span>`;
-
-              nonVotersTbody.insertAdjacentHTML('beforeend', `
-                <tr>
-                  <td class="fw-bold small text-dark">${name}</td>
-                  <td>${buttonsHtml}</td>
-                </tr>
-              `);
-            });
-          }
-        });
-      });
-
-      // جلب المراسلات (القديمة)
-      callGoogleAPI({ action: 'getAdminMessages' }).then(msgs => {
-        const tbody = document.getElementById('messagesTableBody'); tbody.innerHTML = '';
-        if (!msgs || msgs.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">لا يوجد رسائل.</td></tr>'; return; }
-        msgs.forEach(m => { tbody.insertAdjacentHTML('beforeend', `<tr><td>${m.timestamp}</td><td class="fw-bold">${m.sender}</td><td class="text-success">${m.subject}</td><td>${m.msg}</td><td>${m.attachment!=="لا يوجد"?`<a href="${m.attachment}" target="_blank">تحميل</a>`:"بدون"}</td></tr>`); });
-      });
+        
+        loadData();
+        loadMinutesData(false);
+      } else {
+        document.getElementById('login-error').innerText = response.message;
+        document.getElementById('login-error').classList.remove('hidden');
+      }
     }
 
-    function loadAllMembersForAdmin() {
-      callGoogleAPI({ action: 'getAllMembers' }).then(data => { allMembers = data; displayMembers(allMembers); });
+    function switchTab(tab) {
+      const memBtn = document.getElementById('tab-members-btn');
+      const minBtn = document.getElementById('tab-minutes-btn');
+      const memContent = document.getElementById('tab-members-content');
+      const minContent = document.getElementById('tab-minutes-content');
+
+      if (tab === 'members') {
+        memBtn.className = "px-6 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition";
+        minBtn.className = "px-6 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition";
+        memContent.classList.remove('hidden');
+        minContent.classList.add('hidden');
+      } else {
+        minBtn.className = "px-6 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition";
+        memBtn.className = "px-6 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition";
+        minContent.classList.remove('hidden');
+        memContent.classList.add('hidden');
+      }
     }
 
-    function displayMembers(members) {
-      const container = document.getElementById('membersContainer'); document.getElementById('membersCount').textContent = members.length;
-      container.innerHTML = '';
-      members.forEach(member => {
-        const name = member['الاسم الكامل'] || Object.values(member)[1] || 'عضو';
-        container.insertAdjacentHTML('beforeend', `<div class="col-12"><div class="card shadow-sm border-0 member-card" onclick="openAdminEditModal(${member.id})"><div class="card-body d-flex align-items-center p-2"><div class="avatar-circle ms-2" style="width:40px; height:40px;"><i class="fa-solid fa-user-tie"></i></div><div class="flex-grow-1"><h6 class="fw-bold mb-0">${name}</h6><p class="mb-0 small text-muted">${member['الولاية']||''}</p></div><div class="text-danger small"><i class="fa-solid fa-pen"></i></div></div></div></div>`);
-      });
-    }
-
-    function filterMembers() {
-      const query = document.getElementById('searchInput').value.toLowerCase().trim();
-      if (!query) { displayMembers(allMembers); return; }
-      displayMembers(allMembers.filter(m => Object.values(m).some(v => String(v).toLowerCase().includes(query))));
-    }
-
-    function openAdminEditModal(id) {
-      const member = allMembers.find(m => m.id === id); if (!member) return;
-      document.getElementById('editRowNumber').value = member.rowNumber;
-      let fieldsHtml = '';
-      Object.keys(member).forEach(key => {
-        if (key !== 'id' && key !== 'rowNumber') {
-          fieldsHtml += `<div class="col-md-6 text-start"><label class="form-label small fw-bold">${key}</label><input type="text" class="form-control form-control-sm edit-input" data-key="${key}" value="${member[key] || ''}"></div>`;
-        }
-      });
-      document.getElementById('editFieldsContainer').innerHTML = fieldsHtml; 
-      new bootstrap.Modal(document.getElementById('editMemberModal')).show();
-    }
-
-    function handleEditFormSubmit(e) {
-      e.preventDefault(); 
-      const rowNumber = document.getElementById('editRowNumber').value; const saveBtn = document.getElementById('saveEditBtn');
-      saveBtn.disabled = true; saveBtn.innerHTML = 'جاري الحفظ...';
-      let updatedFields = {}; 
-      document.querySelectorAll('.edit-input').forEach(input => { updatedFields[input.getAttribute('data-key')] = input.value.trim(); });
+    async function loadData() {
+      document.getElementById('loading').classList.remove('hidden');
+      const response = await callBackend('getFilteredMembers', { userProfile: currentUserProfile });
       
-      callGoogleAPI({ action: 'updateMemberData', rowNumber: rowNumber, updatedFields: updatedFields })
-        .then(res => {
-          saveBtn.disabled = false; saveBtn.innerHTML = 'حفظ التعديلات';
-          if(res.success) { loadAllMembersForAdmin(); setTimeout(() => bootstrap.Modal.getInstance(document.getElementById('editMemberModal')).hide(), 1000); }
-          else alert(res.message);
-        });
+      document.getElementById('loading').classList.add('hidden');
+      if (response.success) {
+        allMembers = response.data;
+        filteredMembers = [...allMembers];
+        updateStats();
+        renderTable();
+      } else {
+        alert(response.message);
+      }
+    }
+
+    async function loadMinutesData(isAutoFillClick) {
+      document.getElementById('loading').classList.remove('hidden');
+      const response = await callBackend('getMinutesData', { 
+        sheetName: currentUserProfile.minutesSheetName, 
+        userProfile: currentUserProfile, 
+        shouldAutoFill: isAutoFillClick 
+      });
+      
+      document.getElementById('loading').classList.add('hidden');
+      if (response.success) {
+        minutesRows = response.data;
+        renderMinutesTable();
+        if (isAutoFillClick) alert(response.message);
+      } else {
+        alert(response.message);
+      }
+    }
+
+    function autoFillMinutes() {
+      if (confirm("هل أنت متأكد من رغبتك في سحب وتعبئة بيانات المحضر تلقائياً بناءً على منخرطي قاعدة البيانات الحالية؟")) {
+        loadMinutesData(true);
+      }
+    }
+
+    function renderMinutesTable() {
+      const tbody = document.getElementById('minutes-table-body');
+      tbody.innerHTML = '';
+      const isNational = currentUserProfile.minutesSheetName === "المحضر الوطني";
+      
+      minutesRows.forEach((row, i) => {
+        let tr = document.createElement('tr');
+        tr.className = "hover:bg-gray-50 transition";
+        tr.innerHTML = `
+          <td class="p-2 border-l text-center bg-gray-50 font-bold text-gray-500">${row.id || (i + 1)}</td>
+          <td class="p-1 border-l"><input type="text" value="${row.name}" onchange="updateMinutesCell(${i}, 'name', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none font-semibold text-gray-900"></td>
+          <td class="p-1 border-l"><input type="text" value="${row.job}" onchange="updateMinutesCell(${i}, 'job', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none"></td>
+          <td class="p-1 border-l"><input type="text" value="${row.nin}" onchange="updateMinutesCell(${i}, 'nin', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none font-semibold text-gray-700"></td>
+          <td class="p-1 border-l"><input type="text" value="${row.socialSec}" onchange="updateMinutesCell(${i}, 'socialSec', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none font-semibold text-emerald-700"></td>
+          <td class="p-1 border-l"><input type="text" value="${row.unionDuty}" onchange="updateMinutesCell(${i}, 'unionDuty', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none font-medium"></td>
+          <td class="p-1 border-l"><input type="text" value="${row.workplace1}" onchange="updateMinutesCell(${i}, 'workplace1', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none"></td>
+          <td class="p-1 ${isNational ? '' : 'hidden'}"><input type="text" value="${row.workplace2}" onchange="updateMinutesCell(${i}, 'workplace2', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none"></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateMinutesCell(index, field, value) { minutesRows[index][field] = value; }
+
+    async function saveMinutes() {
+      document.getElementById('loading').classList.remove('hidden');
+      const response = await callBackend('saveMinutesData', { 
+        sheetName: currentUserProfile.minutesSheetName, 
+        updatedRows: minutesRows 
+      });
+      
+      document.getElementById('loading').classList.add('hidden');
+      alert(response.message);
+      if(response.success) loadMinutesData(false);
+    }
+
+    function updateStats() {
+      document.getElementById('stat-total').innerText = filteredMembers.length;
+      document.getElementById('stat-males').innerText = filteredMembers.filter(m => m.gender === 'ذكر').length;
+      document.getElementById('stat-females').innerText = filteredMembers.filter(m => m.gender === 'أنثى').length;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+      const start = (currentPage - 1) * rowsPerPage;
+      const pageData = filteredMembers.slice(start, start + rowsPerPage);
+
+      if(pageData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center p-6 text-gray-400 font-bold">لا توجد سجلات منخرطين تقع ضمن نطاق صلاحياتك الحالية</td></tr>`;
+        return;
+      }
+
+      pageData.forEach(m => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-gray-50 border-b border-gray-100 transition">
+            <td class="p-3.5 font-bold text-gray-900">${m.fullName}</td>
+            <td class="p-3.5 text-gray-500">${m.state || '/'}</td>
+            <td class="p-3.5 text-gray-500 font-semibold">${m.municipality || '/'}</td>
+            <td class="p-3.5 text-gray-500">${m.workplace || '/'}</td>
+            <td class="p-3.5 text-center">
+              <button onclick="openEditModal(${m.row})" class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-lg border border-emerald-200 hover:bg-emerald-100 font-bold transition">تعديل الملف</button>
+            </td>
+          </tr>`;
+      });
+      const totalPages = Math.ceil(filteredMembers.length / rowsPerPage) || 1;
+      document.getElementById('page-info').innerText = `صفحة ${currentPage} من ${totalPages}`;
+      document.getElementById('prev-btn').disabled = currentPage === 1;
+      document.getElementById('next-btn').disabled = currentPage === totalPages;
+    }
+
+    function handleSearch() {
+      const q = document.getElementById('search-input').value.toLowerCase();
+      filteredMembers = allMembers.filter(m => m.fullName.toLowerCase().includes(q) || (m.state && m.state.toLowerCase().includes(q)) || (m.workplace && m.workplace.toLowerCase().includes(q)));
+      currentPage = 1;
+      renderTable();
+      updateStats();
+    }
+
+    function openEditModal(row) {
+      const m = allMembers.find(item => item.row === row);
+      if(!m) return;
+      document.getElementById('modal-title').innerHTML = `<span>تعديل وحفظ ملف: ${m.fullName}</span>`;
+      document.getElementById('member-row').value = m.row;
+      
+      document.getElementById('field-fullName').value = m.fullName || '';
+      document.getElementById('field-latinName').value = m.latinName || '';
+      document.getElementById('field-gender').value = m.gender || 'ذكر';
+      document.getElementById('field-phone').value = m.phone || '';
+      document.getElementById('field-birthDate').value = m.birthDate || '';
+      document.getElementById('field-birthPlace').value = m.birthPlace || '';
+      document.getElementById('field-email').value = m.email || '';
+      document.getElementById('field-address').value = m.address || '';
+      
+      document.getElementById('field-state').value = m.state || '';
+      document.getElementById('field-municipality').value = m.municipality || '';
+      document.getElementById('field-workplace').value = m.workplace || '';
+      document.getElementById('field-rank').value = m.rank || '';
+      document.getElementById('field-firstAppointment').value = m.firstAppointment || '';
+      document.getElementById('field-subject').value = m.subject || '';
+      
+      document.getElementById('field-nin').value = m.nin || '';
+      document.getElementById('field-socialSec').value = m.socialSec || '';
+      document.getElementById('field-cardNum').value = m.cardNum || '';
+      
+      document.getElementById('field-unionStatus').value = m.unionStatus || '';
+      document.getElementById('field-unionDuties').value = m.unionDuties || '';
+      document.getElementById('field-regionalSec').value = m.regionalSec || '';
+      document.getElementById('field-assignedDuties').value = m.assignedDuties || '';
+      
+      document.getElementById('member-modal').classList.remove('hidden');
+    }
+
+    function openAddModal() {
+      document.getElementById('modal-title').innerText = "إضافة منخرط جديد لقاعدة البيانات";
+      document.getElementById('member-form').reset();
+      document.getElementById('member-row').value = '';
+      document.getElementById('member-modal').classList.remove('hidden');
+    }
+
+    function closeModal() { document.getElementById('member-modal').classList.add('hidden'); }
+    function handleLogout() { window.location.reload(); }
+    function prevPage() { if(currentPage > 1) { currentPage--; renderTable(); } }
+    function nextPage() { if(currentPage < Math.ceil(filteredMembers.length / rowsPerPage)) { currentPage++; renderTable(); } }
+
+    async function handleSave(e) {
+      e.preventDefault();
+      document.getElementById('loading').classList.remove('hidden');
+      const row = document.getElementById('member-row').value;
+      
+      const data = {
+        fullName: document.getElementById('field-fullName').value,
+        latinName: document.getElementById('field-latinName').value,
+        gender: document.getElementById('field-gender').value,
+        phone: document.getElementById('field-phone').value,
+        birthDate: document.getElementById('field-birthDate').value,
+        birthPlace: document.getElementById('field-birthPlace').value,
+        email: document.getElementById('field-email').value,
+        address: document.getElementById('field-address').value,
+        state: document.getElementById('field-state').value,
+        municipality: document.getElementById('field-municipality').value,
+        workplace: document.getElementById('field-workplace').value,
+        rank: document.getElementById('field-rank').value,
+        firstAppointment: document.getElementById('field-firstAppointment').value,
+        subject: document.getElementById('field-subject').value,
+        nin: document.getElementById('field-nin').value,
+        socialSec: document.getElementById('field-socialSec').value,
+        cardNum: document.getElementById('field-cardNum').value,
+        unionStatus: document.getElementById('field-unionStatus').value,
+        unionDuties: document.getElementById('field-unionDuties').value,
+        regionalSec: document.getElementById('field-regionalSec').value,
+        assignedDuties: document.getElementById('field-assignedDuties').value
+      };
+
+      const response = await callBackend('saveMember', {
+        member: data,
+        row: row ? parseInt(row) : null,
+        userProfile: currentUserProfile
+      });
+
+      if(response.success) {
+        closeModal();
+        loadData();
+      } else {
+        alert(response.message);
+        document.getElementById('loading').classList.add('hidden');
+      }
     }
   </script>
 </body>

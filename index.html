@@ -10,38 +10,38 @@
 </head>
 <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
 
+  <!-- شاشة تسجيل الدخول -->
   <div id="login-screen" class="flex-grow flex items-center justify-center px-4 py-12">
   <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100">
     <div class="text-center mb-6">
-      
       <img src="https://l.top4top.io/p_37988hwfa0.png" alt="لوغو النقابة" class="w-24 h-24 mx-auto mb-4 object-contain dropped-shadow-md">
-            <h2 class="text-xl font-bold text-gray-900"> بوابةهيكلة الامانات - SNTE</h2>
-        <p class="text-xs text-gray-400 mt-1">النقابة الوطنية لعمال التربية SNTE</p>
-      </div>
-      <form id="login-form" onsubmit="handleLogin(event)">
-        <div class="mb-4">
-          <label class="block text-gray-700 text-xs font-bold mb-2">اسم المستخدم الموحد</label>
-          <input type="text" id="login-username" value="sntedz2026" readonly class="w-full px-3 py-2 border bg-gray-100 rounded-lg text-sm font-semibold text-gray-500 focus:outline-none cursor-not-allowed">
-        </div>
-        <div class="mb-6">
-          <label class="block text-gray-700 text-xs font-bold mb-2">الرقم السري الشخصي (العمود الثاني)</label>
-          <input type="password" id="login-password" required class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="••••••••">
-        </div>
-        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow">
-          <span>دخول آمن للوحة التحكم</span>
-          <i id="login-spinner" class="fa-solid fa-spinner animate-spin hidden"></i>
-        </button>
-        <div id="login-error" class="mt-4 p-2.5 bg-red-50 text-red-600 rounded-lg text-xs text-center font-bold hidden"></div>
-      </form>
+      <h2 class="text-xl font-bold text-gray-900">بوابة هيكلة الامانات - SNTE</h2>
+      <p class="text-xs text-gray-400 mt-1">النقابة الوطنية لعمال التربية SNTE</p>
     </div>
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-xs font-bold mb-2">اسم المستخدم الموحد</label>
+        <input type="text" id="login-username" value="sntedz2026" readonly class="w-full px-3 py-2 border bg-gray-100 rounded-lg text-sm font-semibold text-gray-500 focus:outline-none cursor-not-allowed">
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-xs font-bold mb-2">الرقم السري الشخصي (العمود الثاني)</label>
+        <input type="password" id="login-password" required class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="••••••••">
+      </div>
+      <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow">
+        <span>دخول آمن للوحة التحكم</span>
+        <i id="login-spinner" class="fa-solid fa-spinner animate-spin hidden"></i>
+      </button>
+      <div id="login-error" class="mt-4 p-2.5 bg-red-50 text-red-600 rounded-lg text-xs text-center font-bold hidden"></div>
+    </form>
+  </div>
   </div>
 
+  <!-- لوحة التحكم الرئيسية بعد تسجيل الدخول -->
   <div id="dashboard-screen" class="hidden flex-grow flex flex-col">
     <header class="bg-white shadow-sm border-b">
       <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
           <img src="https://l.top4top.io/p_37988hwfa0.png" alt="لوغو النقابة" class="w-12 h-12 object-contain">
-          
           <h1 class="text-lg font-bold text-gray-900">منصة تسيير السلم النقابي والمحاضر</h1>
         </div>
         <div class="flex items-center gap-4">
@@ -54,19 +54,21 @@
       </div>
     </header>
 
+    <!-- تبويبات النظام -->
     <div class="bg-white border-b shadow-inner">
       <div class="max-w-7xl mx-auto px-4 flex gap-4">
         <button id="tab-members-btn" onclick="switchTab('members')" class="px-6 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition">
           <i class="fa-solid fa-users"></i> قائمة بيانات المنخرطين
         </button>
         <button id="tab-minutes-btn" onclick="switchTab('minutes')" class="px-6 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition">
-          <i class="fa-solid fa-file-signature"></i> تحرير وتسيير شيت المحضر النقابي
+          <i class="fa-solid fa-file-lines"></i> عرض شيت المحضر النقابي
         </button>
       </div>
     </div>
 
     <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
       
+      <!-- الجانب الأيمن: مهام وصلاحيات الأمين العام الحالية -->
       <div class="lg:col-span-1 flex flex-col gap-6">
         <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
           <h3 class="text-sm font-bold text-gray-900 border-b pb-2 mb-3 flex items-center gap-2 text-emerald-600">
@@ -83,9 +85,23 @@
         </div>
       </div>
 
+      <!-- الجانب الأيسر: محتوى التبويبات النشطة -->
       <div class="lg:col-span-3 flex flex-col gap-6">
         
+        <!-- التبويب الأول: قائمة المنخرطين -->
         <div id="tab-members-content" class="space-y-6">
+          
+          <div id="national-dashboard" class="hidden bg-white p-5 rounded-xl shadow-sm border border-emerald-200">
+            <div class="flex justify-between items-end border-b pb-3 mb-4">
+              <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2 text-emerald-700">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>الداشبورد المركزي: إحصائيات الأمانات الولائية</span>
+              </h3>
+              <span class="text-[11px] text-gray-400 font-bold bg-gray-100 px-2 py-1 rounded">اضغط على أي ولاية للبحث وتعديل أمنائها</span>
+            </div>
+            <div id="wilaya-stats-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 max-h-56 overflow-y-auto pr-2"></div>
+          </div>
+
           <div class="grid grid-cols-3 gap-4">
             <div class="bg-white p-4 rounded-xl shadow-sm border text-center">
               <p class="text-xs text-gray-400 font-bold">المنخرطين المتاحين للتعديل</p>
@@ -108,22 +124,16 @@
                 <i class="fa-solid fa-plus"></i> إضافة منخرط جديد
               </button>
             </div>
-
             <div class="overflow-x-auto">
               <table class="w-full text-right border-collapse text-xs">
                 <thead>
                   <tr class="bg-gray-100 text-gray-500 font-bold border-b">
-                    <th class="p-3.5">الاسم الكامل</th>
-                    <th class="p-3.5">الولاية</th>
-                    <th class="p-3.5">البلدية 🏙️</th>
-                    <th class="p-3.5">مكان العمل (الفرع النقابي) 🏢</th>
-                    <th class="p-3.5 text-center">الإجراءات</th>
+                    <th class="p-3.5">الاسم الكامل</th><th class="p-3.5">الولاية</th><th class="p-3.5">البلدية 🏙️</th><th class="p-3.5">مكان العمل 🏢</th><th class="p-3.5 text-center">الإجراءات</th>
                   </tr>
                 </thead>
                 <tbody id="table-body" class="divide-y text-gray-700 font-medium"></tbody>
               </table>
             </div>
-
             <div class="p-3 border-t flex justify-between items-center text-xs text-gray-400 bg-gray-50">
               <span id="page-info"></span>
               <div class="flex gap-1">
@@ -134,42 +144,23 @@
           </div>
         </div>
 
+        <!-- التبويب الثاني: عرض شيت المحاضر -->
         <div id="tab-minutes-content" class="hidden space-y-6">
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-4 gap-3">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-[600px] flex flex-col">
+            <div class="flex justify-between items-center border-b pb-4 mb-4">
               <div>
                 <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
-                  <i class="fa-solid fa-file-pen text-emerald-600"></i>
-                  <span>شيت المحضر النشط: <span id="active-minutes-sheet" class="text-emerald-600"></span></span>
+                  <i class="fa-solid fa-file-pdf text-emerald-600"></i>
+                  <span>عرض شيت المحضر: <span id="active-minutes-sheet" class="text-emerald-600"></span></span>
                 </h3>
-                <p class="text-xs text-gray-400 mt-1">تعديل بيانات الهيئة الإدارية مباشرة وحفظها في جوجل شيت فوريًا.</p>
+                <p class="text-xs text-gray-400 mt-1">عرض المحضر النقابي الخاص بمستوى صلاحياتك (للقراءة والطباعة).</p>
               </div>
-              <div class="flex gap-2 w-full sm:w-auto">
-                <button onclick="autoFillMinutes()" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1.5 transition">
-                  <i class="fa-solid fa-bolt"></i> تعبئة تلقائية من قاعدة المنخرطين
-                </button>
-                <button onclick="saveMinutes()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1.5 transition">
-                  <i class="fa-solid fa-floppy-disk"></i> حفظ شيت المحضر الآن
-                </button>
-              </div>
+              <a id="minutes-external-link" href="#" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 border border-emerald-200">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح للطباعة
+              </a>
             </div>
-
-            <div class="overflow-x-auto border rounded-lg">
-              <table class="w-full text-right border-collapse text-xs">
-                <thead>
-                  <tr class="bg-gray-100 text-gray-600 font-bold border-b">
-                    <th class="p-3 border-l text-center w-12">رقم</th>
-                    <th class="p-3 border-l">اللقب والاسم</th>
-                    <th class="p-3 border-l">الوظيفة</th>
-                    <th class="p-3 border-l">رقم التعريف الوطني (NIN)</th>
-                    <th class="p-3 border-l">رقم الضمان الاجتماعي</th>
-                    <th class="p-3 border-l">المهمة النقابية</th>
-                    <th class="p-3 border-l">مكان العمل 01</th>
-                    <th class="p-3" id="minutes-h8">مكان العمل 02</th>
-                  </tr>
-                </thead>
-                <tbody id="minutes-table-body" class="divide-y"></tbody>
-              </table>
+            <div class="flex-grow rounded-lg overflow-hidden border">
+              <iframe id="minutes-iframe" class="w-full h-full" src="" frameborder="0"></iframe>
             </div>
           </div>
         </div>
@@ -178,127 +169,58 @@
     </main>
   </div>
 
+  <!-- نافذة الإضافة والتعديل للمنخرطين -->
   <div id="member-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <!-- محتوى النافذة كما هو دون تغيير -->
     <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden">
       <div class="bg-emerald-600 text-white px-5 py-4 flex justify-between items-center shadow-md">
         <h3 id="modal-title" class="text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-user-pen"></i> <span>إدارة بيانات ملف المنخرط بالكامل</span></h3>
         <button onclick="closeModal()" class="text-white text-lg hover:text-gray-200"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      
       <form id="member-form" onsubmit="handleSave(event)" class="overflow-y-auto p-6 space-y-6 text-xs bg-gray-50">
         <input type="hidden" id="member-row">
-
+        <!-- الأقسام الأربعة -->
         <div class="bg-white p-4 rounded-xl border shadow-sm space-y-4">
           <h4 class="font-bold text-emerald-700 border-b pb-1.5 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-id-card-clip text-sm"></i> 1. البيانات الشخصية والاتصال</h4>
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">الاسم الكامل بالعربية</label>
-              <input type="text" id="field-fullName" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">NOM ET PRENOM (اللاتينية)</label>
-              <input type="text" id="field-latinName" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">الجنس</label>
-              <select id="field-gender" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-                <option value="ذكر">ذكر</option>
-                <option value="أنثى">أنثى</option>
-              </select>
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">رقم الهاتف 📞</label>
-              <input type="text" id="field-phone" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">تاريخ الميلاد</label>
-              <input type="date" id="field-birthDate" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">مكان الميلاد</label>
-              <input type="text" id="field-birthPlace" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div class="md:col-span-2">
-              <label class="font-bold block mb-1 text-gray-600">البريد الإلكتروني ✉️</label>
-              <input type="email" id="field-email" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div class="md:col-span-4">
-              <label class="font-bold block mb-1 text-gray-600">العنوان الشخصي الكامل</label>
-              <input type="text" id="field-address" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
+            <div><label class="font-bold block mb-1 text-gray-600">الاسم الكامل بالعربية</label><input type="text" id="field-fullName" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">NOM ET PRENOM (اللاتينية)</label><input type="text" id="field-latinName" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">الجنس</label><select id="field-gender" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select></div>
+            <div><label class="font-bold block mb-1 text-gray-600">رقم الهاتف 📞</label><input type="text" id="field-phone" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">تاريخ الميلاد</label><input type="date" id="field-birthDate" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">مكان الميلاد</label><input type="text" id="field-birthPlace" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div class="md:col-span-2"><label class="font-bold block mb-1 text-gray-600">البريد الإلكتروني ✉️</label><input type="email" id="field-email" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div class="md:col-span-4"><label class="font-bold block mb-1 text-gray-600">العنوان الشخصي الكامل</label><input type="text" id="field-address" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
           </div>
         </div>
-
         <div class="bg-white p-4 rounded-xl border shadow-sm space-y-4">
           <h4 class="font-bold text-emerald-700 border-b pb-1.5 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-briefcase text-sm"></i> 2. البيانات المهنية والجغرافية</h4>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">الولاية الجغرافية</label>
-              <input type="text" id="field-state" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">البلدية 🏙️</label>
-              <input type="text" id="field-municipality" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">مكان العمل (الفرع النقابي) 🏢</label>
-              <input type="text" id="field-workplace" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">الرتبة الحالية</label>
-              <input type="text" id="field-rank" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">تاريخ أول تعيين في القطاع</label>
-              <input type="date" id="field-firstAppointment" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">مادة التدريس (للأساتذة)</label>
-              <input type="text" id="field-subject" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
+            <div><label class="font-bold block mb-1 text-gray-600">الولاية الجغرافية</label><input type="text" id="field-state" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">البلدية 🏙️</label><input type="text" id="field-municipality" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">مكان العمل (الفرع النقابي) 🏢</label><input type="text" id="field-workplace" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">الرتبة الحالية</label><input type="text" id="field-rank" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">تاريخ أول تعيين في القطاع</label><input type="date" id="field-firstAppointment" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">مادة التدريس (للأساتذة)</label><input type="text" id="field-subject" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
           </div>
         </div>
-
         <div class="bg-white p-4 rounded-xl border shadow-sm space-y-4">
           <h4 class="font-bold text-emerald-700 border-b pb-1.5 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-file-invoice text-sm"></i> 3. الأرقام الرسمية والضمان الاجتماعي</h4>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">رقم التعريف الوطني (NIN)</label>
-              <input type="text" id="field-nin" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-emerald-600 font-bold">رقم الضمان الاجتماعي 🛡️</label>
-              <input type="text" id="field-socialSec" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-emerald-50 border-emerald-200">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">رقم بطاقة الانخراط النقابي</label>
-              <input type="text" id="field-cardNum" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold">
-            </div>
+            <div><label class="font-bold block mb-1 text-gray-600">رقم التعريف الوطني (NIN)</label><input type="text" id="field-nin" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold"></div>
+            <div><label class="font-bold block mb-1 text-emerald-600 font-bold">رقم الضمان الاجتماعي 🛡️</label><input type="text" id="field-socialSec" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-emerald-50 border-emerald-200"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">رقم بطاقة الانخراط النقابي</label><input type="text" id="field-cardNum" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-semibold"></div>
           </div>
         </div>
-
         <div class="bg-white p-4 rounded-xl border shadow-sm space-y-4">
           <h4 class="font-bold text-emerald-700 border-b pb-1.5 flex items-center gap-1.5 text-xs"><i class="fa-solid fa-sitemap text-sm"></i> 4. الصفة والهياكل النقابية القيادية</h4>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div>
-              <label class="font-bold block mb-1 text-emerald-700">الصفة النقابية (العمود F)</label>
-              <input type="text" id="field-unionStatus" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-gray-50">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-emerald-700">المهام النقابية (العمود G)</label>
-              <input type="text" id="field-unionDuties" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-gray-50">
-            </div>
-            <div>
-              <label class="font-bold block mb-1 text-gray-600">الأمانة الجهوية المكلفة بالتنسيق</label>
-              <input type="text" id="field-regionalSec" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none">
-            </div>
-            <div class="md:col-span-3">
-              <label class="font-bold block mb-1 text-gray-600">المهام المكلف بها تفصيلياً (العمود W)</label>
-              <textarea id="field-assignedDuties" rows="3" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-medium"></textarea>
-            </div>
+            <div><label class="font-bold block mb-1 text-emerald-700">الصفة النقابية (العمود F)</label><input type="text" id="field-unionStatus" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-gray-50"></div>
+            <div><label class="font-bold block mb-1 text-emerald-700">المهام النقابية (العمود G)</label><input type="text" id="field-unionDuties" required class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-bold bg-gray-50"></div>
+            <div><label class="font-bold block mb-1 text-gray-600">الأمانة الجهوية المكلفة بالتنسيق</label><input type="text" id="field-regionalSec" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none"></div>
+            <div class="md:col-span-3"><label class="font-bold block mb-1 text-gray-600">المهام المكلف بها تفصيلياً (العمود W)</label><textarea id="field-assignedDuties" rows="3" class="w-full border p-2 rounded focus:ring-1 focus:ring-emerald-500 focus:outline-none font-medium"></textarea></div>
           </div>
         </div>
-
         <div class="flex justify-end gap-2 border-t pt-4">
           <button type="button" onclick="closeModal()" class="px-5 py-2 border rounded-lg hover:bg-gray-200 transition font-semibold bg-white text-gray-700">إلغاء</button>
           <button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition shadow-md flex items-center gap-1"><i class="fa-solid fa-floppy-disk"></i> <span>حفظ وتحديث الملف بالكامل</span></button>
@@ -317,14 +239,20 @@
     // ==========================================
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzNCb7CcQ_iDKCXcWWGIDY8f4MZKNMT8MAO5BxLWTTlUGhfi8P0ADn781JNgSO-I1k3/exec";
 
+    // روابط المحاضر التي أرسلتها
+    const minutesLinks = {
+      "NATIONAL": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwpdOMVZmqNdWZjUGRwEIzTEq86WrzOzbXFXor9odV-6RqSlfXeENhKVg-SWd6asau5DAXE_XApnOv/pubhtml?gid=1079939139&single=true",
+      "STATE": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwpdOMVZmqNdWZjUGRwEIzTEq86WrzOzbXFXor9odV-6RqSlfXeENhKVg-SWd6asau5DAXE_XApnOv/pubhtml?gid=2016425605&single=true",
+      "MUNICIPAL": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwpdOMVZmqNdWZjUGRwEIzTEq86WrzOzbXFXor9odV-6RqSlfXeENhKVg-SWd6asau5DAXE_XApnOv/pubhtml?gid=932325707&single=true",
+      "BRANCH": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTwpdOMVZmqNdWZjUGRwEIzTEq86WrzOzbXFXor9odV-6RqSlfXeENhKVg-SWd6asau5DAXE_XApnOv/pubhtml?gid=1028207212&single=true"
+    };
+
     let currentUserProfile = null;
     let allMembers = [];
     let filteredMembers = [];
-    let minutesRows = [];
     let currentPage = 1;
     const rowsPerPage = 12;
 
-    // دالة الاتصال بالخادم عبر API
     async function callBackend(action, payload) {
       payload.action = action;
       try {
@@ -362,12 +290,14 @@
         document.getElementById('user-assigned-duties').innerText = currentUserProfile.assignedDuties;
         document.getElementById('active-minutes-sheet').innerText = currentUserProfile.minutesSheetName;
         
-        if (currentUserProfile.minutesSheetName !== "المحضر الوطني") {
-          document.getElementById('minutes-h8').classList.add('hidden');
+        // إعداد الإطار لعرض المحضر المناسب
+        const sheetUrl = minutesLinks[currentUserProfile.hierarchyLevel];
+        if(sheetUrl) {
+          document.getElementById('minutes-iframe').src = sheetUrl;
+          document.getElementById('minutes-external-link').href = sheetUrl;
         }
         
         loadData();
-        loadMinutesData(false);
       } else {
         document.getElementById('login-error').innerText = response.message;
         document.getElementById('login-error').classList.remove('hidden');
@@ -408,80 +338,66 @@
       }
     }
 
-    async function loadMinutesData(isAutoFillClick) {
-      document.getElementById('loading').classList.remove('hidden');
-      const response = await callBackend('getMinutesData', { 
-        sheetName: currentUserProfile.minutesSheetName, 
-        userProfile: currentUserProfile, 
-        shouldAutoFill: isAutoFillClick 
-      });
-      
-      document.getElementById('loading').classList.add('hidden');
-      if (response.success) {
-        minutesRows = response.data;
-        renderMinutesTable();
-        if (isAutoFillClick) alert(response.message);
-      } else {
-        alert(response.message);
-      }
-    }
-
-    function autoFillMinutes() {
-      if (confirm("هل أنت متأكد من رغبتك في سحب وتعبئة بيانات المحضر تلقائياً بناءً على منخرطي قاعدة البيانات الحالية؟")) {
-        loadMinutesData(true);
-      }
-    }
-
-    function renderMinutesTable() {
-      const tbody = document.getElementById('minutes-table-body');
-      tbody.innerHTML = '';
-      const isNational = currentUserProfile.minutesSheetName === "المحضر الوطني";
-      
-      minutesRows.forEach((row, i) => {
-        let tr = document.createElement('tr');
-        tr.className = "hover:bg-gray-50 transition";
-        tr.innerHTML = `
-          <td class="p-2 border-l text-center bg-gray-50 font-bold text-gray-500">${row.id || (i + 1)}</td>
-          <td class="p-1 border-l"><input type="text" value="${row.name}" onchange="updateMinutesCell(${i}, 'name', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none font-semibold text-gray-900"></td>
-          <td class="p-1 border-l"><input type="text" value="${row.job}" onchange="updateMinutesCell(${i}, 'job', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none"></td>
-          <td class="p-1 border-l"><input type="text" value="${row.nin}" onchange="updateMinutesCell(${i}, 'nin', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none font-semibold text-gray-700"></td>
-          <td class="p-1 border-l"><input type="text" value="${row.socialSec}" onchange="updateMinutesCell(${i}, 'socialSec', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none font-semibold text-emerald-700"></td>
-          <td class="p-1 border-l"><input type="text" value="${row.unionDuty}" onchange="updateMinutesCell(${i}, 'unionDuty', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none font-medium"></td>
-          <td class="p-1 border-l"><input type="text" value="${row.workplace1}" onchange="updateMinutesCell(${i}, 'workplace1', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none"></td>
-          <td class="p-1 ${isNational ? '' : 'hidden'}"><input type="text" value="${row.workplace2}" onchange="updateMinutesCell(${i}, 'workplace2', this.value)" class="w-full bg-transparent p-1 border border-transparent hover:border-gray-300 focus:border-emerald-500 focus:bg-white rounded outline-none"></td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function updateMinutesCell(index, field, value) { minutesRows[index][field] = value; }
-
-    async function saveMinutes() {
-      document.getElementById('loading').classList.remove('hidden');
-      const response = await callBackend('saveMinutesData', { 
-        sheetName: currentUserProfile.minutesSheetName, 
-        updatedRows: minutesRows 
-      });
-      
-      document.getElementById('loading').classList.add('hidden');
-      alert(response.message);
-      if(response.success) loadMinutesData(false);
-    }
-
     function updateStats() {
       document.getElementById('stat-total').innerText = filteredMembers.length;
       document.getElementById('stat-males').innerText = filteredMembers.filter(m => m.gender === 'ذكر').length;
       document.getElementById('stat-females').innerText = filteredMembers.filter(m => m.gender === 'أنثى').length;
+
+      if (currentUserProfile && currentUserProfile.hierarchyLevel === 'NATIONAL') {
+        const dashboard = document.getElementById('national-dashboard');
+        if (dashboard) {
+          dashboard.classList.remove('hidden');
+          const wilayaCounts = {};
+          allMembers.forEach(m => {
+            const state = (m.state && m.state.trim() !== "") ? m.state.trim() : 'غير مصنف';
+            wilayaCounts[state] = (wilayaCounts[state] || 0) + 1;
+          });
+
+          const grid = document.getElementById('wilaya-stats-grid');
+          grid.innerHTML = '';
+          Object.entries(wilayaCounts).sort((a,b) => b[1] - a[1]).forEach(([state, count]) => {
+            grid.innerHTML += `
+              <div onclick="filterByState('${state}')" class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-center hover:bg-emerald-600 hover:text-white group transition duration-200 cursor-pointer shadow-sm">
+                <p class="text-[11px] text-emerald-700 group-hover:text-emerald-100 font-bold mb-1 truncate" title="${state}">${state}</p>
+                <h4 class="text-xl font-bold text-emerald-600 group-hover:text-white">${count}</h4>
+              </div>`;
+          });
+        }
+      }
+    }
+
+    function filterByState(state) {
+      document.getElementById('search-input').value = state === 'غير مصنف' ? '' : state;
+      handleSearch();
+      document.getElementById('search-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function handleSearch() {
+      const q = document.getElementById('search-input').value.toLowerCase();
+      filteredMembers = allMembers.filter(m => 
+        String(m.fullName || '').toLowerCase().includes(q) || 
+        String(m.state || '').toLowerCase().includes(q) || 
+        String(m.workplace || '').toLowerCase().includes(q)
+      );
+      currentPage = 1;
+      updateStats();
+      renderTable();
     }
 
     function renderTable() {
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = '';
+
+      const totalPages = Math.ceil(filteredMembers.length / rowsPerPage) || 1;
+      document.getElementById('page-info').innerText = `صفحة ${currentPage} من ${totalPages}`;
+      document.getElementById('prev-btn').disabled = currentPage === 1;
+      document.getElementById('next-btn').disabled = currentPage === totalPages;
+
       const start = (currentPage - 1) * rowsPerPage;
       const pageData = filteredMembers.slice(start, start + rowsPerPage);
 
       if(pageData.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center p-6 text-gray-400 font-bold">لا توجد سجلات منخرطين تقع ضمن نطاق صلاحياتك الحالية</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center p-8 text-gray-500 font-bold bg-gray-50">لا توجد سجلات مطابقة ضمن هذا النطاق</td></tr>`;
         return;
       }
 
@@ -497,18 +413,6 @@
             </td>
           </tr>`;
       });
-      const totalPages = Math.ceil(filteredMembers.length / rowsPerPage) || 1;
-      document.getElementById('page-info').innerText = `صفحة ${currentPage} من ${totalPages}`;
-      document.getElementById('prev-btn').disabled = currentPage === 1;
-      document.getElementById('next-btn').disabled = currentPage === totalPages;
-    }
-
-    function handleSearch() {
-      const q = document.getElementById('search-input').value.toLowerCase();
-      filteredMembers = allMembers.filter(m => m.fullName.toLowerCase().includes(q) || (m.state && m.state.toLowerCase().includes(q)) || (m.workplace && m.workplace.toLowerCase().includes(q)));
-      currentPage = 1;
-      renderTable();
-      updateStats();
     }
 
     function openEditModal(row) {
@@ -525,18 +429,15 @@
       document.getElementById('field-birthPlace').value = m.birthPlace || '';
       document.getElementById('field-email').value = m.email || '';
       document.getElementById('field-address').value = m.address || '';
-      
       document.getElementById('field-state').value = m.state || '';
       document.getElementById('field-municipality').value = m.municipality || '';
       document.getElementById('field-workplace').value = m.workplace || '';
       document.getElementById('field-rank').value = m.rank || '';
       document.getElementById('field-firstAppointment').value = m.firstAppointment || '';
       document.getElementById('field-subject').value = m.subject || '';
-      
       document.getElementById('field-nin').value = m.nin || '';
       document.getElementById('field-socialSec').value = m.socialSec || '';
       document.getElementById('field-cardNum').value = m.cardNum || '';
-      
       document.getElementById('field-unionStatus').value = m.unionStatus || '';
       document.getElementById('field-unionDuties').value = m.unionDuties || '';
       document.getElementById('field-regionalSec').value = m.regionalSec || '';
@@ -586,19 +487,8 @@
         assignedDuties: document.getElementById('field-assignedDuties').value
       };
 
-      const response = await callBackend('saveMember', {
-        member: data,
-        row: row ? parseInt(row) : null,
-        userProfile: currentUserProfile
-      });
-
-      if(response.success) {
-        closeModal();
-        loadData();
-      } else {
-        alert(response.message);
-        document.getElementById('loading').classList.add('hidden');
-      }
+      const response = await callBackend('saveMember', { member: data, row: row ? parseInt(row) : null, userProfile: currentUserProfile });
+      if(response.success) { closeModal(); loadData(); } else { alert(response.message); document.getElementById('loading').classList.add('hidden'); }
     }
   </script>
 </body>

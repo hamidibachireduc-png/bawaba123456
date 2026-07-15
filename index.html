@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>نظام المحاضر والمنخرطين - SNTE</title>
+  <title>بوابة أمانات الأسنتيو - SNTE</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,23 +15,26 @@
   <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100">
     <div class="text-center mb-6">
       <img src="https://l.top4top.io/p_37988hwfa0.png" alt="لوغو النقابة" class="w-24 h-24 mx-auto mb-4 object-contain dropped-shadow-md">
-      <h2 class="text-xl font-bold text-gray-900">بوابة هيكلة الامانات - SNTE</h2>
+      <h2 class="text-xl font-bold text-gray-900">بوابة أمانات الأسنتيو - SNTE</h2>
       <p class="text-xs text-gray-400 mt-1">النقابة الوطنية لعمال التربية SNTE</p>
+      <div class="mt-3 p-2 bg-emerald-50 text-emerald-800 rounded-lg text-[10px] font-bold">
+        🛡️ يرجى تسجيل الدخول بالرقم السري الشخصي الخاص بك (العمود الثاني بقاعدة البيانات).
+      </div>
     </div>
     <form id="login-form" onsubmit="handleLogin(event)">
       <div class="mb-4">
-        <label class="block text-gray-700 text-xs font-bold mb-2">اسم المستخدم الموحد</label>
+        <label class="block text-gray-750 text-xs font-bold mb-2">اسم المستخدم الموحد</label>
         <input type="text" id="login-username" value="sntedz2026" readonly class="w-full px-3 py-2 border bg-gray-100 rounded-lg text-sm font-semibold text-gray-500 focus:outline-none cursor-not-allowed">
       </div>
       <div class="mb-6">
-        <label class="block text-gray-700 text-xs font-bold mb-2">الرقم السري الشخصي (العمود الثاني)</label>
-        <input type="password" id="login-password" required class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="••••••••">
+        <label class="block text-gray-750 text-xs font-bold mb-2">الرقم السري الشخصي (العمود الثاني)</label>
+        <input type="password" id="login-password" required class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none font-bold" placeholder="••••••••">
       </div>
       <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow">
         <span>دخول آمن للوحة التحكم</span>
         <i id="login-spinner" class="fa-solid fa-spinner animate-spin hidden"></i>
       </button>
-      <div id="login-error" class="mt-4 p-2.5 bg-red-50 text-red-600 rounded-lg text-xs text-center font-bold hidden"></div>
+      <div id="login-error" class="mt-4 p-2.5 bg-red-50 text-red-650 rounded-lg text-xs text-center font-bold hidden"></div>
     </form>
   </div>
   </div>
@@ -42,7 +45,7 @@
       <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
           <img src="https://l.top4top.io/p_37988hwfa0.png" alt="لوغو النقابة" class="w-12 h-12 object-contain">
-          <h1 class="text-lg font-bold text-gray-900">منصة تسيير السلم النقابي والمحاضر</h1>
+          <h1 class="text-lg font-bold text-gray-900">بوابة أمانات الأسنتيو</h1>
         </div>
         <div class="flex items-center gap-4">
           <div class="text-left">
@@ -65,6 +68,9 @@
         </button>
         <button id="tab-tasks-btn" onclick="switchTab('tasks')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
           <i class="fa-solid fa-list-check"></i> المهام والتعليمات
+        </button>
+        <button id="tab-magazine-btn" onclick="switchTab('magazine')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
+          <i class="fa-solid fa-newspaper"></i> مجلة "صوت القاعدة"
         </button>
         <button id="tab-legal-btn" onclick="switchTab('legal')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
           <i class="fa-solid fa-scale-balanced"></i> الدليل القانوني
@@ -114,7 +120,7 @@
             <div id="wilaya-stats-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 max-h-56 overflow-y-auto pr-2"></div>
           </div>
 
-          <div class="grid grid-cols-3 gap-4">
+          <div id="members-stats-container" class="grid grid-cols-3 gap-4">
             <div class="bg-white p-4 rounded-xl shadow-sm border text-center">
               <p class="text-xs text-gray-400 font-bold">المنخرطين المتاحين للتعديل</p>
               <h4 id="stat-total" class="text-2xl font-bold text-gray-800 mt-1">0</h4>
@@ -129,7 +135,7 @@
             </div>
           </div>
 
-          <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+          <div id="members-table-container" class="bg-white rounded-xl shadow-sm border overflow-hidden">
             <div class="p-4 border-b flex flex-col sm:flex-row justify-between items-center gap-3 bg-gray-50">
               <input type="text" id="search-input" oninput="handleSearch()" class="w-full sm:w-72 px-3 py-1.5 border rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="البحث السريع بالاسم، الولاية، أو مكان العمل...">
               <button onclick="openAddModal()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 shadow">
@@ -152,6 +158,54 @@
                 <button onclick="prevPage()" id="prev-btn" class="px-2.5 py-1 border rounded bg-white hover:bg-gray-100 disabled:opacity-40">السابق</button>
                 <button onclick="nextPage()" id="next-btn" class="px-2.5 py-1 border rounded bg-white hover:bg-gray-100 disabled:opacity-40">التالي</button>
               </div>
+            </div>
+          </div>
+          
+          <!-- لوحة العضو المنخرط الشخصية (تظهر للمنخرطين العاديين فقط) -->
+          <div id="member-personal-panel" class="hidden bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-6">
+            <div class="flex items-center gap-4 border-b pb-4">
+              <div class="bg-emerald-100 text-emerald-800 w-16 h-16 rounded-full flex items-center justify-center text-3xl">
+                <i class="fa-solid fa-user-shield"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-gray-900" id="member-panel-name">الاسم الكامل</h3>
+                <p class="text-xs text-gray-400 mt-1" id="member-panel-role">منخرط عادي في النقابة</p>
+                <span class="inline-block bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full mt-1.5 border border-emerald-100">بوابة العضوية الشخصية</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div class="bg-gray-50 p-3 rounded-lg border border-gray-150">
+                <p class="text-gray-400 font-bold mb-1">الولاية الجغرافية:</p>
+                <p class="font-semibold text-gray-700" id="member-panel-state">-</p>
+              </div>
+              <div class="bg-gray-50 p-3 rounded-lg border border-gray-150">
+                <p class="text-gray-400 font-bold mb-1">البلدية الجغرافية:</p>
+                <p class="font-semibold text-gray-700" id="member-panel-municipality">-</p>
+              </div>
+              <div class="bg-gray-50 p-3 rounded-lg border border-gray-150">
+                <p class="text-gray-400 font-bold mb-1">مكان العمل (المؤسسة):</p>
+                <p class="font-semibold text-gray-700" id="member-panel-workplace">-</p>
+              </div>
+              <div class="bg-gray-50 p-3 rounded-lg border border-gray-150">
+                <p class="text-gray-400 font-bold mb-1">رقم بطاقة الانخراط:</p>
+                <p class="font-semibold text-gray-700 font-mono" id="member-panel-card">-</p>
+              </div>
+            </div>
+
+            <div class="p-4 bg-emerald-50 text-emerald-850 rounded-xl text-xs font-semibold leading-relaxed border border-emerald-150 flex items-start gap-3">
+              <i class="fa-solid fa-circle-info mt-0.5 text-emerald-600 text-sm"></i>
+              <div>
+                <p class="font-bold mb-1">مرحباً بك في فضائك الرقمي!</p>
+                <p class="font-medium text-emerald-700 leading-relaxed">بصفتك منخرطاً، يمكنك تصفح الدليل القانوني والتشريعي للنشاط النقابي، ومطالعة ومشاركة مقالات مجلة "صوت القاعدة"، بالإضافة إلى تحديث بياناتك الشخصية في أي وقت لضمان صحة ملفك الإداري.</p>
+              </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+              <button onclick="handleMemberEditProfile()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-md">
+                <i class="fa-solid fa-user-pen"></i>
+                <span>تعديل وتحديث بياناتي الشخصية</span>
+              </button>
             </div>
           </div>
         </div>
@@ -232,6 +286,126 @@
                   <!-- سيتم توليدها ديناميكياً -->
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- التبويب الجديد: مجلة صوت القاعدة -->
+        <div id="tab-magazine-content" class="hidden space-y-6">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+            
+            <!-- بنر المجلة -->
+            <div class="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-700 text-white p-6 rounded-xl shadow-md mb-6 relative overflow-hidden">
+              <div class="relative z-10">
+                <span class="bg-emerald-600/50 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full tracking-wider">الإصدار الإلكتروني الأول</span>
+                <h3 class="text-xl font-bold mt-2 flex items-center gap-2">
+                  <i class="fa-solid fa-bullhorn text-amber-300 animate-bounce"></i>
+                  <span>مجلة "صوت القاعدة" النقابية</span>
+                </h3>
+                <p class="text-xs text-emerald-100 mt-1.5 max-w-xl leading-relaxed">المنبر الحر لجميع المنخرطين للمساهمة في صياغة الرؤية النقابية ونقل تقارير الولايات ورسائل الميدان إلى القيادة الوطنية.</p>
+              </div>
+              <div class="absolute -left-10 -bottom-10 opacity-15 text-8xl transform -rotate-12"><i class="fa-solid fa-newspaper"></i></div>
+            </div>
+
+            <!-- تقسيم المحتوى -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              
+              <!-- العمود الأيمن: تصفح أقسام المجلة -->
+              <div class="lg:col-span-2 space-y-4">
+                <div class="border-b pb-3 mb-4">
+                  <h4 class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                    <i class="fa-solid fa-book-open text-emerald-600"></i>
+                    <span>أقسام المجلة والمواضيع المتاحة</span>
+                  </h4>
+                </div>
+                
+                <!-- تبويبات الأقسام الفرعية للمجلة -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <button onclick="switchMagCategory('all')" id="mag-cat-all-btn" class="mag-cat-btn px-3 py-1.5 rounded-full text-[11px] font-bold bg-emerald-600 text-white shadow-sm transition">الكل</button>
+                  <button onclick="switchMagCategory('reportage')" id="mag-cat-reportage-btn" class="mag-cat-btn px-3 py-1.5 rounded-full text-[11px] font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">🎙️ الروبورتاج</button>
+                  <button onclick="switchMagCategory('investigations')" id="mag-cat-investigations-btn" class="mag-cat-btn px-3 py-1.5 rounded-full text-[11px] font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">🔍 تحقيقات</button>
+                  <button onclick="switchMagCategory('professional')" id="mag-cat-professional-btn" class="mag-cat-btn px-3 py-1.5 rounded-full text-[11px] font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">📂 ملف مهني</button>
+                  <button onclick="switchMagCategory('interview')" id="mag-cat-interview-btn" class="mag-cat-btn px-3 py-1.5 rounded-full text-[11px] font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">💬 حوار العدد</button>
+                  <button onclick="switchMagCategory('legal')" id="mag-cat-legal-btn" class="mag-cat-btn px-3 py-1.5 rounded-full text-[11px] font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">⚖️ نافذة قانونية</button>
+                  <button onclick="switchMagCategory('field')" id="mag-cat-field-btn" class="mag-cat-btn px-3 py-1.5 rounded-full text-[11px] font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">📢 صوت القاعدة</button>
+                  <button onclick="switchMagCategory('states')" id="mag-cat-states-btn" class="mag-cat-btn px-3 py-1.5 rounded-full text-[11px] font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">🌟 أخبار الولايات</button>
+                </div>
+
+                <!-- شبكة المقالات -->
+                <div id="mag-articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[480px] overflow-y-auto pr-1">
+                  <!-- سيتم تعبئتها عبر الجافاسكريبت -->
+                </div>
+              </div>
+
+              <!-- العمود الأيسر: المساهمة في إعداد موضوع وإرساله -->
+              <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-inner">
+                <h4 class="text-xs font-bold text-gray-700 border-b pb-3 mb-4 flex items-center gap-1.5">
+                  <i class="fa-solid fa-pen-nib text-emerald-600"></i>
+                  <span>ساهم بموضوعك في المجلة</span>
+                </h4>
+                
+                <form id="mag-contribution-form" onsubmit="handleSendMagazineArticle(event)" class="space-y-4 text-xs font-bold text-gray-700">
+                  <div>
+                    <label class="block mb-1 text-gray-600">اسم الكاتب / المساهم</label>
+                    <input type="text" id="mag-author" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none" placeholder="مثال: زميل نقابي">
+                  </div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <div>
+                      <label class="block mb-1 text-gray-600">الولاية الجغرافية</label>
+                      <input type="text" id="mag-state" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none" placeholder="مثال: وهران">
+                    </div>
+                    <div>
+                      <label class="block mb-1 text-gray-600">القسم المستهدف</label>
+                      <select id="mag-section" class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none bg-white">
+                        <option value="الروبورتاج">🎙️ الروبورتاج</option>
+                        <option value="تحقيقات">🔍 تحقيقات</option>
+                        <option value="ملف مهني">📂 ملف مهني</option>
+                        <option value="حوار العدد">💬 حوار العدد</option>
+                        <option value="نافذة قانونية">⚖️ نافذة قانونية</option>
+                        <option value="صوت القاعدة">📢 صوت القاعدة: رسائل الميدان</option>
+                        <option value="أخبار الولايات">🌟 أخبار الولايات (الدخول المدرسي)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">عنوان المقال أو التقرير</label>
+                    <input type="text" id="mag-title" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none" placeholder="عنوان المقال...">
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">محتوى المساهمة بالتفصيل</label>
+                    <textarea id="mag-body" rows="6" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none font-medium leading-relaxed" placeholder="اكتب مسودتك أو مقالك هنا بالتفصيل..."></textarea>
+                  </div>
+                  
+                  <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow font-bold">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>إرسال كمسودة للأمين العام</span>
+                  </button>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- مودال قراءة المقال بالكامل -->
+        <div id="mag-read-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full flex flex-col overflow-hidden max-h-[85vh]">
+            <div class="bg-emerald-600 text-white px-5 py-4 flex justify-between items-center shadow-md">
+              <h3 id="mag-modal-title" class="text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-book-open"></i> <span id="mag-read-title">عنوان المقال</span></h3>
+              <button onclick="closeMagReadModal()" class="text-white text-lg hover:text-gray-200"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="overflow-y-auto p-6 space-y-4">
+              <div class="flex justify-between items-center text-xs text-gray-400 border-b pb-3 font-semibold">
+                <span id="mag-read-author-info">الكاتب: </span>
+                <span id="mag-read-category-badge" class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">قسم</span>
+              </div>
+              <div id="mag-read-body" class="text-xs text-gray-700 leading-relaxed whitespace-pre-line font-medium text-justify">
+                محتوى المقال...
+              </div>
+            </div>
+            <div class="flex justify-end p-4 border-t bg-gray-50">
+              <button onclick="closeMagReadModal()" class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-bold transition text-xs">إغلاق نافذة القراءة</button>
             </div>
           </div>
         </div>
@@ -484,7 +658,7 @@
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('dashboard-screen').classList.remove('hidden');
         
-        document.getElementById('user-name').innerText = currentUserProfile.name;
+        document.getElementById('user-name').innerText = currentUserProfile.fullName || currentUserProfile.name || '';
         document.getElementById('user-badge').innerText = currentUserProfile.hierarchyLabel;
         document.getElementById('user-scope').innerText = currentUserProfile.hierarchyScope;
         document.getElementById('user-assigned-duties').innerText = currentUserProfile.assignedDuties;
@@ -497,8 +671,11 @@
           document.getElementById('minutes-external-link').href = sheetUrl;
         }
         
-        // تهيئة قائمة المهام للمستخدم الحالي
+        setupRoleUI();
+
+        // تهيئة المكونات الأخرى للمستخدم الحالي
         initTasks();
+        initMagazine();
         
         loadData();
       } else {
@@ -508,7 +685,7 @@
     }
 
     function switchTab(tab) {
-      const tabs = ['members', 'minutes', 'tasks', 'legal', 'docs', 'contact'];
+      const tabs = ['members', 'minutes', 'tasks', 'magazine', 'legal', 'docs', 'contact'];
       tabs.forEach(t => {
         const btn = document.getElementById(`tab-${t}-btn`);
         const content = document.getElementById(`tab-${t}-content`);
@@ -616,269 +793,5 @@
       });
     }
 
-    function openEditModal(row) {
-      const m = allMembers.find(item => item.row === row);
-      if(!m) return;
-      document.getElementById('modal-title').innerHTML = `<span>تعديل وحفظ ملف: ${m.fullName}</span>`;
-      document.getElementById('member-row').value = m.row;
-      
-      document.getElementById('field-fullName').value = m.fullName || '';
-      document.getElementById('field-latinName').value = m.latinName || '';
-      document.getElementById('field-gender').value = m.gender || 'ذكر';
-      document.getElementById('field-phone').value = m.phone || '';
-      document.getElementById('field-birthDate').value = m.birthDate || '';
-      document.getElementById('field-birthPlace').value = m.birthPlace || '';
-      document.getElementById('field-email').value = m.email || '';
-      document.getElementById('field-address').value = m.address || '';
-      document.getElementById('field-state').value = m.state || '';
-      document.getElementById('field-municipality').value = m.municipality || '';
-      document.getElementById('field-workplace').value = m.workplace || '';
-      document.getElementById('field-rank').value = m.rank || '';
-      document.getElementById('field-firstAppointment').value = m.firstAppointment || '';
-      document.getElementById('field-subject').value = m.subject || '';
-      document.getElementById('field-nin').value = m.nin || '';
-      document.getElementById('field-socialSec').value = m.socialSec || '';
-      document.getElementById('field-cardNum').value = m.cardNum || '';
-      document.getElementById('field-unionStatus').value = m.unionStatus || '';
-      document.getElementById('field-unionDuties').value = m.unionDuties || '';
-      document.getElementById('field-regionalSec').value = m.regionalSec || '';
-      document.getElementById('field-assignedDuties').value = m.assignedDuties || '';
-      
-      document.getElementById('member-modal').classList.remove('hidden');
-    }
-
-    function openAddModal() {
-      document.getElementById('modal-title').innerText = "إضافة منخرط جديد لقاعدة البيانات";
-      document.getElementById('member-form').reset();
-      document.getElementById('member-row').value = '';
-      document.getElementById('member-modal').classList.remove('hidden');
-    }
-
-    function closeModal() { document.getElementById('member-modal').classList.add('hidden'); }
-    function handleLogout() { window.location.reload(); }
-    function prevPage() { if(currentPage > 1) { currentPage--; renderTable(); } }
-    function nextPage() { if(currentPage < Math.ceil(filteredMembers.length / rowsPerPage)) { currentPage++; renderTable(); } }
-
-    async function handleSave(e) {
-      e.preventDefault();
-      document.getElementById('loading').classList.remove('hidden');
-      const row = document.getElementById('member-row').value;
-      
-      const data = {
-        fullName: document.getElementById('field-fullName').value,
-        latinName: document.getElementById('field-latinName').value,
-        gender: document.getElementById('field-gender').value,
-        phone: document.getElementById('field-phone').value,
-        birthDate: document.getElementById('field-birthDate').value,
-        birthPlace: document.getElementById('field-birthPlace').value,
-        email: document.getElementById('field-email').value,
-        address: document.getElementById('field-address').value,
-        state: document.getElementById('field-state').value,
-        municipality: document.getElementById('field-municipality').value,
-        workplace: document.getElementById('field-workplace').value,
-        rank: document.getElementById('field-rank').value,
-        firstAppointment: document.getElementById('field-firstAppointment').value,
-        subject: document.getElementById('field-subject').value,
-        nin: document.getElementById('field-nin').value,
-        socialSec: document.getElementById('field-socialSec').value,
-        cardNum: document.getElementById('field-cardNum').value,
-        unionStatus: document.getElementById('field-unionStatus').value,
-        unionDuties: document.getElementById('field-unionDuties').value,
-        regionalSec: document.getElementById('field-regionalSec').value,
-        assignedDuties: document.getElementById('field-assignedDuties').value
-      };
-
-      const response = await callBackend('saveMember', { member: data, row: row ? parseInt(row) : null, userProfile: currentUserProfile });
-      if(response.success) { closeModal(); loadData(); } else { alert(response.message); document.getElementById('loading').classList.add('hidden'); }
-    }
-
-    // =========================================================================
-    // إدارة قسم المهام والتعليمات التنظيمية (رسمية + خاصة)
-    // =========================================================================
-    let customTasks = [];
-    let checkedOfficialTasks = [];
-
-    function initTasks() {
-      if (!currentUserProfile) return;
-      const username = currentUserProfile.name || "default_user";
-      
-      // تحميل المهام المكتملة للتكاليف الرسمية
-      const savedOfficial = localStorage.getItem(`tasks_official_${username}`);
-      checkedOfficialTasks = savedOfficial ? JSON.parse(savedOfficial) : [];
-
-      // تحميل المهام الخاصة
-      const savedCustom = localStorage.getItem(`tasks_custom_${username}`);
-      customTasks = savedCustom ? JSON.parse(savedCustom) : [];
-
-      renderTasks();
-    }
-
-    function renderTasks() {
-      if (!currentUserProfile) return;
-
-      // 1. معالجة ورسم المهام الرسمية المعتمدة
-      const officialContainer = document.getElementById('official-tasks-list');
-      const dutiesText = currentUserProfile.assignedDuties || "";
-      const officialDuties = dutiesText.split('\n')
-        .map(line => line.replace(/^[-*•\d.]+\s*/, '').trim())
-        .filter(line => line.length > 0);
-
-      officialContainer.innerHTML = '';
-      if (officialDuties.length === 0) {
-        officialContainer.innerHTML = `
-          <div class="text-center py-8 text-gray-400 bg-white rounded-lg border border-dashed border-gray-200">
-            <i class="fa-solid fa-circle-check text-2xl mb-2 text-gray-300"></i>
-            <p class="text-xs">لا توجد مهام رسمية معتمدة حالياً في الملف التعريفي.</p>
-          </div>`;
-      } else {
-        officialDuties.forEach((duty, index) => {
-          const isChecked = checkedOfficialTasks.includes(index);
-          officialContainer.innerHTML += `
-            <div onclick="toggleOfficialTask(${index})" class="flex items-start gap-3 p-3 rounded-lg border transition duration-200 cursor-pointer ${isChecked ? 'bg-emerald-50 border-emerald-200 text-emerald-800 font-bold' : 'bg-white border-gray-200 text-gray-700 hover:border-emerald-300'}">
-              <button class="mt-0.5 text-sm transition ${isChecked ? 'text-emerald-600' : 'text-gray-400 hover:text-emerald-500'}">
-                <i class="fa-solid ${isChecked ? 'fa-square-check' : 'fa-square'}"></i>
-              </button>
-              <span class="text-xs font-semibold leading-relaxed ${isChecked ? 'line-through opacity-70' : ''}">${duty}</span>
-            </div>`;
-        });
-      }
-
-      // 2. رسم المهام المضافة يدوياً للمتابعة
-      const localContainer = document.getElementById('local-tasks-list');
-      localContainer.innerHTML = '';
-      if (customTasks.length === 0) {
-        localContainer.innerHTML = `
-          <div class="text-center py-8 text-gray-400 bg-gray-50 rounded-lg border border-dashed border-gray-200">
-            <i class="fa-solid fa-list-check text-2xl mb-2 text-gray-300"></i>
-            <p class="text-xs">اضغط على زر الإضافة لإدراج مهام المتابعة الخاصة بك.</p>
-          </div>`;
-      } else {
-        customTasks.forEach(task => {
-          localContainer.innerHTML += `
-            <div class="flex items-center justify-between p-3 rounded-lg border bg-gray-50 border-gray-200 transition hover:border-emerald-300 group">
-              <div onclick="toggleCustomTask('${task.id}')" class="flex items-center gap-3 flex-grow cursor-pointer">
-                <button class="text-sm transition ${task.completed ? 'text-emerald-600' : 'text-gray-400 hover:text-emerald-500'}">
-                  <i class="fa-solid ${task.completed ? 'fa-square-check' : 'fa-square'}"></i>
-                </button>
-                <span class="text-xs font-semibold ${task.completed ? 'line-through text-gray-400' : 'text-gray-750'}">${task.title}</span>
-              </div>
-              <button onclick="deleteCustomTask('${task.id}')" class="text-gray-400 hover:text-red-650 opacity-0 group-hover:opacity-100 transition p-1">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-            </div>`;
-        });
-      }
-
-      // 3. حساب شريط التقدم والتحديث
-      const totalOfficial = officialDuties.length;
-      const completedOfficial = checkedOfficialTasks.filter(idx => idx < totalOfficial).length;
-      
-      const totalCustom = customTasks.length;
-      const completedCustom = customTasks.filter(t => t.completed).length;
-
-      const total = totalOfficial + totalCustom;
-      const completed = completedOfficial + completedCustom;
-
-      const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
-      document.getElementById('tasks-progress-bar').style.width = `${pct}%`;
-      document.getElementById('tasks-progress-text').innerText = `${completed}/${total} مكتملة (${pct}%)`;
-    }
-
-    function toggleOfficialTask(index) {
-      if (!currentUserProfile) return;
-      const username = currentUserProfile.name || "default_user";
-      const idx = checkedOfficialTasks.indexOf(index);
-      if (idx > -1) {
-        checkedOfficialTasks.splice(idx, 1);
-      } else {
-        checkedOfficialTasks.push(index);
-      }
-      localStorage.setItem(`tasks_official_${username}`, JSON.stringify(checkedOfficialTasks));
-      renderTasks();
-    }
-
-    function handleAddLocalTask(e) {
-      e.preventDefault();
-      const input = document.getElementById('new-task-title');
-      const title = input.value.trim();
-      if (!title) return;
-
-      const newTask = {
-        id: 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-        title: title,
-        completed: false,
-        createdAt: new Date().toISOString()
-      };
-
-      customTasks.push(newTask);
-      const username = currentUserProfile.name || "default_user";
-      localStorage.setItem(`tasks_custom_${username}`, JSON.stringify(customTasks));
-      
-      input.value = '';
-      renderTasks();
-    }
-
-    function toggleCustomTask(id) {
-      const task = customTasks.find(t => t.id === id);
-      if (task) {
-        task.completed = !task.completed;
-        const username = currentUserProfile.name || "default_user";
-        localStorage.setItem(`tasks_custom_${username}`, JSON.stringify(customTasks));
-        renderTasks();
-      }
-    }
-
-    function deleteCustomTask(id) {
-      customTasks = customTasks.filter(t => t.id !== id);
-      const username = currentUserProfile.name || "default_user";
-      localStorage.setItem(`tasks_custom_${username}`, JSON.stringify(customTasks));
-      renderTasks();
-    }
-
-    // =========================================================================
-    // إدارة مراسلة الأمين العام الوطني
-    // =========================================================================
-    function handleSendEmail(e) {
-      e.preventDefault();
-      if (!currentUserProfile) return;
-
-      const subject = document.getElementById('email-subject').value.trim();
-      const priority = document.getElementById('email-priority').value;
-      const type = document.getElementById('email-type').value;
-      const bodyText = document.getElementById('email-body').value.trim();
-
-      const recipient = "kouidery@ymail.com";
-      const emailSubject = `[SNTE بوابة هيكلة الأمانات] ${subject} - (${priority})`;
-      
-      const emailBody = `الموضوع: ${subject}
-نوع المراسلة: ${type}
-درجة الأهمية: ${priority}
-
-معلومات المرسل النقابي:
---------------------------------------------------
-الاسم الكامل: ${currentUserProfile.name}
-الصفة النقابية: ${currentUserProfile.hierarchyLabel}
-نطاق الصلاحيات: ${currentUserProfile.hierarchyScope}
-تاريخ المراسلة: ${new Date().toLocaleString('ar-DZ')}
-
-تفاصيل الرسالة:
---------------------------------------------------
-${bodyText}
-
---------------------------------------------------
-مُرسل تلقائياً عبر منصة تسيير الأمانات - SNTE`;
-
-      const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-      window.location.href = mailtoLink;
-    }
-
-    function copyEmailToClipboard() {
-      navigator.clipboard.writeText("kouidery@ymail.com").then(() => {
-        alert("تم نسخ البريد الإلكتروني للأمين العام الوطني بنجاح: kouidery@ymail.com");
-      }).catch(err => {
-        console.error("فشل نسخ البريد الإلكتروني:", err);
-      });
-    }
-  </script>
-</body>
-</html>
+    function setupRoleUI() {
+      if (!currentU

@@ -55,13 +55,25 @@
     </header>
 
     <!-- تبويبات النظام -->
-    <div class="bg-white border-b shadow-inner">
-      <div class="max-w-7xl mx-auto px-4 flex gap-4">
-        <button id="tab-members-btn" onclick="switchTab('members')" class="px-6 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition">
+    <div class="bg-white border-b shadow-inner overflow-x-auto">
+      <div class="max-w-7xl mx-auto px-4 flex flex-nowrap md:flex-wrap gap-2 min-w-max">
+        <button id="tab-members-btn" onclick="switchTab('members')" class="px-5 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition shrink-0">
           <i class="fa-solid fa-users"></i> قائمة بيانات المنخرطين
         </button>
-        <button id="tab-minutes-btn" onclick="switchTab('minutes')" class="px-6 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition">
+        <button id="tab-minutes-btn" onclick="switchTab('minutes')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
           <i class="fa-solid fa-file-lines"></i> عرض شيت المحضر النقابي
+        </button>
+        <button id="tab-tasks-btn" onclick="switchTab('tasks')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
+          <i class="fa-solid fa-list-check"></i> المهام والتعليمات
+        </button>
+        <button id="tab-legal-btn" onclick="switchTab('legal')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
+          <i class="fa-solid fa-scale-balanced"></i> الدليل القانوني
+        </button>
+        <button id="tab-docs-btn" onclick="switchTab('docs')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
+          <i class="fa-solid fa-folder-open"></i> مخزن وثائق الأمانات الولائية
+        </button>
+        <button id="tab-contact-btn" onclick="switchTab('contact')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
+          <i class="fa-solid fa-envelope"></i> مراسلة الأمين العام الوطني
         </button>
       </div>
     </div>
@@ -144,7 +156,7 @@
           </div>
         </div>
 
-        <!-- التبويب الثاني: عرض شيت المحاضر -->
+        <!-- التبويب الثاني: عرض شيت المحضر -->
         <div id="tab-minutes-content" class="hidden space-y-6">
           <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-[600px] flex flex-col">
             <div class="flex justify-between items-center border-b pb-4 mb-4">
@@ -161,6 +173,194 @@
             </div>
             <div class="flex-grow rounded-lg overflow-hidden border">
               <iframe id="minutes-iframe" class="w-full h-full" src="" frameborder="0"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- التبويب الثالث: المهام والتعليمات -->
+        <div id="tab-tasks-content" class="hidden space-y-6">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+            <div class="flex justify-between items-center border-b pb-4 mb-4">
+              <div>
+                <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                  <i class="fa-solid fa-list-check text-emerald-600"></i>
+                  <span>المهام والتكاليف النقابية والتنظيمية</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">إدارة التكاليف الرسمية ومهام المتابعة الخاصة بكم.</p>
+              </div>
+              <div class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg text-xs font-bold border border-emerald-100 flex items-center gap-1.5 shadow-sm">
+                <i class="fa-solid fa-circle-notch animate-spin text-[10px] hidden" id="tasks-sync-indicator"></i>
+                <span id="tasks-progress-text">0/0 مكتملة</span>
+              </div>
+            </div>
+
+            <!-- شريط تقدم المهام -->
+            <div class="w-full bg-gray-100 rounded-full h-2 mb-6 overflow-hidden">
+              <div id="tasks-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- المهام الرسمية (المستمدة من الملف الشخصي) -->
+              <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 flex flex-col">
+                <h4 class="text-xs font-bold text-gray-700 mb-3 flex items-center gap-1.5">
+                  <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                  <span>التكاليف الرسمية المعتمدة (العمود W)</span>
+                </h4>
+                <div id="official-tasks-list" class="space-y-2 flex-grow overflow-y-auto max-h-80 pr-1">
+                  <!-- سيتم توليدها ديناميكياً -->
+                </div>
+              </div>
+
+              <!-- المهام التنفيذية الخاصة بالأمين العام -->
+              <div class="bg-white p-4 rounded-xl border border-gray-200 flex flex-col">
+                <h4 class="text-xs font-bold text-gray-700 mb-3 flex items-center gap-1.5">
+                  <i class="fa-solid fa-square-plus text-emerald-600"></i>
+                  <span>قائمة المهام المضافة للمتابعة الشخصية</span>
+                </h4>
+                
+                <!-- إضافة مهمة جديدة -->
+                <form id="add-task-form" onsubmit="handleAddLocalTask(event)" class="flex gap-2 mb-4">
+                  <input type="text" id="new-task-title" required class="flex-grow px-3 py-2 border rounded-lg text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none" placeholder="اكتب عنوان المهمة الجديدة...">
+                  <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1 shadow">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>إضافة</span>
+                  </button>
+                </form>
+
+                <!-- قائمة المهام الخاصة -->
+                <div id="local-tasks-list" class="space-y-2 flex-grow overflow-y-auto max-h-64 pr-1">
+                  <!-- سيتم توليدها ديناميكياً -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- التبويب الرابع: الدليل القانوني -->
+        <div id="tab-legal-content" class="hidden space-y-6">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-[650px] flex flex-col">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4 mb-4">
+              <div>
+                <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                  <i class="fa-solid fa-scale-balanced text-emerald-600"></i>
+                  <span>الدليل القانوني للنقابة الوطنية لعمال التربية</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">تصفح القوانين، المراسيم، والتشريعات المنظمة للعمل النقابي.</p>
+              </div>
+              <a href="https://docs.google.com/document/d/1PqoMTLf9sf_f1zhBETUGzmnL1v7hI98j/edit?usp=sharing&ouid=107262215692600027206&rtpof=true&sd=true" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 border border-emerald-200 w-full sm:w-auto justify-center">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح الدليل في نافذة مستقلة
+              </a>
+            </div>
+            <div class="flex-grow rounded-lg overflow-hidden border bg-gray-50 relative shadow-inner">
+              <iframe id="legal-iframe" class="w-full h-full" src="https://docs.google.com/document/d/1PqoMTLf9sf_f1zhBETUGzmnL1v7hI98j/preview" frameborder="0"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- التبويب الخامس: مخزن وثائق الأمانات الولائية -->
+        <div id="tab-docs-content" class="hidden space-y-6">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-[650px] flex flex-col">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4 mb-4">
+              <div>
+                <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                  <i class="fa-solid fa-folder-open text-emerald-600"></i>
+                  <span>مخزن وثائق الأمانات الولائية</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">الوصول للملفات المشتركة، النماذج، والقرارات التنظيمية للأمانات الولائية.</p>
+              </div>
+              <a href="https://drive.google.com/drive/folders/1dRDRoV_D7BLCrxeMxzaZE44wrjmUhkKc?usp=sharing" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-100 px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 border border-emerald-200 w-full sm:w-auto justify-center">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح المجلد في Google Drive
+              </a>
+            </div>
+            <div class="flex-grow rounded-lg overflow-hidden border bg-gray-50 shadow-inner">
+              <iframe id="docs-iframe" class="w-full h-full" src="https://drive.google.com/embeddedfolderview?id=1dRDRoV_D7BLCrxeMxzaZE44wrjmUhkKc" frameborder="0"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- التبويب السادس: مراسلة الأمين العام الوطني -->
+        <div id="tab-contact-content" class="hidden space-y-6">
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <div class="border-b pb-4 mb-6">
+              <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                <i class="fa-solid fa-envelope-open-text text-emerald-600"></i>
+                <span>مراسلة الأمين العام الوطني</span>
+              </h3>
+              <p class="text-xs text-gray-400 mt-1">تواصل مباشر لطرح الانشغالات، التقارير أو الاستفسارات التنظيمية للأمين العام الوطني.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <!-- معلومات التواصل والدعم -->
+              <div class="bg-gradient-to-br from-emerald-700 to-teal-800 text-white p-6 rounded-xl shadow-md space-y-4 flex flex-col justify-between">
+                <div class="space-y-4">
+                  <div>
+                    <h4 class="font-bold text-sm mb-1">الأمين العام الوطني</h4>
+                    <p class="text-xs text-emerald-100">النقابة الوطنية لعمال التربية (SNTE)</p>
+                  </div>
+                  <div class="border-t border-emerald-600/50 pt-4 space-y-3">
+                    <div class="flex items-center gap-3">
+                      <div class="bg-emerald-600/30 p-2 rounded-lg text-sm"><i class="fa-solid fa-envelope"></i></div>
+                      <div>
+                        <p class="text-[10px] text-emerald-200 font-bold">البريد الإلكتروني الرسمي</p>
+                        <p class="text-xs font-semibold select-all">kouidery@ymail.com</p>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="bg-emerald-600/30 p-2 rounded-lg text-sm"><i class="fa-solid fa-shield"></i></div>
+                      <div>
+                        <p class="text-[10px] text-emerald-200 font-bold">طريقة الاتصال</p>
+                        <p class="text-xs font-semibold">اتصال نقابي مباشر وآمن</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-emerald-900/40 p-3 rounded-lg text-[10px] leading-relaxed text-emerald-100 mt-4">
+                  <i class="fa-solid fa-circle-info"></i> سيقوم النظام بإعداد محتوى الرسالة تلقائياً مع ترويسة البيانات وتمريرها لتطبيق البريد المعتمد لديك لإتمام الإرسال.
+                </div>
+              </div>
+
+              <!-- نموذج المراسلة -->
+              <div class="md:col-span-2 space-y-4">
+                <form id="contact-form" onsubmit="handleSendEmail(event)" class="space-y-4 text-xs font-bold">
+                  <div>
+                    <label class="block text-gray-600 mb-1.5">موضوع الرسالة</label>
+                    <input type="text" id="email-subject" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none" placeholder="مثال: تقرير حول هيكلة الفرع النقابي بالولاية">
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-gray-600 mb-1.5">درجة الأهمية / الأولوية</label>
+                      <select id="email-priority" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none bg-white">
+                        <option value="عادي">عادي</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="عاجل هام">عاجل وهام جداً</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-gray-600 mb-1.5">نوع المراسلة</label>
+                      <select id="email-type" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none bg-white">
+                        <option value="انشغال نقابي">انشغال نقابي</option>
+                        <option value="تقرير تنظيمي">تقرير تنظيمي</option>
+                        <option value="استفسار قانوني">استفسار قانوني</option>
+                        <option value="طلب دعم">طلب دعم أو توضيح</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block text-gray-600 mb-1.5">نص الرسالة التفصيلي</label>
+                    <textarea id="email-body" rows="6" required class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-1 focus:ring-emerald-500 focus:outline-none leading-relaxed font-medium" placeholder="اكتب تفاصيل مراسلتك للأمين العام الوطني هنا..."></textarea>
+                  </div>
+                  <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="copyEmailToClipboard()" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition flex items-center gap-1.5 text-gray-700 bg-white">
+                      <i class="fa-solid fa-copy"></i>
+                      <span>نسخ البريد الإلكتروني</span>
+                    </button>
+                    <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition shadow-md flex items-center gap-1.5 font-bold">
+                      <i class="fa-solid fa-paper-plane"></i>
+                      <span>فتح البريد للإرسال</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -297,6 +497,9 @@
           document.getElementById('minutes-external-link').href = sheetUrl;
         }
         
+        // تهيئة قائمة المهام للمستخدم الحالي
+        initTasks();
+        
         loadData();
       } else {
         document.getElementById('login-error').innerText = response.message;
@@ -305,22 +508,20 @@
     }
 
     function switchTab(tab) {
-      const memBtn = document.getElementById('tab-members-btn');
-      const minBtn = document.getElementById('tab-minutes-btn');
-      const memContent = document.getElementById('tab-members-content');
-      const minContent = document.getElementById('tab-minutes-content');
-
-      if (tab === 'members') {
-        memBtn.className = "px-6 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition";
-        minBtn.className = "px-6 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition";
-        memContent.classList.remove('hidden');
-        minContent.classList.add('hidden');
-      } else {
-        minBtn.className = "px-6 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition";
-        memBtn.className = "px-6 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition";
-        minContent.classList.remove('hidden');
-        memContent.classList.add('hidden');
-      }
+      const tabs = ['members', 'minutes', 'tasks', 'legal', 'docs', 'contact'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}-btn`);
+        const content = document.getElementById(`tab-${t}-content`);
+        if (btn && content) {
+          if (t === tab) {
+            btn.className = "px-5 py-3.5 border-b-2 border-emerald-600 text-emerald-600 font-bold text-xs flex items-center gap-2 transition shrink-0";
+            content.classList.remove('hidden');
+          } else {
+            btn.className = "px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0";
+            content.classList.add('hidden');
+          }
+        }
+      });
     }
 
     async function loadData() {
@@ -489,6 +690,194 @@
 
       const response = await callBackend('saveMember', { member: data, row: row ? parseInt(row) : null, userProfile: currentUserProfile });
       if(response.success) { closeModal(); loadData(); } else { alert(response.message); document.getElementById('loading').classList.add('hidden'); }
+    }
+
+    // =========================================================================
+    // إدارة قسم المهام والتعليمات التنظيمية (رسمية + خاصة)
+    // =========================================================================
+    let customTasks = [];
+    let checkedOfficialTasks = [];
+
+    function initTasks() {
+      if (!currentUserProfile) return;
+      const username = currentUserProfile.name || "default_user";
+      
+      // تحميل المهام المكتملة للتكاليف الرسمية
+      const savedOfficial = localStorage.getItem(`tasks_official_${username}`);
+      checkedOfficialTasks = savedOfficial ? JSON.parse(savedOfficial) : [];
+
+      // تحميل المهام الخاصة
+      const savedCustom = localStorage.getItem(`tasks_custom_${username}`);
+      customTasks = savedCustom ? JSON.parse(savedCustom) : [];
+
+      renderTasks();
+    }
+
+    function renderTasks() {
+      if (!currentUserProfile) return;
+
+      // 1. معالجة ورسم المهام الرسمية المعتمدة
+      const officialContainer = document.getElementById('official-tasks-list');
+      const dutiesText = currentUserProfile.assignedDuties || "";
+      const officialDuties = dutiesText.split('\n')
+        .map(line => line.replace(/^[-*•\d.]+\s*/, '').trim())
+        .filter(line => line.length > 0);
+
+      officialContainer.innerHTML = '';
+      if (officialDuties.length === 0) {
+        officialContainer.innerHTML = `
+          <div class="text-center py-8 text-gray-400 bg-white rounded-lg border border-dashed border-gray-200">
+            <i class="fa-solid fa-circle-check text-2xl mb-2 text-gray-300"></i>
+            <p class="text-xs">لا توجد مهام رسمية معتمدة حالياً في الملف التعريفي.</p>
+          </div>`;
+      } else {
+        officialDuties.forEach((duty, index) => {
+          const isChecked = checkedOfficialTasks.includes(index);
+          officialContainer.innerHTML += `
+            <div onclick="toggleOfficialTask(${index})" class="flex items-start gap-3 p-3 rounded-lg border transition duration-200 cursor-pointer ${isChecked ? 'bg-emerald-50 border-emerald-200 text-emerald-800 font-bold' : 'bg-white border-gray-200 text-gray-700 hover:border-emerald-300'}">
+              <button class="mt-0.5 text-sm transition ${isChecked ? 'text-emerald-600' : 'text-gray-400 hover:text-emerald-500'}">
+                <i class="fa-solid ${isChecked ? 'fa-square-check' : 'fa-square'}"></i>
+              </button>
+              <span class="text-xs font-semibold leading-relaxed ${isChecked ? 'line-through opacity-70' : ''}">${duty}</span>
+            </div>`;
+        });
+      }
+
+      // 2. رسم المهام المضافة يدوياً للمتابعة
+      const localContainer = document.getElementById('local-tasks-list');
+      localContainer.innerHTML = '';
+      if (customTasks.length === 0) {
+        localContainer.innerHTML = `
+          <div class="text-center py-8 text-gray-400 bg-gray-50 rounded-lg border border-dashed border-gray-200">
+            <i class="fa-solid fa-list-check text-2xl mb-2 text-gray-300"></i>
+            <p class="text-xs">اضغط على زر الإضافة لإدراج مهام المتابعة الخاصة بك.</p>
+          </div>`;
+      } else {
+        customTasks.forEach(task => {
+          localContainer.innerHTML += `
+            <div class="flex items-center justify-between p-3 rounded-lg border bg-gray-50 border-gray-200 transition hover:border-emerald-300 group">
+              <div onclick="toggleCustomTask('${task.id}')" class="flex items-center gap-3 flex-grow cursor-pointer">
+                <button class="text-sm transition ${task.completed ? 'text-emerald-600' : 'text-gray-400 hover:text-emerald-500'}">
+                  <i class="fa-solid ${task.completed ? 'fa-square-check' : 'fa-square'}"></i>
+                </button>
+                <span class="text-xs font-semibold ${task.completed ? 'line-through text-gray-400' : 'text-gray-750'}">${task.title}</span>
+              </div>
+              <button onclick="deleteCustomTask('${task.id}')" class="text-gray-400 hover:text-red-650 opacity-0 group-hover:opacity-100 transition p-1">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>`;
+        });
+      }
+
+      // 3. حساب شريط التقدم والتحديث
+      const totalOfficial = officialDuties.length;
+      const completedOfficial = checkedOfficialTasks.filter(idx => idx < totalOfficial).length;
+      
+      const totalCustom = customTasks.length;
+      const completedCustom = customTasks.filter(t => t.completed).length;
+
+      const total = totalOfficial + totalCustom;
+      const completed = completedOfficial + completedCustom;
+
+      const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+      document.getElementById('tasks-progress-bar').style.width = `${pct}%`;
+      document.getElementById('tasks-progress-text').innerText = `${completed}/${total} مكتملة (${pct}%)`;
+    }
+
+    function toggleOfficialTask(index) {
+      if (!currentUserProfile) return;
+      const username = currentUserProfile.name || "default_user";
+      const idx = checkedOfficialTasks.indexOf(index);
+      if (idx > -1) {
+        checkedOfficialTasks.splice(idx, 1);
+      } else {
+        checkedOfficialTasks.push(index);
+      }
+      localStorage.setItem(`tasks_official_${username}`, JSON.stringify(checkedOfficialTasks));
+      renderTasks();
+    }
+
+    function handleAddLocalTask(e) {
+      e.preventDefault();
+      const input = document.getElementById('new-task-title');
+      const title = input.value.trim();
+      if (!title) return;
+
+      const newTask = {
+        id: 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+        title: title,
+        completed: false,
+        createdAt: new Date().toISOString()
+      };
+
+      customTasks.push(newTask);
+      const username = currentUserProfile.name || "default_user";
+      localStorage.setItem(`tasks_custom_${username}`, JSON.stringify(customTasks));
+      
+      input.value = '';
+      renderTasks();
+    }
+
+    function toggleCustomTask(id) {
+      const task = customTasks.find(t => t.id === id);
+      if (task) {
+        task.completed = !task.completed;
+        const username = currentUserProfile.name || "default_user";
+        localStorage.setItem(`tasks_custom_${username}`, JSON.stringify(customTasks));
+        renderTasks();
+      }
+    }
+
+    function deleteCustomTask(id) {
+      customTasks = customTasks.filter(t => t.id !== id);
+      const username = currentUserProfile.name || "default_user";
+      localStorage.setItem(`tasks_custom_${username}`, JSON.stringify(customTasks));
+      renderTasks();
+    }
+
+    // =========================================================================
+    // إدارة مراسلة الأمين العام الوطني
+    // =========================================================================
+    function handleSendEmail(e) {
+      e.preventDefault();
+      if (!currentUserProfile) return;
+
+      const subject = document.getElementById('email-subject').value.trim();
+      const priority = document.getElementById('email-priority').value;
+      const type = document.getElementById('email-type').value;
+      const bodyText = document.getElementById('email-body').value.trim();
+
+      const recipient = "kouidery@ymail.com";
+      const emailSubject = `[SNTE بوابة هيكلة الأمانات] ${subject} - (${priority})`;
+      
+      const emailBody = `الموضوع: ${subject}
+نوع المراسلة: ${type}
+درجة الأهمية: ${priority}
+
+معلومات المرسل النقابي:
+--------------------------------------------------
+الاسم الكامل: ${currentUserProfile.name}
+الصفة النقابية: ${currentUserProfile.hierarchyLabel}
+نطاق الصلاحيات: ${currentUserProfile.hierarchyScope}
+تاريخ المراسلة: ${new Date().toLocaleString('ar-DZ')}
+
+تفاصيل الرسالة:
+--------------------------------------------------
+${bodyText}
+
+--------------------------------------------------
+مُرسل تلقائياً عبر منصة تسيير الأمانات - SNTE`;
+
+      const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = mailtoLink;
+    }
+
+    function copyEmailToClipboard() {
+      navigator.clipboard.writeText("kouidery@ymail.com").then(() => {
+        alert("تم نسخ البريد الإلكتروني للأمين العام الوطني بنجاح: kouidery@ymail.com");
+      }).catch(err => {
+        console.error("فشل نسخ البريد الإلكتروني:", err);
+      });
     }
   </script>
 </body>

@@ -81,6 +81,15 @@
         <button id="tab-contact-btn" onclick="switchTab('contact')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0">
           <i class="fa-solid fa-envelope"></i> مراسلة الأمين العام الوطني
         </button>
+        <button id="tab-legal-dept-btn" onclick="switchTab('legal-dept')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0 hidden">
+          <i class="fa-solid fa-gavel text-red-600"></i> القسم القانوني ⚖️
+        </button>
+        <button id="tab-pedagogical-dept-btn" onclick="switchTab('pedagogical-dept')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0 hidden">
+          <i class="fa-solid fa-graduation-cap text-blue-600"></i> القسم البيداغوجي 🎓
+        </button>
+        <button id="tab-media-dept-btn" onclick="switchTab('media-dept')" class="px-5 py-3.5 border-b-2 border-transparent text-gray-500 font-bold text-xs flex items-center gap-2 transition shrink-0 hidden">
+          <i class="fa-solid fa-radio text-amber-500"></i> القسم الإعلامي 📢
+        </button>
       </div>
     </div>
 
@@ -564,6 +573,331 @@
             </div>
           </div>
         </div>
+
+        <!-- تبويب القسم القانوني -->
+        <div id="tab-legal-dept-content" class="hidden space-y-6">
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <!-- الهيدر الخاص بالقسم القانوني -->
+            <div class="bg-gradient-to-r from-red-800 to-red-600 text-white p-6 rounded-xl shadow-md mb-6 relative overflow-hidden">
+              <div class="relative z-10">
+                <span class="bg-red-500/50 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full tracking-wider">خاص بالقسم القانوني والمنازعات</span>
+                <h3 class="text-xl font-bold mt-2 flex items-center gap-2">
+                  <i class="fa-solid fa-gavel text-amber-300"></i>
+                  <span>بوابة الشؤون القانونية والمنازعات</span>
+                </h3>
+                <p class="text-xs text-red-100 mt-1.5 max-w-xl leading-relaxed">المرجع التشريعي الرسمي للفرع النقابي لإعداد الطعون الإدارية، متابعة العرائض، والتوجيه القانوني لعمال التربية.</p>
+              </div>
+            </div>
+
+            <!-- محتويات القسم -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <!-- تقديم طلب جديد -->
+              <div class="lg:col-span-1 bg-gray-50 p-5 rounded-xl border border-gray-200">
+                <h4 class="text-xs font-bold text-gray-700 border-b pb-3 mb-4 flex items-center gap-1.5">
+                  <i class="fa-solid fa-pen-fancy text-red-600"></i>
+                  <span>تسجيل ملف منازعة أو طلب تظلم</span>
+                </h4>
+                <form id="legal-query-form" onsubmit="event.preventDefault(); alert('تم إرسال الاستشارة القانونية بنجاح للجنة المنازعات الوطنية!'); this.reset();" class="space-y-4 text-xs font-bold text-gray-700">
+                  <div>
+                    <label class="block mb-1 text-gray-600">اسم صاحب التظلم</label>
+                    <input type="text" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500 focus:outline-none" placeholder="الاسم الكامل للمنخرط...">
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">طبيعة القضية / التظلم</label>
+                    <select class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500 focus:outline-none bg-white">
+                      <option>ترقية ودرجات مهنية</option>
+                      <option>عقوبة انضباطية تعسفية</option>
+                      <option>سكن وظيفي أو منحة</option>
+                      <option>نزاع نقابي داخلي</option>
+                      <option>أخرى</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">الولاية والمؤسسة</label>
+                    <input type="text" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500 focus:outline-none" placeholder="الولاية وجامعة/مدرسة العمل...">
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">شرح ملخص للقضية والطلبات</label>
+                    <textarea rows="4" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-red-500 focus:outline-none font-medium leading-relaxed" placeholder="اكتب تفاصيل التظلم والسندات القانونية هنا..."></textarea>
+                  </div>
+                  <button type="submit" class="w-full bg-red-700 hover:bg-red-800 text-white py-2 rounded-lg font-bold transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>إرسال الملف للمراجعة 📥</span>
+                  </button>
+                </form>
+              </div>
+
+              <!-- سجل القضايا والاستشارات النشطة -->
+              <div class="lg:col-span-2 space-y-4">
+                <div class="border-b pb-3 flex justify-between items-center">
+                  <h4 class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                    <i class="fa-solid fa-briefcase text-red-600"></i>
+                    <span>سجل الطعون والاستشارات القانونية الحالية</span>
+                  </h4>
+                  <span class="bg-red-50 text-red-750 border border-red-200 px-2 py-0.5 rounded text-[10px] font-bold">نشط بالميدان</span>
+                </div>
+
+                <!-- جدول محاكي للقضايا -->
+                <div class="overflow-x-auto border rounded-xl bg-white shadow-sm">
+                  <table class="w-full text-right border-collapse text-xs">
+                    <thead>
+                      <tr class="bg-gray-50 text-gray-500 font-bold border-b text-[10px]">
+                        <th class="p-3">صاحب الملف</th>
+                        <th class="p-3">الموضوع</th>
+                        <th class="p-3">الولاية</th>
+                        <th class="p-3">تاريخ الإيداع</th>
+                        <th class="p-3 text-center">الحالة</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y text-gray-700 font-medium">
+                      <tr>
+                        <td class="p-3 font-bold">أ. بلقاسم مراد</td>
+                        <td class="p-3 text-gray-500">طعن في خصم عشوائي من الراتب</td>
+                        <td class="p-3 text-gray-400">الجزائر غرب</td>
+                        <td class="p-3 text-gray-400">2026-07-12</td>
+                        <td class="p-3 text-center"><span class="bg-yellow-50 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-yellow-100">قيد الدراسة</span></td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 font-bold">أ. عمارة زهير</td>
+                        <td class="p-3 text-gray-500">طلب استشارة حول السكن الإلزامي</td>
+                        <td class="p-3 text-gray-400">قسنطينة</td>
+                        <td class="p-3 text-gray-400">2026-07-09</td>
+                        <td class="p-3 text-center"><span class="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-100">تم الرد وإعداد العريضة</span></td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 font-bold">أستاذة مليكة ب.</td>
+                        <td class="p-3 text-gray-500">تظلم ضد عقوبة من الدرجة الثانية</td>
+                        <td class="p-3 text-gray-400">وهران</td>
+                        <td class="p-3 text-gray-400">2026-07-05</td>
+                        <td class="p-3 text-center"><span class="bg-red-50 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-100">مرفوع للوصاية القضائية</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- تحميل وثائق ونماذج -->
+                <div class="bg-red-50/50 p-4 rounded-xl border border-red-100">
+                  <h5 class="text-xs font-bold text-red-800 mb-2 flex items-center gap-1"><i class="fa-solid fa-file-pdf"></i> مكتبة النماذج والطعون الجاهزة</h5>
+                  <div class="grid grid-cols-2 gap-3 text-[11px]">
+                    <a href="#" onclick="alert('جاري تحميل نموذج طعن ضد عقوبة انضباطية تعسفية...'); return false;" class="flex items-center justify-between p-2.5 bg-white rounded-lg border hover:border-red-400 transition">
+                      <span class="text-gray-700 font-bold">📄 نموذج طعن ضد عقوبة تعسفية</span>
+                      <i class="fa-solid fa-download text-red-600"></i>
+                    </a>
+                    <a href="#" onclick="alert('جاري تحميل نموذج تظلم رئاسي بخصوص السكن الوظيفي...'); return false;" class="flex items-center justify-between p-2.5 bg-white rounded-lg border hover:border-red-400 transition">
+                      <span class="text-gray-700 font-bold">📄 نموذج تظلم للسكن الوظيفي</span>
+                      <i class="fa-solid fa-download text-red-600"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- تبويب القسم البيداغوجي -->
+        <div id="tab-pedagogical-dept-content" class="hidden space-y-6">
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <!-- الهيدر الخاص بالقسم البيداغوجي -->
+            <div class="bg-gradient-to-r from-blue-800 to-indigo-700 text-white p-6 rounded-xl shadow-md mb-6 relative overflow-hidden">
+              <div class="relative z-10">
+                <span class="bg-indigo-500/50 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full tracking-wider">خاص بالبيداغوجيا وشؤون التربية</span>
+                <h3 class="text-xl font-bold mt-2 flex items-center gap-2">
+                  <i class="fa-solid fa-graduation-cap text-amber-300 animate-pulse"></i>
+                  <span>قسم البيداغوجيا وشؤون المناهج والتربية</span>
+                </h3>
+                <p class="text-xs text-indigo-100 mt-1.5 max-w-xl leading-relaxed">تنسيق الرؤية التربوية للنقابة الوطنية، تقييم كثافة المناهج المدرسية، واقتراح الحلول البيداغوجية والزمنية للوصاية.</p>
+              </div>
+            </div>
+
+            <!-- محتويات القسم -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <!-- رفع تقرير بيداغوجي -->
+              <div class="lg:col-span-1 bg-gray-50 p-5 rounded-xl border border-indigo-100">
+                <h4 class="text-xs font-bold text-indigo-900 border-b pb-3 mb-4 flex items-center gap-1.5">
+                  <i class="fa-solid fa-book-open-reader text-indigo-700"></i>
+                  <span>إعداد واقتراح بيداغوجي ميداني</span>
+                </h4>
+                <form id="pedagogical-form" onsubmit="event.preventDefault(); alert('تم إرسال المقترح البيداغوجي بنجاح إلى الأمانة الوطنية للدراسات والمناهج!'); this.reset();" class="space-y-4 text-xs font-bold text-gray-700">
+                  <div>
+                    <label class="block mb-1 text-gray-600">المقترح / التقرير البيداغوجي</label>
+                    <input type="text" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-indigo-500 focus:outline-none" placeholder="عنوان المقترح (مثال: تقليص مناهج الابتدائي)...">
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">الطور التعليمي المستهدف</label>
+                    <select class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-indigo-500 focus:outline-none bg-white">
+                      <option>التعليم الابتدائي</option>
+                      <option>التعليم المتوسط</option>
+                      <option>التعليم الثانوي</option>
+                      <option>التعليم الخاص / محو الأمية</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">شرح وتبرير الميداني للمقترح</label>
+                    <textarea rows="6" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-indigo-500 focus:outline-none font-medium leading-relaxed" placeholder="أدخل أسباب اقتراح هذا التغيير البيداغوجي والعقبات البيداغوجية التي يعالجها..."></textarea>
+                  </div>
+                  <button type="submit" class="w-full bg-indigo-750 hover:bg-indigo-800 text-white py-2 rounded-lg font-bold transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>إرسال التوصية التربوية 📥</span>
+                  </button>
+                </form>
+              </div>
+
+              <!-- سجل التوصيات المقترحة -->
+              <div class="lg:col-span-2 space-y-4">
+                <div class="border-b pb-3 flex justify-between items-center">
+                  <h4 class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                    <i class="fa-solid fa-list text-indigo-750"></i>
+                    <span>التوصيات البيداغوجية النشطة للأسنتيو</span>
+                  </h4>
+                  <span class="bg-indigo-50 text-indigo-800 border border-indigo-150 px-2 py-0.5 rounded text-[10px] font-bold">ملفات دراسات الوزارة</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-[10px] font-bold px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full">الطور الابتدائي 🎒</span>
+                        <span class="text-[9px] text-gray-400 font-bold">2026-07-15</span>
+                      </div>
+                      <h5 class="font-bold text-gray-800 text-xs mb-1">تخفيف ثقل المحفظة المدرسية ورقمنة الكتب</h5>
+                      <p class="text-[10px] text-gray-500 leading-relaxed font-medium mb-3">مقترح متكامل لدمج المواد والاعتماد على الألواح الإلكترونية والأقراص الموحدة لتقليص الوزن الزائد للحقائب الدراسية.</p>
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2 text-[10px]">
+                      <span class="text-gray-400 font-bold">الحالة: معروض للنقاش بالوزارة</span>
+                    </div>
+                  </div>
+
+                  <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-[10px] font-bold px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full">الطور الثانوي 🎓</span>
+                        <span class="text-[9px] text-gray-400 font-bold">2026-07-11</span>
+                      </div>
+                      <h5 class="font-bold text-gray-800 text-xs mb-1">مشروع بكالوريا الفنون والمهن المستحدثة</h5>
+                      <p class="text-[10px] text-gray-500 leading-relaxed font-medium mb-3">دراسة نقابية حول هيكلة بكالوريا الفنون وتقييم المناهج والمعدلات وتأطير الأساتذة المتخصصين بالميدان الفني والسينمائي.</p>
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2 text-[10px]">
+                      <span class="text-gray-400 font-bold">الحالة: تم اعتماده جزئياً</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- دليل أو وثيقة بيداغوجية -->
+                <div class="p-4 bg-indigo-50 text-indigo-900 rounded-xl border border-indigo-150 flex items-start gap-3">
+                  <i class="fa-solid fa-circle-question mt-0.5 text-indigo-600 text-sm"></i>
+                  <div class="text-xs">
+                    <p class="font-bold mb-1">دليل المناهج البيداغوجية المعتمد:</p>
+                    <p class="font-medium text-indigo-700 leading-relaxed">بصفتك عضواً في القسم البيداغوجي، يمكنك الإشراف وتقديم آراء نقدية في المناهج والكتب المدرسية الجديدة، والمساهمة في صياغة مقترحات النقابة الرسمية الموجهة للجنة العليا للمناهج بوزارة التربية الوطنية الجزائرية.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- تبويب القسم الإعلامي والتواصل -->
+        <div id="tab-media-dept-content" class="hidden space-y-6">
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <!-- الهيدر الخاص بالقسم الإعلامي -->
+            <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-orange-500 text-white p-6 rounded-xl shadow-md mb-6 relative overflow-hidden">
+              <div class="relative z-10">
+                <span class="bg-amber-600/50 text-[10px] uppercase font-bold px-2.5 py-1 rounded-full tracking-wider">خاص بالخلية الإعلامية الوطنية والتواصل</span>
+                <h3 class="text-xl font-bold mt-2 flex items-center gap-2">
+                  <i class="fa-solid fa-bullhorn text-indigo-950 animate-bounce"></i>
+                  <span>خلية الإعلام والتنظيم والتواصل الرقمي</span>
+                </h3>
+                <p class="text-xs text-amber-55 mt-1.5 max-w-xl leading-relaxed">صياغة البيانات الصحفية الرسمية، تسيير صفحات التواصل الاجتماعي، ونشر التقارير الإخبارية الفورية لنشاطات قواعد الأسنتيو.</p>
+              </div>
+            </div>
+
+            <!-- محتويات القسم -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <!-- أداة تحرير البيان -->
+              <div class="lg:col-span-1 bg-gray-50 p-5 rounded-xl border border-gray-200">
+                <h4 class="text-xs font-bold text-gray-700 border-b pb-3 mb-4 flex items-center gap-1.5">
+                  <i class="fa-solid fa-pen-nib text-amber-600"></i>
+                  <span>محرر وصائغ البيانات الصحفية</span>
+                </h4>
+                <form id="media-release-form" onsubmit="event.preventDefault(); alert('تم حفظ مسودة البيان الإعلامي وجاري مراجعتها للنشر الرسمي!'); this.reset();" class="space-y-4 text-xs font-bold text-gray-700">
+                  <div>
+                    <label class="block mb-1 text-gray-600">عنوان البيان الإعلامي</label>
+                    <input type="text" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-amber-500 focus:outline-none" placeholder="عنوان البيان المباشر...">
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">تصنيف النشر</label>
+                    <select class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-amber-500 focus:outline-none bg-white">
+                      <option>بيان إعلامي وطني عاجل</option>
+                      <option>توضيح تنظيمي للرأي العام</option>
+                      <option>بيان استنكاري / تضامني</option>
+                      <option>أخبار وتغطية لنشاط ولائي</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block mb-1 text-gray-600">محتوى ونص البيان بالكامل</label>
+                    <textarea rows="6" required class="w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-amber-500 focus:outline-none font-medium leading-relaxed" placeholder="اكتب مسودة البيان الصحفي بالتفصيل هنا..."></textarea>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-lg font-bold transition flex items-center justify-center gap-1 shadow">
+                      <i class="fa-solid fa-floppy-disk"></i>
+                      <span>حفظ كمسودة 📥</span>
+                    </button>
+                    <button type="button" onclick="alert('تم إرسال التنبيه لمدراء صفحات التواصل!');" class="bg-indigo-900 hover:bg-indigo-950 text-white py-2 rounded-lg font-bold transition flex items-center justify-center gap-1 shadow">
+                      <i class="fa-solid fa-share-nodes"></i>
+                      <span>نشر فوري 🚀</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- سجل البيانات المنشورة ومحاكي التنبيهات -->
+              <div class="lg:col-span-2 space-y-4">
+                <div class="border-b pb-3 flex justify-between items-center">
+                  <h4 class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                    <i class="fa-solid fa-paper-plane text-amber-600"></i>
+                    <span>سجل البيانات والجرائد الرسمية الصادرة</span>
+                  </h4>
+                  <span class="bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-bold">بث مباشر للرأي العام</span>
+                </div>
+
+                <!-- سجل المحاكاة -->
+                <div class="space-y-3">
+                  <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm transition hover:shadow-md">
+                    <div class="flex justify-between items-center mb-1 text-[10px] font-bold">
+                      <span class="text-red-650">🚨 بيان هام جداً</span>
+                      <span class="text-gray-400">منذ ساعتين</span>
+                    </div>
+                    <h5 class="font-bold text-gray-800 text-xs mb-1.5">بيان الأمانة الوطنية حول تجميد المفاوضات بخصوص عجز مشرفي المدارس</h5>
+                    <p class="text-[10px] text-gray-500 font-medium leading-relaxed">أصدر المكتب الوطني بياناً يستنكر فيه تأخر استدراك النقص البيداغوجي والإداري الفادح في سلك مشرفي التربية بالطور الابتدائي والحلول المقترحة.</p>
+                  </div>
+
+                  <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm transition hover:shadow-md">
+                    <div class="flex justify-between items-center mb-1 text-[10px] font-bold">
+                      <span class="text-emerald-700">🌟 تغطية نشاط</span>
+                      <span class="text-gray-400">يوم أمس</span>
+                    </div>
+                    <h5 class="font-bold text-gray-800 text-xs mb-1.5">تغطية إعلامية لانطلاق الندوة الوطنية للتنسيق والرقمنة بالجزائر العاصمة</h5>
+                    <p class="text-[10px] text-gray-500 font-medium leading-relaxed">تغطية شاملة وصور حية للندوة التي ترأسها الأمين العام الوطني، بحضور المنسقين الجهويين الستة لولايات الوطن.</p>
+                  </div>
+                </div>
+
+                <!-- بث التنبيهات -->
+                <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-200">
+                  <h5 class="text-xs font-bold text-amber-800 mb-2 flex items-center gap-1.5"><i class="fa-solid fa-tower-broadcast animate-pulse"></i> أداة البث الفوري والتواصل الرقمي</h5>
+                  <p class="text-[10px] text-gray-600 mb-3 leading-relaxed">بصفتك من مسؤولي خلية الإعلام، يمكنك إرسال تنبيهات بريدية أو تنبيهات واتساب جماعية فورية لكافة المكاتب الولائية الـ 58 دفعة واحدة من لوحة البث.</p>
+                  <div class="flex gap-2">
+                    <button onclick="alert('جاري إعداد البث الجماعي عبر البريد الإلكتروني لكافة الولايات...');" class="flex-1 px-3 py-2 bg-white hover:bg-gray-100 text-gray-800 rounded-lg border border-gray-300 font-bold transition text-[10px] flex items-center justify-center gap-1">
+                      <i class="fa-solid fa-envelope text-red-650"></i> بث بريدي جماعي
+                    </button>
+                    <button onclick="alert('جاري إرسال تنبيه واتساب جماعي للأمناء الولائيين والبلديين المعتمدين...');" class="flex-1 px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-lg border border-emerald-350 font-bold transition text-[10px] flex items-center justify-center gap-1">
+                      <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i> بث واتساب جماعي
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
             </div>
           </div>
         </div>
@@ -714,7 +1048,7 @@
     }
 
     function switchTab(tab) {
-      const tabs = ['members', 'minutes', 'tasks', 'magazine', 'legal', 'docs', 'contact'];
+      const tabs = ['members', 'minutes', 'tasks', 'magazine', 'legal', 'docs', 'contact', 'legal-dept', 'pedagogical-dept', 'media-dept'];
       tabs.forEach(t => {
         const btn = document.getElementById(`tab-${t}-btn`);
         const content = document.getElementById(`tab-${t}-content`);
@@ -863,7 +1197,7 @@
         if (statsContainer) statsContainer.classList.remove('hidden');
         if (tableContainer) tableContainer.classList.remove('hidden');
         if (statsGrid) {
-          if (currentUserProfile.hierarchyLevel === 'NATIONAL') {
+          if (currentUserProfile.hierarchyLevel === 'NATIONAL' || currentUserProfile.hierarchyLevel === 'NATIONAL_LIMITED' || currentUserProfile.hierarchyLevel === 'DEPARTMENT') {
             statsGrid.classList.remove('hidden');
           } else {
             statsGrid.classList.add('hidden');
@@ -872,6 +1206,41 @@
 
         // إخفاء لوحة التحكم الشخصية للمنخرط
         if (personalPanel) personalPanel.classList.add('hidden');
+      }
+
+      // إظهار/إخفاء الأقسام التخصصية بناءً على المهام النقابية أو الصلاحيات الوطنية
+      const legalDeptBtn = document.getElementById('tab-legal-dept-btn');
+      const pedagogicalDeptBtn = document.getElementById('tab-pedagogical-dept-btn');
+      const mediaDeptBtn = document.getElementById('tab-media-dept-btn');
+      
+      const duties = String(currentUserProfile.unionDuties || "").trim();
+      const isNational = currentUserProfile.hierarchyLevel === 'NATIONAL' || currentUserProfile.hierarchyLevel === 'NATIONAL_LIMITED';
+      
+      // القسم القانوني: يظهر للمستشار القانوني أو ممثل المنازعات أو المسؤول الوطني
+      if (legalDeptBtn) {
+        if (isNational || duties.indexOf("قانون") !== -1 || duties.indexOf("منازعات") !== -1) {
+          legalDeptBtn.classList.remove('hidden');
+        } else {
+          legalDeptBtn.classList.add('hidden');
+        }
+      }
+      
+      // القسم البيداغوجي: يظهر لمستشار التربية والبيداغوجيا أو ممثل التربية والتكوين أو المسؤول الوطني
+      if (pedagogicalDeptBtn) {
+        if (isNational || duties.indexOf("بيداغوج") !== -1 || duties.indexOf("تربية") !== -1 || duties.indexOf("تكوين") !== -1) {
+          pedagogicalDeptBtn.classList.remove('hidden');
+        } else {
+          pedagogicalDeptBtn.classList.add('hidden');
+        }
+      }
+      
+      // القسم الإعلامي: يظهر لمسؤولي الإعلام والاتصال والتواصل أو المسؤول الوطني
+      if (mediaDeptBtn) {
+        if (isNational || duties.indexOf("إعلام") !== -1 || duties.indexOf("اتصال") !== -1 || duties.indexOf("تواصل") !== -1 || duties.indexOf("تنظيم") !== -1) {
+          mediaDeptBtn.classList.remove('hidden');
+        } else {
+          mediaDeptBtn.classList.add('hidden');
+        }
       }
     }
 
